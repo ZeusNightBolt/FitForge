@@ -1,0 +1,40 @@
+{
+  "_note": "§7.2.5 defaults-matrix spot checks for suggestOnboardingDefaults(goal, experience).",
+  "cases": [
+    {
+      "goal": "strength",
+      "experience": "beginner",
+      "expected": { "days_per_week": 3, "session_minutes": 45, "rep_min": 5, "rep_max": 6, "split_name": "Full Body" }
+    },
+    {
+      "goal": "strength",
+      "experience": "advanced",
+      "expected": { "days_per_week": 4, "session_minutes": 75, "rep_min": 3, "rep_max": 6, "split_name": "Upper/Lower" }
+    },
+    {
+      "goal": "hypertrophy",
+      "experience": "beginner",
+      "expected": { "days_per_week": 3, "session_minutes": 45, "rep_min": 8, "rep_max": 12, "split_name": "Full Body" }
+    },
+    {
+      "goal": "hypertrophy",
+      "experience": "advanced",
+      "expected": { "days_per_week": 5, "session_minutes": 75, "rep_min": 6, "rep_max": 12, "split_name": "Upper/Lower/Push/Pull/Legs" }
+    },
+    {
+      "goal": "fat_loss",
+      "experience": "intermediate",
+      "expected": { "days_per_week": 4, "session_minutes": 45, "rep_min": 10, "rep_max": 15, "split_name": "Upper/Lower" }
+    },
+    {
+      "goal": "endurance",
+      "experience": "beginner",
+      "expected": { "days_per_week": 3, "session_minutes": 30, "rep_min": 15, "rep_max": 20, "split_name": "Full Body" }
+    },
+    {
+      "goal": "general_health",
+      "experience": "advanced",
+      "expected": { "days_per_week": 4, "session_minutes": 60, "rep_min": 8, "rep_max": 12, "split_name": "Upper/Lower" }
+    }
+  ]
+}

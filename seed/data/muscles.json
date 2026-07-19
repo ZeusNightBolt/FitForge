@@ -1,0 +1,33 @@
+{
+  "groups": [
+    { "slug": "chest", "name": "Chest", "region": "upper", "display_order": 1 },
+    { "slug": "back", "name": "Back", "region": "upper", "display_order": 2 },
+    { "slug": "shoulders", "name": "Shoulders", "region": "upper", "display_order": 3 },
+    { "slug": "arms", "name": "Arms", "region": "upper", "display_order": 4 },
+    { "slug": "core", "name": "Core", "region": "core", "display_order": 5 },
+    { "slug": "glutes", "name": "Glutes", "region": "lower", "display_order": 6 },
+    { "slug": "legs", "name": "Legs", "region": "lower", "display_order": 7 }
+  ],
+  "muscles": [
+    { "slug": "pecs", "name": "Chest", "latin_name": "Pectoralis major", "group": "chest", "is_front": true },
+    { "slug": "lats", "name": "Lats", "latin_name": "Latissimus dorsi", "group": "back", "is_front": false },
+    { "slug": "traps", "name": "Traps", "latin_name": "Trapezius", "group": "back", "is_front": false },
+    { "slug": "rhomboids", "name": "Mid-back", "latin_name": "Rhomboideus", "group": "back", "is_front": false },
+    { "slug": "lower-back", "name": "Lower Back", "latin_name": "Erector spinae", "group": "back", "is_front": false },
+    { "slug": "front-delts", "name": "Front Delts", "latin_name": "Deltoideus anterior", "group": "shoulders", "is_front": true },
+    { "slug": "side-delts", "name": "Side Delts", "latin_name": "Deltoideus lateralis", "group": "shoulders", "is_front": true },
+    { "slug": "rear-delts", "name": "Rear Delts", "latin_name": "Deltoideus posterior", "group": "shoulders", "is_front": false },
+    { "slug": "biceps", "name": "Biceps", "latin_name": "Biceps brachii", "group": "arms", "is_front": true },
+    { "slug": "triceps", "name": "Triceps", "latin_name": "Triceps brachii", "group": "arms", "is_front": false },
+    { "slug": "forearms", "name": "Forearms", "latin_name": "Brachioradialis", "group": "arms", "is_front": true },
+    { "slug": "abs", "name": "Abs", "latin_name": "Rectus abdominis", "group": "core", "is_front": true },
+    { "slug": "obliques", "name": "Obliques", "latin_name": "Obliquus externus", "group": "core", "is_front": true },
+    { "slug": "glute-max", "name": "Glutes", "latin_name": "Gluteus maximus", "group": "glutes", "is_front": false },
+    { "slug": "glute-med", "name": "Hip Abductors", "latin_name": "Gluteus medius", "group": "glutes", "is_front": false },
+    { "slug": "quads", "name": "Quads", "latin_name": "Quadriceps femoris", "group": "legs", "is_front": true },
+    { "slug": "hamstrings", "name": "Hamstrings", "latin_name": "Biceps femoris", "group": "legs", "is_front": false },
+    { "slug": "adductors", "name": "Inner Thigh", "latin_name": "Adductor magnus", "group": "legs", "is_front": true },
+    { "slug": "calves", "name": "Calves", "latin_name": "Gastrocnemius/Soleus", "group": "legs", "is_front": false },
+    { "slug": "hip-flexors", "name": "Hip Flexors", "latin_name": "Iliopsoas", "group": "legs", "is_front": true }
+  ]
+}

@@ -1,0 +1,100 @@
+# ===========================================================================
+# FitForge — root .gitignore
+# ===========================================================================
+
+# --- Node / JavaScript ---
+node_modules/
+.npm/
+.pnp
+.pnp.js
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+.eslintcache
+*.tsbuildinfo
+
+# --- Build output ---
+dist/
+build/
+out/
+coverage/
+*.log
+
+# --- Turborepo ---
+.turbo/
+
+# --- Next.js ---
+.next/
+next-env.d.ts
+.vercel/
+
+# --- Playwright ---
+playwright-report/
+test-results/
+blob-report/
+.playwright/
+
+# --- Environment / secrets ---
+.env
+.env.*
+!.env.example
+!apps/web/.env.example
+*.pem
+
+# --- Supabase (local stack, generated artifacts) ---
+supabase/.branches/
+supabase/.temp/
+.supabase/
+# NOTE: supabase/seed/seed.sql IS committed (generated artifact tracked on purpose);
+# if you prefer to generate it in CI, uncomment the next line.
+# supabase/seed/seed.sql
+
+# --- Xcode / SwiftUI (apps/ios) ---
+## Build generated
+DerivedData/
+build/
+*.o
+*.hmap
+*.ipa
+*.dSYM.zip
+*.dSYM
+
+## User settings & workspace state
+xcuserdata/
+*.xcuserstate
+*.xcscmblueprint
+*.xccheckout
+*.moved-aside
+
+## Generated Xcode project (XcodeGen is source of truth — project.yml)
+*.xcodeproj/
+*.xcworkspace/
+!apps/ios/**/project.yml
+
+## Swift Package Manager
+.build/
+.swiftpm/
+Packages/
+Package.resolved
+
+## CocoaPods / Carthage (if ever used)
+Pods/
+Carthage/Build/
+
+# --- macOS ---
+.DS_Store
+.AppleDouble
+.LSOverride
+Icon
+._*
+.Spotlight-V100
+.Trashes
+
+# --- Editors / IDEs ---
+.idea/
+.vscode/*
+!.vscode/extensions.json
+!.vscode/settings.json
+*.swp
+*.swo
+*~

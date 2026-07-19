@@ -1,0 +1,367 @@
+[
+  {
+    "exercise": "barbell-back-squat",
+    "substitute": "goblet-squat",
+    "similarity": 85
+  },
+  {
+    "exercise": "barbell-back-squat",
+    "substitute": "leg-press",
+    "similarity": 80
+  },
+  {
+    "exercise": "barbell-back-squat",
+    "substitute": "hack-squat",
+    "similarity": 80
+  },
+  {
+    "exercise": "barbell-back-squat",
+    "substitute": "front-squat",
+    "similarity": 75
+  },
+  {
+    "exercise": "barbell-back-squat",
+    "substitute": "bulgarian-split-squat",
+    "similarity": 70
+  },
+  {
+    "exercise": "barbell-back-squat",
+    "substitute": "bodyweight-squat",
+    "similarity": 55
+  },
+  {
+    "exercise": "bench-press",
+    "substitute": "dumbbell-bench-press",
+    "similarity": 92
+  },
+  {
+    "exercise": "bench-press",
+    "substitute": "machine-chest-press",
+    "similarity": 85
+  },
+  {
+    "exercise": "bench-press",
+    "substitute": "push-up",
+    "similarity": 70
+  },
+  {
+    "exercise": "bench-press",
+    "substitute": "incline-dumbbell-press",
+    "similarity": 70
+  },
+  {
+    "exercise": "overhead-press",
+    "substitute": "seated-dumbbell-shoulder-press",
+    "similarity": 90
+  },
+  {
+    "exercise": "overhead-press",
+    "substitute": "machine-shoulder-press",
+    "similarity": 82
+  },
+  {
+    "exercise": "overhead-press",
+    "substitute": "lateral-raise",
+    "similarity": 45
+  },
+  {
+    "exercise": "pull-up",
+    "substitute": "lat-pulldown",
+    "similarity": 90
+  },
+  {
+    "exercise": "pull-up",
+    "substitute": "band-assisted-pull-up",
+    "similarity": 88
+  },
+  {
+    "exercise": "pull-up",
+    "substitute": "chin-up",
+    "similarity": 85
+  },
+  {
+    "exercise": "pull-up",
+    "substitute": "inverted-row",
+    "similarity": 65
+  },
+  {
+    "exercise": "lat-pulldown",
+    "substitute": "pull-up",
+    "similarity": 85
+  },
+  {
+    "exercise": "lat-pulldown",
+    "substitute": "band-assisted-pull-up",
+    "similarity": 80
+  },
+  {
+    "exercise": "lat-pulldown",
+    "substitute": "seated-cable-row",
+    "similarity": 60
+  },
+  {
+    "exercise": "conventional-deadlift",
+    "substitute": "romanian-deadlift",
+    "similarity": 85
+  },
+  {
+    "exercise": "conventional-deadlift",
+    "substitute": "kettlebell-swing",
+    "similarity": 65
+  },
+  {
+    "exercise": "conventional-deadlift",
+    "substitute": "good-morning",
+    "similarity": 60
+  },
+  {
+    "exercise": "conventional-deadlift",
+    "substitute": "barbell-hip-thrust",
+    "similarity": 55
+  },
+  {
+    "exercise": "romanian-deadlift",
+    "substitute": "leg-curl",
+    "similarity": 70
+  },
+  {
+    "exercise": "romanian-deadlift",
+    "substitute": "good-morning",
+    "similarity": 70
+  },
+  {
+    "exercise": "romanian-deadlift",
+    "substitute": "kettlebell-swing",
+    "similarity": 65
+  },
+  {
+    "exercise": "romanian-deadlift",
+    "substitute": "glute-bridge",
+    "similarity": 50
+  },
+  {
+    "exercise": "barbell-row",
+    "substitute": "dumbbell-row",
+    "similarity": 90
+  },
+  {
+    "exercise": "barbell-row",
+    "substitute": "seated-cable-row",
+    "similarity": 85
+  },
+  {
+    "exercise": "barbell-row",
+    "substitute": "inverted-row",
+    "similarity": 70
+  },
+  {
+    "exercise": "barbell-hip-thrust",
+    "substitute": "glute-bridge",
+    "similarity": 80
+  },
+  {
+    "exercise": "barbell-hip-thrust",
+    "substitute": "romanian-deadlift",
+    "similarity": 60
+  },
+  {
+    "exercise": "leg-press",
+    "substitute": "hack-squat",
+    "similarity": 85
+  },
+  {
+    "exercise": "leg-press",
+    "substitute": "goblet-squat",
+    "similarity": 75
+  },
+  {
+    "exercise": "leg-press",
+    "substitute": "bulgarian-split-squat",
+    "similarity": 65
+  },
+  {
+    "exercise": "leg-curl",
+    "substitute": "romanian-deadlift",
+    "similarity": 75
+  },
+  {
+    "exercise": "leg-curl",
+    "substitute": "glute-bridge",
+    "similarity": 45
+  },
+  {
+    "exercise": "leg-extension",
+    "substitute": "bulgarian-split-squat",
+    "similarity": 60
+  },
+  {
+    "exercise": "leg-extension",
+    "substitute": "step-up",
+    "similarity": 55
+  },
+  {
+    "exercise": "leg-extension",
+    "substitute": "bodyweight-squat",
+    "similarity": 50
+  },
+  {
+    "exercise": "dip",
+    "substitute": "bench-press",
+    "similarity": 65
+  },
+  {
+    "exercise": "dip",
+    "substitute": "push-up",
+    "similarity": 65
+  },
+  {
+    "exercise": "dip",
+    "substitute": "triceps-pushdown",
+    "similarity": 55
+  },
+  {
+    "exercise": "barbell-curl",
+    "substitute": "dumbbell-curl",
+    "similarity": 92
+  },
+  {
+    "exercise": "barbell-curl",
+    "substitute": "cable-curl",
+    "similarity": 85
+  },
+  {
+    "exercise": "barbell-curl",
+    "substitute": "hammer-curl",
+    "similarity": 80
+  },
+  {
+    "exercise": "triceps-pushdown",
+    "substitute": "overhead-triceps-extension",
+    "similarity": 85
+  },
+  {
+    "exercise": "triceps-pushdown",
+    "substitute": "skull-crusher",
+    "similarity": 80
+  },
+  {
+    "exercise": "skull-crusher",
+    "substitute": "overhead-triceps-extension",
+    "similarity": 85
+  },
+  {
+    "exercise": "skull-crusher",
+    "substitute": "triceps-pushdown",
+    "similarity": 80
+  },
+  {
+    "exercise": "lateral-raise",
+    "substitute": "cable-lateral-raise",
+    "similarity": 90
+  },
+  {
+    "exercise": "lateral-raise",
+    "substitute": "machine-shoulder-press",
+    "similarity": 45
+  },
+  {
+    "exercise": "face-pull",
+    "substitute": "rear-delt-fly",
+    "similarity": 85
+  },
+  {
+    "exercise": "cable-fly",
+    "substitute": "pec-deck-fly",
+    "similarity": 90
+  },
+  {
+    "exercise": "cable-fly",
+    "substitute": "dumbbell-bench-press",
+    "similarity": 60
+  },
+  {
+    "exercise": "cable-fly",
+    "substitute": "push-up",
+    "similarity": 50
+  },
+  {
+    "exercise": "plank",
+    "substitute": "dead-bug",
+    "similarity": 80
+  },
+  {
+    "exercise": "plank",
+    "substitute": "ab-wheel-rollout",
+    "similarity": 60
+  },
+  {
+    "exercise": "hanging-leg-raise",
+    "substitute": "cable-crunch",
+    "similarity": 75
+  },
+  {
+    "exercise": "hanging-leg-raise",
+    "substitute": "russian-twist",
+    "similarity": 55
+  },
+  {
+    "exercise": "hanging-leg-raise",
+    "substitute": "dead-bug",
+    "similarity": 55
+  },
+  {
+    "exercise": "treadmill-run",
+    "substitute": "stationary-bike-ride",
+    "similarity": 75
+  },
+  {
+    "exercise": "treadmill-run",
+    "substitute": "rowing-erg",
+    "similarity": 70
+  },
+  {
+    "exercise": "treadmill-run",
+    "substitute": "jump-rope",
+    "similarity": 65
+  },
+  {
+    "exercise": "kettlebell-swing",
+    "substitute": "romanian-deadlift",
+    "similarity": 70
+  },
+  {
+    "exercise": "kettlebell-swing",
+    "substitute": "conventional-deadlift",
+    "similarity": 55
+  },
+  {
+    "exercise": "dumbbell-bench-press",
+    "substitute": "machine-chest-press",
+    "similarity": 85
+  },
+  {
+    "exercise": "dumbbell-bench-press",
+    "substitute": "push-up",
+    "similarity": 72
+  },
+  {
+    "exercise": "dumbbell-bench-press",
+    "substitute": "bench-press",
+    "similarity": 90
+  },
+  {
+    "exercise": "seated-cable-row",
+    "substitute": "dumbbell-row",
+    "similarity": 85
+  },
+  {
+    "exercise": "seated-cable-row",
+    "substitute": "barbell-row",
+    "similarity": 80
+  },
+  {
+    "exercise": "seated-cable-row",
+    "substitute": "inverted-row",
+    "similarity": 70
+  }
+]

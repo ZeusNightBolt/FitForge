@@ -1,0 +1,474 @@
+[
+  {
+    "slug": "barbell-back-squat", "name": "Barbell Back Squat", "category": "legs",
+    "movement_pattern": "squat", "mechanics": "compound", "difficulty": "intermediate",
+    "is_unilateral": false, "is_bodyweight_ok": false, "popularity": 95,
+    "primary_muscles": ["quads"], "secondary_muscles": ["glute-max", "lower-back", "adductors"],
+    "equipment": [["barbell"], ["weight-plates"], ["squat-rack"]],
+    "instructions": "Set the bar across your upper back, brace your core, and unrack it. Push your hips back and bend your knees to lower until your thighs are at least parallel to the floor. Drive through your whole foot to stand back up, keeping your chest tall throughout. Keep the weight moderate until the movement feels smooth and controlled."
+  },
+  {
+    "slug": "goblet-squat", "name": "Goblet Squat", "category": "legs",
+    "movement_pattern": "squat", "mechanics": "compound", "difficulty": "beginner",
+    "is_unilateral": false, "is_bodyweight_ok": false, "popularity": 80,
+    "primary_muscles": ["quads"], "secondary_muscles": ["glute-max", "abs"],
+    "equipment": [["dumbbell", "kettlebell"]],
+    "instructions": "Hold a single dumbbell or kettlebell against your chest with both hands. Sit down between your hips, keeping your elbows inside your knees and your torso upright. Stand back up by pushing through your feet. It is a great squat to learn form because the front load naturally keeps you balanced."
+  },
+  {
+    "slug": "front-squat", "name": "Barbell Front Squat", "category": "legs",
+    "movement_pattern": "squat", "mechanics": "compound", "difficulty": "advanced",
+    "is_unilateral": false, "is_bodyweight_ok": false, "popularity": 60,
+    "primary_muscles": ["quads"], "secondary_muscles": ["glute-max", "abs"],
+    "equipment": [["barbell"], ["weight-plates"], ["squat-rack"]],
+    "instructions": "Rest the bar on the front of your shoulders with your elbows pointing forward and high. Squat straight down while fighting to keep your torso vertical and elbows up. Drive back up through your feet without letting the bar roll forward. The upright position places more emphasis on the quads and demands solid core control."
+  },
+  {
+    "slug": "bodyweight-squat", "name": "Bodyweight Squat", "category": "legs",
+    "movement_pattern": "squat", "mechanics": "compound", "difficulty": "beginner",
+    "is_unilateral": false, "is_bodyweight_ok": true, "popularity": 70,
+    "primary_muscles": ["quads"], "secondary_muscles": ["glute-max"],
+    "equipment": [],
+    "instructions": "Stand with your feet about shoulder-width apart and your arms out for balance. Push your hips back and bend your knees to lower as far as feels comfortable, keeping your heels down. Stand back up by squeezing your legs and glutes. Perfect as a warm-up or a no-equipment option anywhere."
+  },
+  {
+    "slug": "leg-press", "name": "Leg Press", "category": "legs",
+    "movement_pattern": "squat", "mechanics": "compound", "difficulty": "beginner",
+    "is_unilateral": false, "is_bodyweight_ok": false, "popularity": 85,
+    "primary_muscles": ["quads"], "secondary_muscles": ["glute-max", "adductors"],
+    "equipment": [["leg-press"]],
+    "instructions": "Sit in the machine with your feet flat and about shoulder-width on the platform. Lower the weight by bending your knees toward your chest in a controlled way, then press it back up without locking your knees hard. Keep your lower back against the pad the whole time. It lets you train your legs heavily with the back fully supported."
+  },
+  {
+    "slug": "hack-squat", "name": "Hack Squat", "category": "legs",
+    "movement_pattern": "squat", "mechanics": "compound", "difficulty": "intermediate",
+    "is_unilateral": false, "is_bodyweight_ok": false, "popularity": 65,
+    "primary_muscles": ["quads"], "secondary_muscles": ["glute-max"],
+    "equipment": [["hack-squat-machine"]],
+    "instructions": "Position your shoulders and back against the machine pads with your feet on the platform. Release the safeties and lower under control until your thighs reach about parallel. Push back up through your feet, keeping your back flat against the pad. The fixed path lets you focus on driving with your quads."
+  },
+  {
+    "slug": "bulgarian-split-squat", "name": "Bulgarian Split Squat", "category": "legs",
+    "movement_pattern": "lunge", "mechanics": "compound", "difficulty": "intermediate",
+    "is_unilateral": true, "is_bodyweight_ok": true, "popularity": 75,
+    "primary_muscles": ["quads"], "secondary_muscles": ["glute-max"],
+    "equipment": [["dumbbell", "kettlebell"], ["flat-bench"]],
+    "instructions": "Rest the top of your rear foot on a bench and stand tall on your front leg. Lower straight down by bending your front knee until your thigh is roughly parallel, keeping most of your weight on the front foot. Drive back up through the front heel. Add dumbbells once the bodyweight version feels stable."
+  },
+  {
+    "slug": "walking-lunge", "name": "Walking Lunge", "category": "legs",
+    "movement_pattern": "lunge", "mechanics": "compound", "difficulty": "beginner",
+    "is_unilateral": true, "is_bodyweight_ok": true, "popularity": 70,
+    "primary_muscles": ["quads"], "secondary_muscles": ["glute-max", "hamstrings"],
+    "equipment": [["dumbbell"]],
+    "instructions": "Step forward into a lunge and lower your back knee toward the floor while keeping your front shin fairly vertical. Push off the front foot and bring your back leg through into the next step. Keep your torso tall and your steps even on both sides. Hold dumbbells at your sides to make it harder."
+  },
+  {
+    "slug": "step-up", "name": "Step-up", "category": "legs",
+    "movement_pattern": "lunge", "mechanics": "compound", "difficulty": "beginner",
+    "is_unilateral": true, "is_bodyweight_ok": true, "popularity": 55,
+    "primary_muscles": ["quads"], "secondary_muscles": ["glute-max"],
+    "equipment": [["flat-bench"]],
+    "instructions": "Place one whole foot on a sturdy bench or box at about knee height. Drive through that foot to stand all the way up, letting the working leg do the work rather than pushing off the floor. Lower yourself back down with control and repeat. Switch legs each set or alternate as you go."
+  },
+  {
+    "slug": "conventional-deadlift", "name": "Conventional Deadlift", "category": "legs",
+    "movement_pattern": "hinge", "mechanics": "compound", "difficulty": "advanced",
+    "is_unilateral": false, "is_bodyweight_ok": false, "popularity": 90,
+    "primary_muscles": ["hamstrings"], "secondary_muscles": ["glute-max", "lower-back", "traps", "forearms"],
+    "equipment": [["barbell"], ["weight-plates"]],
+    "instructions": "Stand with the bar over your mid-foot, hinge down, and grip it just outside your knees. Brace your core, keep your back flat, and stand up by pushing the floor away and driving your hips forward. Lower the bar under control by pushing your hips back first. Keep the bar close to your body the entire lift."
+  },
+  {
+    "slug": "romanian-deadlift", "name": "Romanian Deadlift", "category": "legs",
+    "movement_pattern": "hinge", "mechanics": "compound", "difficulty": "intermediate",
+    "is_unilateral": false, "is_bodyweight_ok": false, "popularity": 85,
+    "primary_muscles": ["hamstrings"], "secondary_muscles": ["glute-max", "lower-back"],
+    "equipment": [["barbell", "dumbbell"]],
+    "instructions": "Start standing with the weight in front of your thighs and a soft bend in your knees. Push your hips back and let the weight travel down your legs until you feel a stretch in your hamstrings, keeping your back flat. Drive your hips forward to return to standing. The knees stay mostly still so the hamstrings and glutes do the work."
+  },
+  {
+    "slug": "kettlebell-swing", "name": "Kettlebell Swing", "category": "glutes",
+    "movement_pattern": "hinge", "mechanics": "compound", "difficulty": "intermediate",
+    "is_unilateral": false, "is_bodyweight_ok": false, "popularity": 70,
+    "primary_muscles": ["glute-max"], "secondary_muscles": ["hamstrings", "lower-back"],
+    "equipment": [["kettlebell"]],
+    "instructions": "Hinge at your hips and hike the kettlebell back between your legs like a snap pass. Snap your hips forward to swing the bell up to about chest height, letting the momentum come from your hips rather than your arms. Let it swing back down and immediately hinge into the next rep. Keep your back flat and your core braced on every swing."
+  },
+  {
+    "slug": "good-morning", "name": "Good Morning", "category": "legs",
+    "movement_pattern": "hinge", "mechanics": "compound", "difficulty": "advanced",
+    "is_unilateral": false, "is_bodyweight_ok": false, "popularity": 40,
+    "primary_muscles": ["hamstrings"], "secondary_muscles": ["glute-max", "lower-back"],
+    "equipment": [["barbell"], ["squat-rack"]],
+    "instructions": "Set a barbell across your upper back as you would for a squat. With a soft knee bend, push your hips back and hinge your torso toward parallel with the floor while keeping your back flat. Drive your hips forward to return upright. Start light and prioritize a smooth hinge, since the long lever makes this deceptively challenging."
+  },
+  {
+    "slug": "barbell-hip-thrust", "name": "Barbell Hip Thrust", "category": "glutes",
+    "movement_pattern": "hip_extension_iso", "mechanics": "compound", "difficulty": "intermediate",
+    "is_unilateral": false, "is_bodyweight_ok": false, "popularity": 85,
+    "primary_muscles": ["glute-max"], "secondary_muscles": ["hamstrings"],
+    "equipment": [["barbell", "hip-thrust-machine"], ["weight-plates"], ["flat-bench"]],
+    "instructions": "Sit on the floor with your upper back against a bench and the barbell over your hips, padded for comfort. Drive through your heels to lift your hips until your body forms a straight line from shoulders to knees. Squeeze your glutes hard at the top, then lower with control. Keep your chin tucked and ribs down so the movement comes from your hips."
+  },
+  {
+    "slug": "glute-bridge", "name": "Glute Bridge", "category": "glutes",
+    "movement_pattern": "hip_extension_iso", "mechanics": "isolation", "difficulty": "beginner",
+    "is_unilateral": false, "is_bodyweight_ok": true, "popularity": 65,
+    "primary_muscles": ["glute-max"], "secondary_muscles": ["hamstrings"],
+    "equipment": [],
+    "instructions": "Lie on your back with your knees bent and feet flat, hip-width apart. Press through your heels to lift your hips until your body is straight from shoulders to knees, squeezing your glutes at the top. Lower back down with control. A simple, joint-friendly way to feel and strengthen the glutes with no equipment."
+  },
+  {
+    "slug": "leg-curl", "name": "Lying/Seated Leg Curl", "category": "legs",
+    "movement_pattern": "knee_flexion_iso", "mechanics": "isolation", "difficulty": "beginner",
+    "is_unilateral": false, "is_bodyweight_ok": false, "popularity": 75,
+    "primary_muscles": ["hamstrings"], "secondary_muscles": [],
+    "equipment": [["leg-curl-machine"]],
+    "instructions": "Set the machine so the pad rests just above your heels and your knees line up with the pivot. Curl your heels toward your glutes by bending your knees, pausing briefly at the top. Lower under control without letting the weight slam down. It isolates the hamstrings, which most other leg exercises train only as helpers."
+  },
+  {
+    "slug": "leg-extension", "name": "Leg Extension", "category": "legs",
+    "movement_pattern": "knee_extension_iso", "mechanics": "isolation", "difficulty": "beginner",
+    "is_unilateral": false, "is_bodyweight_ok": false, "popularity": 75,
+    "primary_muscles": ["quads"], "secondary_muscles": [],
+    "equipment": [["leg-extension-machine"]],
+    "instructions": "Sit in the machine with the pad on top of your lower shins and your knees at the pivot point. Straighten your legs to lift the weight, squeezing your quads at the top. Lower with control back to the start. A straightforward way to directly target the quads and add volume to leg day."
+  },
+  {
+    "slug": "standing-calf-raise", "name": "Standing Calf Raise", "category": "legs",
+    "movement_pattern": "calf_raise", "mechanics": "isolation", "difficulty": "beginner",
+    "is_unilateral": false, "is_bodyweight_ok": true, "popularity": 70,
+    "primary_muscles": ["calves"], "secondary_muscles": [],
+    "equipment": [["calf-raise-machine", "dumbbell"]],
+    "instructions": "Stand tall with the balls of your feet on a step or platform and your heels free to drop. Rise up as high as you can onto your toes, pausing at the top. Lower slowly until you feel a stretch in your calves. Hold a dumbbell or use a machine to add load once bodyweight feels easy."
+  },
+  {
+    "slug": "bench-press", "name": "Barbell Bench Press", "category": "chest",
+    "movement_pattern": "horizontal_push", "mechanics": "compound", "difficulty": "intermediate",
+    "is_unilateral": false, "is_bodyweight_ok": false, "popularity": 95,
+    "primary_muscles": ["pecs"], "secondary_muscles": ["front-delts", "triceps"],
+    "equipment": [["barbell"], ["weight-plates"], ["flat-bench"]],
+    "instructions": "Lie on the bench with your eyes under the bar and grip it a bit wider than shoulder-width. Unrack, lower the bar to your mid-chest with your elbows tucked at a moderate angle, then press it back up over your chest. Keep your feet planted and your shoulder blades pinned back. Use a spotter or safeties when going heavy."
+  },
+  {
+    "slug": "dumbbell-bench-press", "name": "Dumbbell Bench Press", "category": "chest",
+    "movement_pattern": "horizontal_push", "mechanics": "compound", "difficulty": "beginner",
+    "is_unilateral": false, "is_bodyweight_ok": false, "popularity": 90,
+    "primary_muscles": ["pecs"], "secondary_muscles": ["front-delts", "triceps"],
+    "equipment": [["dumbbell"], ["flat-bench"]],
+    "instructions": "Lie back on a flat bench with a dumbbell in each hand at chest level. Press the dumbbells up until your arms are straight, then lower them under control to a comfortable stretch. The dumbbells let each side work independently and allow a natural, shoulder-friendly path. A great pressing option when you have no spotter."
+  },
+  {
+    "slug": "incline-dumbbell-press", "name": "Incline Dumbbell Press", "category": "chest",
+    "movement_pattern": "horizontal_push", "mechanics": "compound", "difficulty": "intermediate",
+    "is_unilateral": false, "is_bodyweight_ok": false, "popularity": 85,
+    "primary_muscles": ["pecs"], "secondary_muscles": ["front-delts", "triceps"],
+    "equipment": [["dumbbell"], ["adjustable-bench"]],
+    "instructions": "Set an adjustable bench to a low incline of around thirty degrees and sit back with a dumbbell in each hand. Press the weights up and slightly together, then lower them under control to the sides of your upper chest. The incline shifts more work to the upper chest and front shoulders. Keep the angle modest to avoid turning it into a shoulder press."
+  },
+  {
+    "slug": "push-up", "name": "Push-up", "category": "chest",
+    "movement_pattern": "horizontal_push", "mechanics": "compound", "difficulty": "beginner",
+    "is_unilateral": false, "is_bodyweight_ok": true, "popularity": 90,
+    "primary_muscles": ["pecs"], "secondary_muscles": ["front-delts", "triceps", "abs"],
+    "equipment": [],
+    "instructions": "Start in a plank with your hands a bit wider than your shoulders and your body in a straight line. Lower your chest toward the floor by bending your elbows to about forty-five degrees. Press back up while keeping your core tight so your hips do not sag. Drop to your knees if needed to keep good form."
+  },
+  {
+    "slug": "machine-chest-press", "name": "Machine Chest Press", "category": "chest",
+    "movement_pattern": "horizontal_push", "mechanics": "compound", "difficulty": "beginner",
+    "is_unilateral": false, "is_bodyweight_ok": false, "popularity": 75,
+    "primary_muscles": ["pecs"], "secondary_muscles": ["front-delts", "triceps"],
+    "equipment": [["chest-press-machine"]],
+    "instructions": "Adjust the seat so the handles line up with the middle of your chest. Press the handles forward until your arms are nearly straight, then return with control to a comfortable stretch. Keep your back against the pad and shoulders down. The guided path makes it a safe, easy way to learn pressing or push close to failure alone."
+  },
+  {
+    "slug": "cable-fly", "name": "Cable Fly", "category": "chest",
+    "movement_pattern": "horizontal_push", "mechanics": "isolation", "difficulty": "intermediate",
+    "is_unilateral": false, "is_bodyweight_ok": false, "popularity": 70,
+    "primary_muscles": ["pecs"], "secondary_muscles": ["front-delts"],
+    "equipment": [["cable-machine"]],
+    "instructions": "Set the pulleys to about chest height and grab a handle in each hand, standing in a slight staggered stance. With a soft bend in your elbows, bring your hands together in front of your chest in a wide hugging arc. Return slowly to feel a stretch across your chest. Keep the elbow angle fixed so it stays an isolation movement."
+  },
+  {
+    "slug": "pec-deck-fly", "name": "Pec Deck Fly", "category": "chest",
+    "movement_pattern": "horizontal_push", "mechanics": "isolation", "difficulty": "beginner",
+    "is_unilateral": false, "is_bodyweight_ok": false, "popularity": 65,
+    "primary_muscles": ["pecs"], "secondary_muscles": [],
+    "equipment": [["pec-deck"]],
+    "instructions": "Sit with your back flat against the pad and forearms or hands on the machine pads. Squeeze your arms together in front of you until the pads nearly meet, focusing on contracting your chest. Return slowly under control to a gentle stretch. The fixed path makes it easy to feel the chest working without balancing a weight."
+  },
+  {
+    "slug": "dip", "name": "Dip", "category": "chest",
+    "movement_pattern": "vertical_push", "mechanics": "compound", "difficulty": "intermediate",
+    "is_unilateral": false, "is_bodyweight_ok": false, "popularity": 75,
+    "primary_muscles": ["pecs"], "secondary_muscles": ["triceps", "front-delts"],
+    "equipment": [["dip-station"]],
+    "instructions": "Support yourself on parallel bars with your arms straight. Lower your body by bending your elbows until your shoulders are roughly level with your elbows, leaning forward slightly to bias the chest. Press back up to the top. Keep the range of motion controlled and add weight with a belt once bodyweight dips feel easy."
+  },
+  {
+    "slug": "overhead-press", "name": "Barbell Overhead Press", "category": "shoulders",
+    "movement_pattern": "vertical_push", "mechanics": "compound", "difficulty": "intermediate",
+    "is_unilateral": false, "is_bodyweight_ok": false, "popularity": 85,
+    "primary_muscles": ["front-delts"], "secondary_muscles": ["side-delts", "triceps"],
+    "equipment": [["barbell"], ["weight-plates"]],
+    "instructions": "Hold the bar at shoulder height with your grip just outside your shoulders and your core braced. Press the bar straight overhead, moving your head slightly back then forward as it clears your face. Lock it out overhead with the bar over your mid-foot, then lower under control. Squeeze your glutes and abs to keep your lower back from arching."
+  },
+  {
+    "slug": "seated-dumbbell-shoulder-press", "name": "Seated DB Shoulder Press", "category": "shoulders",
+    "movement_pattern": "vertical_push", "mechanics": "compound", "difficulty": "beginner",
+    "is_unilateral": false, "is_bodyweight_ok": false, "popularity": 85,
+    "primary_muscles": ["front-delts"], "secondary_muscles": ["side-delts", "triceps"],
+    "equipment": [["dumbbell"], ["adjustable-bench"]],
+    "instructions": "Sit on an upright bench with a dumbbell in each hand at shoulder height. Press the weights overhead until your arms are nearly straight, then lower them under control back to your shoulders. Keep your core tight and avoid over-arching your back. The seated position gives you support so you can focus on the shoulders."
+  },
+  {
+    "slug": "machine-shoulder-press", "name": "Machine Shoulder Press", "category": "shoulders",
+    "movement_pattern": "vertical_push", "mechanics": "compound", "difficulty": "beginner",
+    "is_unilateral": false, "is_bodyweight_ok": false, "popularity": 60,
+    "primary_muscles": ["front-delts"], "secondary_muscles": ["side-delts", "triceps"],
+    "equipment": [["shoulder-press-machine"]],
+    "instructions": "Set the seat so the handles start near shoulder height. Press up until your arms are almost straight, then lower with control. Keep your back against the pad and your shoulders relaxed down away from your ears. The guided path makes it a beginner-friendly way to build overhead pressing strength."
+  },
+  {
+    "slug": "lateral-raise", "name": "Dumbbell Lateral Raise", "category": "shoulders",
+    "movement_pattern": "shoulder_isolation", "mechanics": "isolation", "difficulty": "beginner",
+    "is_unilateral": false, "is_bodyweight_ok": false, "popularity": 85,
+    "primary_muscles": ["side-delts"], "secondary_muscles": [],
+    "equipment": [["dumbbell", "resistance-bands"]],
+    "instructions": "Stand with a light dumbbell in each hand and a slight bend in your elbows. Raise your arms out to the sides until they reach about shoulder height, leading with your elbows. Lower slowly under control. Use light weight and smooth reps, since momentum quickly takes the work away from the side delts."
+  },
+  {
+    "slug": "cable-lateral-raise", "name": "Cable Lateral Raise", "category": "shoulders",
+    "movement_pattern": "shoulder_isolation", "mechanics": "isolation", "difficulty": "intermediate",
+    "is_unilateral": false, "is_bodyweight_ok": false, "popularity": 60,
+    "primary_muscles": ["side-delts"], "secondary_muscles": [],
+    "equipment": [["cable-machine"]],
+    "instructions": "Set a pulley to the lowest position and stand side-on with the handle in your outside hand. Raise your arm out to the side to about shoulder height with a slight elbow bend. Lower slowly against the constant cable tension. The cable keeps the side delt loaded through the whole range, including the bottom."
+  },
+  {
+    "slug": "face-pull", "name": "Face Pull", "category": "shoulders",
+    "movement_pattern": "shoulder_isolation", "mechanics": "isolation", "difficulty": "beginner",
+    "is_unilateral": false, "is_bodyweight_ok": false, "popularity": 70,
+    "primary_muscles": ["rear-delts"], "secondary_muscles": ["traps", "rhomboids"],
+    "equipment": [["cable-machine", "resistance-bands"]],
+    "instructions": "Set a rope or band at about face height and hold one end in each hand. Pull toward your face, spreading your hands apart and driving your elbows high and back. Squeeze your rear shoulders and upper back, then return with control. A great low-fatigue move for shoulder health and posture."
+  },
+  {
+    "slug": "rear-delt-fly", "name": "Rear Delt Fly", "category": "shoulders",
+    "movement_pattern": "shoulder_isolation", "mechanics": "isolation", "difficulty": "beginner",
+    "is_unilateral": false, "is_bodyweight_ok": false, "popularity": 55,
+    "primary_muscles": ["rear-delts"], "secondary_muscles": ["rhomboids"],
+    "equipment": [["dumbbell", "pec-deck"]],
+    "instructions": "Hinge forward at your hips with a light dumbbell in each hand hanging below you, or use the reverse setting on a pec deck. With a slight elbow bend, raise your arms out to the sides until they reach shoulder level. Squeeze your rear delts and upper back, then lower slowly. Keep the weight light so the small rear delts do the work."
+  },
+  {
+    "slug": "pull-up", "name": "Pull-up", "category": "back",
+    "movement_pattern": "vertical_pull", "mechanics": "compound", "difficulty": "advanced",
+    "is_unilateral": false, "is_bodyweight_ok": false, "popularity": 90,
+    "primary_muscles": ["lats"], "secondary_muscles": ["biceps", "rhomboids", "forearms"],
+    "equipment": [["pull-up-bar"]],
+    "instructions": "Hang from a bar with an overhand grip a bit wider than your shoulders. Pull your chest toward the bar by driving your elbows down and squeezing your back, until your chin clears the bar. Lower yourself all the way down under control. Use a band or the assisted version if you cannot yet do full reps."
+  },
+  {
+    "slug": "chin-up", "name": "Chin-up", "category": "back",
+    "movement_pattern": "vertical_pull", "mechanics": "compound", "difficulty": "intermediate",
+    "is_unilateral": false, "is_bodyweight_ok": false, "popularity": 80,
+    "primary_muscles": ["lats"], "secondary_muscles": ["biceps"],
+    "equipment": [["pull-up-bar"]],
+    "instructions": "Hang from a bar with an underhand grip about shoulder-width apart. Pull yourself up by driving your elbows down until your chin passes the bar, keeping your core tight. Lower all the way down with control. The underhand grip brings the biceps in more, which usually makes it a little easier than a pull-up."
+  },
+  {
+    "slug": "lat-pulldown", "name": "Lat Pulldown", "category": "back",
+    "movement_pattern": "vertical_pull", "mechanics": "compound", "difficulty": "beginner",
+    "is_unilateral": false, "is_bodyweight_ok": false, "popularity": 90,
+    "primary_muscles": ["lats"], "secondary_muscles": ["biceps", "rhomboids"],
+    "equipment": [["lat-pulldown"]],
+    "instructions": "Sit at the machine and secure your thighs under the pad with a grip slightly wider than your shoulders. Pull the bar down to your upper chest by driving your elbows down and back, leaning back only slightly. Let the bar rise under control to a full stretch. It builds the same pulling strength as a pull-up with adjustable load."
+  },
+  {
+    "slug": "band-assisted-pull-up", "name": "Band-Assisted Pull-up", "category": "back",
+    "movement_pattern": "vertical_pull", "mechanics": "compound", "difficulty": "beginner",
+    "is_unilateral": false, "is_bodyweight_ok": false, "popularity": 55,
+    "primary_muscles": ["lats"], "secondary_muscles": ["biceps"],
+    "equipment": [["pull-up-bar"], ["resistance-bands"]],
+    "instructions": "Loop a resistance band over the bar and place one foot or knee in the bottom of it. Pull yourself up as in a normal pull-up while the band gives you a boost from the bottom. Lower under control and let the band help only where you are weakest. Use a lighter band as you get stronger."
+  },
+  {
+    "slug": "barbell-row", "name": "Barbell Bent-over Row", "category": "back",
+    "movement_pattern": "horizontal_pull", "mechanics": "compound", "difficulty": "intermediate",
+    "is_unilateral": false, "is_bodyweight_ok": false, "popularity": 85,
+    "primary_muscles": ["lats"], "secondary_muscles": ["rhomboids", "rear-delts", "biceps", "lower-back"],
+    "equipment": [["barbell"], ["weight-plates"]],
+    "instructions": "Hinge forward at your hips with a flat back and hold the bar with an overhand grip. Row the bar toward your lower ribs by driving your elbows back and squeezing your shoulder blades. Lower under control without rounding your back. Keep your torso angle steady so your back muscles, not momentum, do the work."
+  },
+  {
+    "slug": "dumbbell-row", "name": "One-Arm Dumbbell Row", "category": "back",
+    "movement_pattern": "horizontal_pull", "mechanics": "compound", "difficulty": "beginner",
+    "is_unilateral": true, "is_bodyweight_ok": false, "popularity": 85,
+    "primary_muscles": ["lats"], "secondary_muscles": ["rhomboids", "biceps"],
+    "equipment": [["dumbbell"], ["flat-bench"]],
+    "instructions": "Put one hand and knee on a bench with your back flat and a dumbbell in the other hand. Row the dumbbell up toward your hip by driving your elbow back and squeezing your back. Lower it under control to a full stretch. The bench support makes it easy to focus on one side at a time with a good range of motion."
+  },
+  {
+    "slug": "seated-cable-row", "name": "Seated Cable Row", "category": "back",
+    "movement_pattern": "horizontal_pull", "mechanics": "compound", "difficulty": "beginner",
+    "is_unilateral": false, "is_bodyweight_ok": false, "popularity": 80,
+    "primary_muscles": ["rhomboids"], "secondary_muscles": ["lats", "biceps", "rear-delts"],
+    "equipment": [["seated-row-machine", "cable-machine"]],
+    "instructions": "Sit tall with your feet on the platform and a slight bend in your knees, holding the handle. Pull it toward your stomach by driving your elbows back and squeezing your shoulder blades together. Return with control, letting your arms stretch forward without slumping. Keep your torso mostly upright and steady throughout."
+  },
+  {
+    "slug": "inverted-row", "name": "Inverted Row", "category": "back",
+    "movement_pattern": "horizontal_pull", "mechanics": "compound", "difficulty": "beginner",
+    "is_unilateral": false, "is_bodyweight_ok": true, "popularity": 60,
+    "primary_muscles": ["rhomboids"], "secondary_muscles": ["lats", "biceps"],
+    "equipment": [["suspension-trainer", "barbell"], ["squat-rack"]],
+    "instructions": "Set a bar or straps at about waist height and hang underneath with your body straight and heels on the floor. Pull your chest up to the bar by driving your elbows back and squeezing your upper back. Lower yourself under control while keeping your body in a rigid line. Raise or lower your feet to make it easier or harder."
+  },
+  {
+    "slug": "barbell-curl", "name": "Barbell Curl", "category": "arms",
+    "movement_pattern": "elbow_flexion", "mechanics": "isolation", "difficulty": "beginner",
+    "is_unilateral": false, "is_bodyweight_ok": false, "popularity": 80,
+    "primary_muscles": ["biceps"], "secondary_muscles": ["forearms"],
+    "equipment": [["barbell", "ez-curl-bar"]],
+    "instructions": "Stand tall holding the bar with an underhand, shoulder-width grip and your elbows at your sides. Curl the bar up by bending your elbows, keeping your upper arms still. Lower under control all the way down. Avoid swinging your body, since letting the biceps do the work is what builds them."
+  },
+  {
+    "slug": "dumbbell-curl", "name": "Dumbbell Curl", "category": "arms",
+    "movement_pattern": "elbow_flexion", "mechanics": "isolation", "difficulty": "beginner",
+    "is_unilateral": false, "is_bodyweight_ok": false, "popularity": 85,
+    "primary_muscles": ["biceps"], "secondary_muscles": ["forearms"],
+    "equipment": [["dumbbell"]],
+    "instructions": "Stand with a dumbbell in each hand, palms facing forward and elbows at your sides. Curl the weights up by bending your elbows and squeezing your biceps at the top. Lower them slowly and fully. You can alternate arms or curl both together, keeping your upper arms from drifting forward."
+  },
+  {
+    "slug": "hammer-curl", "name": "Hammer Curl", "category": "arms",
+    "movement_pattern": "elbow_flexion", "mechanics": "isolation", "difficulty": "beginner",
+    "is_unilateral": false, "is_bodyweight_ok": false, "popularity": 75,
+    "primary_muscles": ["biceps"], "secondary_muscles": ["forearms"],
+    "equipment": [["dumbbell"]],
+    "instructions": "Hold a dumbbell in each hand with your palms facing each other, like holding a hammer. Curl the weights up while keeping that neutral grip the whole way. Lower slowly under control. The neutral grip hits the biceps and brings in more of the forearm than a standard curl."
+  },
+  {
+    "slug": "cable-curl", "name": "Cable Curl", "category": "arms",
+    "movement_pattern": "elbow_flexion", "mechanics": "isolation", "difficulty": "beginner",
+    "is_unilateral": false, "is_bodyweight_ok": false, "popularity": 55,
+    "primary_muscles": ["biceps"], "secondary_muscles": [],
+    "equipment": [["cable-machine"]],
+    "instructions": "Attach a bar to a low pulley and hold it with an underhand grip, elbows at your sides. Curl the bar up by bending your elbows, keeping your upper arms fixed. Lower under control against the steady cable tension. The constant tension keeps the biceps loaded even at the bottom of each rep."
+  },
+  {
+    "slug": "triceps-pushdown", "name": "Triceps Pushdown", "category": "arms",
+    "movement_pattern": "elbow_extension", "mechanics": "isolation", "difficulty": "beginner",
+    "is_unilateral": false, "is_bodyweight_ok": false, "popularity": 85,
+    "primary_muscles": ["triceps"], "secondary_muscles": [],
+    "equipment": [["cable-machine", "resistance-bands"]],
+    "instructions": "Stand facing a high pulley and grab the bar or rope with your elbows tucked at your sides. Push the handle down until your arms are fully straight, squeezing your triceps at the bottom. Let it rise under control without letting your elbows flare out. Keep your upper arms still so the movement comes only from your elbows."
+  },
+  {
+    "slug": "skull-crusher", "name": "Skull Crusher", "category": "arms",
+    "movement_pattern": "elbow_extension", "mechanics": "isolation", "difficulty": "intermediate",
+    "is_unilateral": false, "is_bodyweight_ok": false, "popularity": 70,
+    "primary_muscles": ["triceps"], "secondary_muscles": [],
+    "equipment": [["ez-curl-bar", "dumbbell"], ["flat-bench"]],
+    "instructions": "Lie on a bench holding an EZ-bar or dumbbells over your chest with straight arms. Bend only your elbows to lower the weight toward your forehead or just behind your head. Straighten your arms to press it back up, keeping your upper arms still. Control the descent to keep tension on the triceps and your elbows happy."
+  },
+  {
+    "slug": "overhead-triceps-extension", "name": "Overhead Triceps Extension", "category": "arms",
+    "movement_pattern": "elbow_extension", "mechanics": "isolation", "difficulty": "beginner",
+    "is_unilateral": false, "is_bodyweight_ok": false, "popularity": 65,
+    "primary_muscles": ["triceps"], "secondary_muscles": [],
+    "equipment": [["dumbbell", "cable-machine"]],
+    "instructions": "Hold a dumbbell or cable rope overhead with your arms straight and elbows pointing up. Lower the weight behind your head by bending only your elbows. Straighten your arms to press it back overhead, squeezing the triceps at the top. The overhead position gives the long head of the triceps a strong stretch."
+  },
+  {
+    "slug": "plank", "name": "Plank", "category": "core",
+    "movement_pattern": "core_stability", "mechanics": "isolation", "difficulty": "beginner",
+    "is_unilateral": false, "is_bodyweight_ok": true, "popularity": 85,
+    "primary_muscles": ["abs"], "secondary_muscles": ["obliques", "lower-back"],
+    "equipment": [],
+    "instructions": "Rest on your forearms and toes with your body in a straight line from head to heels. Squeeze your abs, glutes, and quads to keep your hips from sagging or rising. Breathe steadily and hold the position for time. Stop the set when you can no longer keep a straight line rather than pushing into a sag."
+  },
+  {
+    "slug": "dead-bug", "name": "Dead Bug", "category": "core",
+    "movement_pattern": "core_stability", "mechanics": "isolation", "difficulty": "beginner",
+    "is_unilateral": false, "is_bodyweight_ok": true, "popularity": 55,
+    "primary_muscles": ["abs"], "secondary_muscles": ["hip-flexors"],
+    "equipment": [],
+    "instructions": "Lie on your back with your arms reaching toward the ceiling and knees bent over your hips. Slowly lower your opposite arm and leg toward the floor while pressing your lower back into the ground. Return to the start and switch sides. Move slowly and keep your core braced so your back stays flat the whole time."
+  },
+  {
+    "slug": "hanging-leg-raise", "name": "Hanging Leg Raise", "category": "core",
+    "movement_pattern": "core_flexion", "mechanics": "isolation", "difficulty": "advanced",
+    "is_unilateral": false, "is_bodyweight_ok": false, "popularity": 65,
+    "primary_muscles": ["abs"], "secondary_muscles": ["hip-flexors", "obliques"],
+    "equipment": [["pull-up-bar"]],
+    "instructions": "Hang from a bar with straight arms and a still torso. Raise your legs in front of you by curling your pelvis up, lifting your knees or straight legs toward your chest. Lower them under control without swinging. Bend your knees to make it easier and keep the movement smooth to avoid using momentum."
+  },
+  {
+    "slug": "cable-crunch", "name": "Cable Crunch", "category": "core",
+    "movement_pattern": "core_flexion", "mechanics": "isolation", "difficulty": "beginner",
+    "is_unilateral": false, "is_bodyweight_ok": false, "popularity": 60,
+    "primary_muscles": ["abs"], "secondary_muscles": ["obliques"],
+    "equipment": [["cable-machine"]],
+    "instructions": "Kneel in front of a high pulley holding a rope beside your head. Crunch down by rounding your spine and bringing your elbows toward your thighs, driving the motion with your abs. Return under control without letting your hips do the work. The cable lets you add resistance to train your abs like any other muscle."
+  },
+  {
+    "slug": "ab-wheel-rollout", "name": "Ab Wheel Rollout", "category": "core",
+    "movement_pattern": "core_stability", "mechanics": "isolation", "difficulty": "advanced",
+    "is_unilateral": false, "is_bodyweight_ok": false, "popularity": 60,
+    "primary_muscles": ["abs"], "secondary_muscles": ["obliques", "lats"],
+    "equipment": [["ab-wheel"]],
+    "instructions": "Kneel and hold the ab wheel on the floor beneath your shoulders. Roll it forward as far as you can control while keeping your core braced and your back from arching. Pull it back to the start by contracting your abs. Start with a short range and build up, since rolling out too far too soon strains the lower back."
+  },
+  {
+    "slug": "russian-twist", "name": "Russian Twist", "category": "core",
+    "movement_pattern": "core_flexion", "mechanics": "isolation", "difficulty": "beginner",
+    "is_unilateral": false, "is_bodyweight_ok": true, "popularity": 60,
+    "primary_muscles": ["obliques"], "secondary_muscles": ["abs"],
+    "equipment": [["medicine-ball", "dumbbell"]],
+    "instructions": "Sit on the floor leaning back slightly with your knees bent and feet lifted or lightly touching down. Hold a weight at your chest and rotate your torso to tap it toward each side. Move with control and turn from your midsection rather than just swinging your arms. Keep your chest up and your back from rounding."
+  },
+  {
+    "slug": "farmers-carry", "name": "Farmer's Carry", "category": "full-body",
+    "movement_pattern": "carry", "mechanics": "compound", "difficulty": "beginner",
+    "is_unilateral": false, "is_bodyweight_ok": false, "popularity": 60,
+    "primary_muscles": ["forearms"], "secondary_muscles": ["traps", "abs", "glute-med"],
+    "equipment": [["dumbbell", "kettlebell"]],
+    "instructions": "Pick up a heavy dumbbell or kettlebell in each hand and stand tall with your shoulders back. Walk in a straight line with short, controlled steps, keeping your core braced and torso upright. Set the weights down safely when your grip or posture starts to fade. It builds grip, core stability, and full-body sturdiness at once."
+  },
+  {
+    "slug": "treadmill-run", "name": "Treadmill Run", "category": "cardio",
+    "movement_pattern": "cardio", "mechanics": "compound", "difficulty": "beginner",
+    "is_unilateral": false, "is_bodyweight_ok": false, "popularity": 80,
+    "primary_muscles": ["quads"], "secondary_muscles": ["calves", "hamstrings"],
+    "equipment": [["treadmill"]],
+    "instructions": "Start with a few minutes of walking to warm up, then build to a steady running pace you can sustain. Keep your posture tall and your steps light and quick rather than over-striding. Use the pace and incline to match an easy conversational effort or harder intervals. Cool down with a slower walk at the end."
+  },
+  {
+    "slug": "stationary-bike-ride", "name": "Stationary Bike", "category": "cardio",
+    "movement_pattern": "cardio", "mechanics": "compound", "difficulty": "beginner",
+    "is_unilateral": false, "is_bodyweight_ok": false, "popularity": 75,
+    "primary_muscles": ["quads"], "secondary_muscles": ["calves"],
+    "equipment": [["stationary-bike"]],
+    "instructions": "Set the seat height so your knee has a slight bend at the bottom of the pedal stroke. Pedal at a steady cadence, adjusting the resistance to keep the effort where you want it. Keep your upper body relaxed and let your legs drive the work. A low-impact way to build endurance or add easy conditioning."
+  },
+  {
+    "slug": "rowing-erg", "name": "Rowing Machine", "category": "cardio",
+    "movement_pattern": "cardio", "mechanics": "compound", "difficulty": "intermediate",
+    "is_unilateral": false, "is_bodyweight_ok": false, "popularity": 70,
+    "primary_muscles": ["lats"], "secondary_muscles": ["quads", "rhomboids"],
+    "equipment": [["rowing-machine"]],
+    "instructions": "Strap in and start each stroke by driving with your legs, then lean back slightly and pull the handle to your lower ribs. Reverse the order on the way back: arms out, hinge forward, then bend your knees. Keep a smooth rhythm with a strong drive and a relaxed recovery. It trains your legs, back, and heart all together."
+  },
+  {
+    "slug": "jump-rope", "name": "Jump Rope", "category": "cardio",
+    "movement_pattern": "cardio", "mechanics": "compound", "difficulty": "beginner",
+    "is_unilateral": false, "is_bodyweight_ok": true, "popularity": 60,
+    "primary_muscles": ["calves"], "secondary_muscles": ["quads"],
+    "equipment": [],
+    "instructions": "Hold the handles with your elbows near your sides and turn the rope mostly with your wrists. Jump just high enough to clear the rope, landing softly on the balls of your feet. Start with short sets and build up your rhythm and endurance over time. A cheap, portable way to get your heart rate up fast."
+  }
+]

@@ -1,0 +1,1367 @@
+[
+  {
+    "id": "ex-barbell-back-squat",
+    "slug": "barbell-back-squat",
+    "name": "Barbell Back Squat",
+    "movement_pattern": "squat",
+    "mechanics": "compound",
+    "difficulty": "intermediate",
+    "popularity": 95,
+    "is_bodyweight_ok": false,
+    "equipment": [
+      [
+        "barbell"
+      ],
+      [
+        "weight-plates"
+      ],
+      [
+        "squat-rack"
+      ]
+    ],
+    "primary_muscles": [
+      "quads"
+    ],
+    "secondary_muscles": [
+      "glute-max",
+      "lower-back",
+      "adductors"
+    ],
+    "is_active": true
+  },
+  {
+    "id": "ex-goblet-squat",
+    "slug": "goblet-squat",
+    "name": "Goblet Squat",
+    "movement_pattern": "squat",
+    "mechanics": "compound",
+    "difficulty": "beginner",
+    "popularity": 80,
+    "is_bodyweight_ok": false,
+    "equipment": [
+      [
+        "dumbbell",
+        "kettlebell"
+      ]
+    ],
+    "primary_muscles": [
+      "quads"
+    ],
+    "secondary_muscles": [
+      "glute-max",
+      "abs"
+    ],
+    "is_active": true
+  },
+  {
+    "id": "ex-front-squat",
+    "slug": "front-squat",
+    "name": "Barbell Front Squat",
+    "movement_pattern": "squat",
+    "mechanics": "compound",
+    "difficulty": "advanced",
+    "popularity": 60,
+    "is_bodyweight_ok": false,
+    "equipment": [
+      [
+        "barbell"
+      ],
+      [
+        "weight-plates"
+      ],
+      [
+        "squat-rack"
+      ]
+    ],
+    "primary_muscles": [
+      "quads"
+    ],
+    "secondary_muscles": [
+      "glute-max",
+      "abs"
+    ],
+    "is_active": true
+  },
+  {
+    "id": "ex-bodyweight-squat",
+    "slug": "bodyweight-squat",
+    "name": "Bodyweight Squat",
+    "movement_pattern": "squat",
+    "mechanics": "compound",
+    "difficulty": "beginner",
+    "popularity": 70,
+    "is_bodyweight_ok": true,
+    "equipment": [],
+    "primary_muscles": [
+      "quads"
+    ],
+    "secondary_muscles": [
+      "glute-max"
+    ],
+    "is_active": true
+  },
+  {
+    "id": "ex-leg-press",
+    "slug": "leg-press",
+    "name": "Leg Press",
+    "movement_pattern": "squat",
+    "mechanics": "compound",
+    "difficulty": "beginner",
+    "popularity": 85,
+    "is_bodyweight_ok": false,
+    "equipment": [
+      [
+        "leg-press"
+      ]
+    ],
+    "primary_muscles": [
+      "quads"
+    ],
+    "secondary_muscles": [
+      "glute-max",
+      "adductors"
+    ],
+    "is_active": true
+  },
+  {
+    "id": "ex-hack-squat",
+    "slug": "hack-squat",
+    "name": "Hack Squat",
+    "movement_pattern": "squat",
+    "mechanics": "compound",
+    "difficulty": "intermediate",
+    "popularity": 65,
+    "is_bodyweight_ok": false,
+    "equipment": [
+      [
+        "hack-squat-machine"
+      ]
+    ],
+    "primary_muscles": [
+      "quads"
+    ],
+    "secondary_muscles": [
+      "glute-max"
+    ],
+    "is_active": true
+  },
+  {
+    "id": "ex-bulgarian-split-squat",
+    "slug": "bulgarian-split-squat",
+    "name": "Bulgarian Split Squat",
+    "movement_pattern": "lunge",
+    "mechanics": "compound",
+    "difficulty": "intermediate",
+    "popularity": 75,
+    "is_bodyweight_ok": true,
+    "equipment": [
+      [
+        "dumbbell",
+        "kettlebell"
+      ],
+      [
+        "flat-bench"
+      ]
+    ],
+    "primary_muscles": [
+      "quads"
+    ],
+    "secondary_muscles": [
+      "glute-max"
+    ],
+    "is_active": true
+  },
+  {
+    "id": "ex-walking-lunge",
+    "slug": "walking-lunge",
+    "name": "Walking Lunge",
+    "movement_pattern": "lunge",
+    "mechanics": "compound",
+    "difficulty": "beginner",
+    "popularity": 70,
+    "is_bodyweight_ok": true,
+    "equipment": [
+      [
+        "dumbbell"
+      ]
+    ],
+    "primary_muscles": [
+      "quads"
+    ],
+    "secondary_muscles": [
+      "glute-max",
+      "hamstrings"
+    ],
+    "is_active": true
+  },
+  {
+    "id": "ex-step-up",
+    "slug": "step-up",
+    "name": "Step-up",
+    "movement_pattern": "lunge",
+    "mechanics": "compound",
+    "difficulty": "beginner",
+    "popularity": 55,
+    "is_bodyweight_ok": true,
+    "equipment": [
+      [
+        "flat-bench"
+      ]
+    ],
+    "primary_muscles": [
+      "quads"
+    ],
+    "secondary_muscles": [
+      "glute-max"
+    ],
+    "is_active": true
+  },
+  {
+    "id": "ex-conventional-deadlift",
+    "slug": "conventional-deadlift",
+    "name": "Conventional Deadlift",
+    "movement_pattern": "hinge",
+    "mechanics": "compound",
+    "difficulty": "advanced",
+    "popularity": 90,
+    "is_bodyweight_ok": false,
+    "equipment": [
+      [
+        "barbell"
+      ],
+      [
+        "weight-plates"
+      ]
+    ],
+    "primary_muscles": [
+      "hamstrings"
+    ],
+    "secondary_muscles": [
+      "glute-max",
+      "lower-back",
+      "traps",
+      "forearms"
+    ],
+    "is_active": true
+  },
+  {
+    "id": "ex-romanian-deadlift",
+    "slug": "romanian-deadlift",
+    "name": "Romanian Deadlift",
+    "movement_pattern": "hinge",
+    "mechanics": "compound",
+    "difficulty": "intermediate",
+    "popularity": 85,
+    "is_bodyweight_ok": false,
+    "equipment": [
+      [
+        "barbell",
+        "dumbbell"
+      ]
+    ],
+    "primary_muscles": [
+      "hamstrings"
+    ],
+    "secondary_muscles": [
+      "glute-max",
+      "lower-back"
+    ],
+    "is_active": true
+  },
+  {
+    "id": "ex-kettlebell-swing",
+    "slug": "kettlebell-swing",
+    "name": "Kettlebell Swing",
+    "movement_pattern": "hinge",
+    "mechanics": "compound",
+    "difficulty": "intermediate",
+    "popularity": 70,
+    "is_bodyweight_ok": false,
+    "equipment": [
+      [
+        "kettlebell"
+      ]
+    ],
+    "primary_muscles": [
+      "glute-max"
+    ],
+    "secondary_muscles": [
+      "hamstrings",
+      "lower-back"
+    ],
+    "is_active": true
+  },
+  {
+    "id": "ex-good-morning",
+    "slug": "good-morning",
+    "name": "Good Morning",
+    "movement_pattern": "hinge",
+    "mechanics": "compound",
+    "difficulty": "advanced",
+    "popularity": 40,
+    "is_bodyweight_ok": false,
+    "equipment": [
+      [
+        "barbell"
+      ],
+      [
+        "squat-rack"
+      ]
+    ],
+    "primary_muscles": [
+      "hamstrings"
+    ],
+    "secondary_muscles": [
+      "glute-max",
+      "lower-back"
+    ],
+    "is_active": true
+  },
+  {
+    "id": "ex-barbell-hip-thrust",
+    "slug": "barbell-hip-thrust",
+    "name": "Barbell Hip Thrust",
+    "movement_pattern": "hip_extension_iso",
+    "mechanics": "compound",
+    "difficulty": "intermediate",
+    "popularity": 85,
+    "is_bodyweight_ok": false,
+    "equipment": [
+      [
+        "barbell"
+      ],
+      [
+        "weight-plates"
+      ],
+      [
+        "flat-bench"
+      ]
+    ],
+    "primary_muscles": [
+      "glute-max"
+    ],
+    "secondary_muscles": [
+      "hamstrings"
+    ],
+    "is_active": true
+  },
+  {
+    "id": "ex-glute-bridge",
+    "slug": "glute-bridge",
+    "name": "Glute Bridge",
+    "movement_pattern": "hip_extension_iso",
+    "mechanics": "isolation",
+    "difficulty": "beginner",
+    "popularity": 65,
+    "is_bodyweight_ok": true,
+    "equipment": [],
+    "primary_muscles": [
+      "glute-max"
+    ],
+    "secondary_muscles": [
+      "hamstrings"
+    ],
+    "is_active": true
+  },
+  {
+    "id": "ex-leg-curl",
+    "slug": "leg-curl",
+    "name": "Lying/Seated Leg Curl",
+    "movement_pattern": "knee_flexion_iso",
+    "mechanics": "isolation",
+    "difficulty": "beginner",
+    "popularity": 75,
+    "is_bodyweight_ok": false,
+    "equipment": [
+      [
+        "leg-curl-machine"
+      ]
+    ],
+    "primary_muscles": [
+      "hamstrings"
+    ],
+    "secondary_muscles": [],
+    "is_active": true
+  },
+  {
+    "id": "ex-leg-extension",
+    "slug": "leg-extension",
+    "name": "Leg Extension",
+    "movement_pattern": "knee_extension_iso",
+    "mechanics": "isolation",
+    "difficulty": "beginner",
+    "popularity": 75,
+    "is_bodyweight_ok": false,
+    "equipment": [
+      [
+        "leg-extension-machine"
+      ]
+    ],
+    "primary_muscles": [
+      "quads"
+    ],
+    "secondary_muscles": [],
+    "is_active": true
+  },
+  {
+    "id": "ex-standing-calf-raise",
+    "slug": "standing-calf-raise",
+    "name": "Standing Calf Raise",
+    "movement_pattern": "calf_raise",
+    "mechanics": "isolation",
+    "difficulty": "beginner",
+    "popularity": 70,
+    "is_bodyweight_ok": true,
+    "equipment": [
+      [
+        "calf-raise-machine",
+        "dumbbell"
+      ]
+    ],
+    "primary_muscles": [
+      "calves"
+    ],
+    "secondary_muscles": [],
+    "is_active": true
+  },
+  {
+    "id": "ex-bench-press",
+    "slug": "bench-press",
+    "name": "Barbell Bench Press",
+    "movement_pattern": "horizontal_push",
+    "mechanics": "compound",
+    "difficulty": "intermediate",
+    "popularity": 95,
+    "is_bodyweight_ok": false,
+    "equipment": [
+      [
+        "barbell"
+      ],
+      [
+        "weight-plates"
+      ],
+      [
+        "flat-bench"
+      ]
+    ],
+    "primary_muscles": [
+      "pecs"
+    ],
+    "secondary_muscles": [
+      "front-delts",
+      "triceps"
+    ],
+    "is_active": true
+  },
+  {
+    "id": "ex-dumbbell-bench-press",
+    "slug": "dumbbell-bench-press",
+    "name": "Dumbbell Bench Press",
+    "movement_pattern": "horizontal_push",
+    "mechanics": "compound",
+    "difficulty": "beginner",
+    "popularity": 90,
+    "is_bodyweight_ok": false,
+    "equipment": [
+      [
+        "dumbbell"
+      ],
+      [
+        "flat-bench"
+      ]
+    ],
+    "primary_muscles": [
+      "pecs"
+    ],
+    "secondary_muscles": [
+      "front-delts",
+      "triceps"
+    ],
+    "is_active": true
+  },
+  {
+    "id": "ex-incline-dumbbell-press",
+    "slug": "incline-dumbbell-press",
+    "name": "Incline Dumbbell Press",
+    "movement_pattern": "horizontal_push",
+    "mechanics": "compound",
+    "difficulty": "intermediate",
+    "popularity": 85,
+    "is_bodyweight_ok": false,
+    "equipment": [
+      [
+        "dumbbell"
+      ],
+      [
+        "adjustable-bench"
+      ]
+    ],
+    "primary_muscles": [
+      "pecs"
+    ],
+    "secondary_muscles": [
+      "front-delts",
+      "triceps"
+    ],
+    "is_active": true
+  },
+  {
+    "id": "ex-push-up",
+    "slug": "push-up",
+    "name": "Push-up",
+    "movement_pattern": "horizontal_push",
+    "mechanics": "compound",
+    "difficulty": "beginner",
+    "popularity": 90,
+    "is_bodyweight_ok": true,
+    "equipment": [],
+    "primary_muscles": [
+      "pecs"
+    ],
+    "secondary_muscles": [
+      "front-delts",
+      "triceps",
+      "abs"
+    ],
+    "is_active": true
+  },
+  {
+    "id": "ex-machine-chest-press",
+    "slug": "machine-chest-press",
+    "name": "Machine Chest Press",
+    "movement_pattern": "horizontal_push",
+    "mechanics": "compound",
+    "difficulty": "beginner",
+    "popularity": 75,
+    "is_bodyweight_ok": false,
+    "equipment": [
+      [
+        "chest-press-machine"
+      ]
+    ],
+    "primary_muscles": [
+      "pecs"
+    ],
+    "secondary_muscles": [
+      "front-delts",
+      "triceps"
+    ],
+    "is_active": true
+  },
+  {
+    "id": "ex-cable-fly",
+    "slug": "cable-fly",
+    "name": "Cable Fly",
+    "movement_pattern": "horizontal_push",
+    "mechanics": "isolation",
+    "difficulty": "intermediate",
+    "popularity": 70,
+    "is_bodyweight_ok": false,
+    "equipment": [
+      [
+        "cable-machine"
+      ]
+    ],
+    "primary_muscles": [
+      "pecs"
+    ],
+    "secondary_muscles": [
+      "front-delts"
+    ],
+    "is_active": true
+  },
+  {
+    "id": "ex-pec-deck-fly",
+    "slug": "pec-deck-fly",
+    "name": "Pec Deck Fly",
+    "movement_pattern": "horizontal_push",
+    "mechanics": "isolation",
+    "difficulty": "beginner",
+    "popularity": 65,
+    "is_bodyweight_ok": false,
+    "equipment": [
+      [
+        "pec-deck"
+      ]
+    ],
+    "primary_muscles": [
+      "pecs"
+    ],
+    "secondary_muscles": [],
+    "is_active": true
+  },
+  {
+    "id": "ex-dip",
+    "slug": "dip",
+    "name": "Dip",
+    "movement_pattern": "vertical_push",
+    "mechanics": "compound",
+    "difficulty": "intermediate",
+    "popularity": 75,
+    "is_bodyweight_ok": false,
+    "equipment": [
+      [
+        "dip-station"
+      ]
+    ],
+    "primary_muscles": [
+      "pecs"
+    ],
+    "secondary_muscles": [
+      "triceps",
+      "front-delts"
+    ],
+    "is_active": true
+  },
+  {
+    "id": "ex-overhead-press",
+    "slug": "overhead-press",
+    "name": "Barbell Overhead Press",
+    "movement_pattern": "vertical_push",
+    "mechanics": "compound",
+    "difficulty": "intermediate",
+    "popularity": 85,
+    "is_bodyweight_ok": false,
+    "equipment": [
+      [
+        "barbell"
+      ],
+      [
+        "weight-plates"
+      ]
+    ],
+    "primary_muscles": [
+      "front-delts"
+    ],
+    "secondary_muscles": [
+      "side-delts",
+      "triceps"
+    ],
+    "is_active": true
+  },
+  {
+    "id": "ex-seated-dumbbell-shoulder-press",
+    "slug": "seated-dumbbell-shoulder-press",
+    "name": "Seated DB Shoulder Press",
+    "movement_pattern": "vertical_push",
+    "mechanics": "compound",
+    "difficulty": "beginner",
+    "popularity": 85,
+    "is_bodyweight_ok": false,
+    "equipment": [
+      [
+        "dumbbell"
+      ],
+      [
+        "adjustable-bench"
+      ]
+    ],
+    "primary_muscles": [
+      "front-delts"
+    ],
+    "secondary_muscles": [
+      "side-delts",
+      "triceps"
+    ],
+    "is_active": true
+  },
+  {
+    "id": "ex-machine-shoulder-press",
+    "slug": "machine-shoulder-press",
+    "name": "Machine Shoulder Press",
+    "movement_pattern": "vertical_push",
+    "mechanics": "compound",
+    "difficulty": "beginner",
+    "popularity": 60,
+    "is_bodyweight_ok": false,
+    "equipment": [
+      [
+        "shoulder-press-machine"
+      ]
+    ],
+    "primary_muscles": [
+      "front-delts"
+    ],
+    "secondary_muscles": [
+      "side-delts",
+      "triceps"
+    ],
+    "is_active": true
+  },
+  {
+    "id": "ex-lateral-raise",
+    "slug": "lateral-raise",
+    "name": "Dumbbell Lateral Raise",
+    "movement_pattern": "shoulder_isolation",
+    "mechanics": "isolation",
+    "difficulty": "beginner",
+    "popularity": 85,
+    "is_bodyweight_ok": false,
+    "equipment": [
+      [
+        "dumbbell",
+        "resistance-bands"
+      ]
+    ],
+    "primary_muscles": [
+      "side-delts"
+    ],
+    "secondary_muscles": [],
+    "is_active": true
+  },
+  {
+    "id": "ex-cable-lateral-raise",
+    "slug": "cable-lateral-raise",
+    "name": "Cable Lateral Raise",
+    "movement_pattern": "shoulder_isolation",
+    "mechanics": "isolation",
+    "difficulty": "intermediate",
+    "popularity": 60,
+    "is_bodyweight_ok": false,
+    "equipment": [
+      [
+        "cable-machine"
+      ]
+    ],
+    "primary_muscles": [
+      "side-delts"
+    ],
+    "secondary_muscles": [],
+    "is_active": true
+  },
+  {
+    "id": "ex-face-pull",
+    "slug": "face-pull",
+    "name": "Face Pull",
+    "movement_pattern": "shoulder_isolation",
+    "mechanics": "isolation",
+    "difficulty": "beginner",
+    "popularity": 70,
+    "is_bodyweight_ok": false,
+    "equipment": [
+      [
+        "cable-machine",
+        "resistance-bands"
+      ]
+    ],
+    "primary_muscles": [
+      "rear-delts"
+    ],
+    "secondary_muscles": [
+      "traps",
+      "rhomboids"
+    ],
+    "is_active": true
+  },
+  {
+    "id": "ex-rear-delt-fly",
+    "slug": "rear-delt-fly",
+    "name": "Rear Delt Fly",
+    "movement_pattern": "shoulder_isolation",
+    "mechanics": "isolation",
+    "difficulty": "beginner",
+    "popularity": 55,
+    "is_bodyweight_ok": false,
+    "equipment": [
+      [
+        "dumbbell",
+        "pec-deck"
+      ]
+    ],
+    "primary_muscles": [
+      "rear-delts"
+    ],
+    "secondary_muscles": [
+      "rhomboids"
+    ],
+    "is_active": true
+  },
+  {
+    "id": "ex-pull-up",
+    "slug": "pull-up",
+    "name": "Pull-up",
+    "movement_pattern": "vertical_pull",
+    "mechanics": "compound",
+    "difficulty": "advanced",
+    "popularity": 90,
+    "is_bodyweight_ok": false,
+    "equipment": [
+      [
+        "pull-up-bar"
+      ]
+    ],
+    "primary_muscles": [
+      "lats"
+    ],
+    "secondary_muscles": [
+      "biceps",
+      "rhomboids",
+      "forearms"
+    ],
+    "is_active": true
+  },
+  {
+    "id": "ex-chin-up",
+    "slug": "chin-up",
+    "name": "Chin-up",
+    "movement_pattern": "vertical_pull",
+    "mechanics": "compound",
+    "difficulty": "intermediate",
+    "popularity": 80,
+    "is_bodyweight_ok": false,
+    "equipment": [
+      [
+        "pull-up-bar"
+      ]
+    ],
+    "primary_muscles": [
+      "lats"
+    ],
+    "secondary_muscles": [
+      "biceps"
+    ],
+    "is_active": true
+  },
+  {
+    "id": "ex-lat-pulldown",
+    "slug": "lat-pulldown",
+    "name": "Lat Pulldown",
+    "movement_pattern": "vertical_pull",
+    "mechanics": "compound",
+    "difficulty": "beginner",
+    "popularity": 90,
+    "is_bodyweight_ok": false,
+    "equipment": [
+      [
+        "lat-pulldown"
+      ]
+    ],
+    "primary_muscles": [
+      "lats"
+    ],
+    "secondary_muscles": [
+      "biceps",
+      "rhomboids"
+    ],
+    "is_active": true
+  },
+  {
+    "id": "ex-band-assisted-pull-up",
+    "slug": "band-assisted-pull-up",
+    "name": "Band-Assisted Pull-up",
+    "movement_pattern": "vertical_pull",
+    "mechanics": "compound",
+    "difficulty": "beginner",
+    "popularity": 55,
+    "is_bodyweight_ok": false,
+    "equipment": [
+      [
+        "pull-up-bar"
+      ],
+      [
+        "resistance-bands"
+      ]
+    ],
+    "primary_muscles": [
+      "lats"
+    ],
+    "secondary_muscles": [
+      "biceps"
+    ],
+    "is_active": true
+  },
+  {
+    "id": "ex-barbell-row",
+    "slug": "barbell-row",
+    "name": "Barbell Bent-over Row",
+    "movement_pattern": "horizontal_pull",
+    "mechanics": "compound",
+    "difficulty": "intermediate",
+    "popularity": 85,
+    "is_bodyweight_ok": false,
+    "equipment": [
+      [
+        "barbell"
+      ],
+      [
+        "weight-plates"
+      ]
+    ],
+    "primary_muscles": [
+      "lats"
+    ],
+    "secondary_muscles": [
+      "rhomboids",
+      "rear-delts",
+      "biceps",
+      "lower-back"
+    ],
+    "is_active": true
+  },
+  {
+    "id": "ex-dumbbell-row",
+    "slug": "dumbbell-row",
+    "name": "One-Arm Dumbbell Row",
+    "movement_pattern": "horizontal_pull",
+    "mechanics": "compound",
+    "difficulty": "beginner",
+    "popularity": 85,
+    "is_bodyweight_ok": false,
+    "equipment": [
+      [
+        "dumbbell"
+      ],
+      [
+        "flat-bench"
+      ]
+    ],
+    "primary_muscles": [
+      "lats"
+    ],
+    "secondary_muscles": [
+      "rhomboids",
+      "biceps"
+    ],
+    "is_active": true
+  },
+  {
+    "id": "ex-seated-cable-row",
+    "slug": "seated-cable-row",
+    "name": "Seated Cable Row",
+    "movement_pattern": "horizontal_pull",
+    "mechanics": "compound",
+    "difficulty": "beginner",
+    "popularity": 80,
+    "is_bodyweight_ok": false,
+    "equipment": [
+      [
+        "seated-row-machine",
+        "cable-machine"
+      ]
+    ],
+    "primary_muscles": [
+      "rhomboids"
+    ],
+    "secondary_muscles": [
+      "lats",
+      "biceps",
+      "rear-delts"
+    ],
+    "is_active": true
+  },
+  {
+    "id": "ex-inverted-row",
+    "slug": "inverted-row",
+    "name": "Inverted Row",
+    "movement_pattern": "horizontal_pull",
+    "mechanics": "compound",
+    "difficulty": "beginner",
+    "popularity": 60,
+    "is_bodyweight_ok": true,
+    "equipment": [
+      [
+        "suspension-trainer"
+      ]
+    ],
+    "primary_muscles": [
+      "rhomboids"
+    ],
+    "secondary_muscles": [
+      "lats",
+      "biceps"
+    ],
+    "is_active": true
+  },
+  {
+    "id": "ex-barbell-curl",
+    "slug": "barbell-curl",
+    "name": "Barbell Curl",
+    "movement_pattern": "elbow_flexion",
+    "mechanics": "isolation",
+    "difficulty": "beginner",
+    "popularity": 80,
+    "is_bodyweight_ok": false,
+    "equipment": [
+      [
+        "barbell",
+        "ez-curl-bar"
+      ]
+    ],
+    "primary_muscles": [
+      "biceps"
+    ],
+    "secondary_muscles": [
+      "forearms"
+    ],
+    "is_active": true
+  },
+  {
+    "id": "ex-dumbbell-curl",
+    "slug": "dumbbell-curl",
+    "name": "Dumbbell Curl",
+    "movement_pattern": "elbow_flexion",
+    "mechanics": "isolation",
+    "difficulty": "beginner",
+    "popularity": 85,
+    "is_bodyweight_ok": false,
+    "equipment": [
+      [
+        "dumbbell"
+      ]
+    ],
+    "primary_muscles": [
+      "biceps"
+    ],
+    "secondary_muscles": [
+      "forearms"
+    ],
+    "is_active": true
+  },
+  {
+    "id": "ex-hammer-curl",
+    "slug": "hammer-curl",
+    "name": "Hammer Curl",
+    "movement_pattern": "elbow_flexion",
+    "mechanics": "isolation",
+    "difficulty": "beginner",
+    "popularity": 75,
+    "is_bodyweight_ok": false,
+    "equipment": [
+      [
+        "dumbbell"
+      ]
+    ],
+    "primary_muscles": [
+      "biceps"
+    ],
+    "secondary_muscles": [
+      "forearms"
+    ],
+    "is_active": true
+  },
+  {
+    "id": "ex-cable-curl",
+    "slug": "cable-curl",
+    "name": "Cable Curl",
+    "movement_pattern": "elbow_flexion",
+    "mechanics": "isolation",
+    "difficulty": "beginner",
+    "popularity": 55,
+    "is_bodyweight_ok": false,
+    "equipment": [
+      [
+        "cable-machine"
+      ]
+    ],
+    "primary_muscles": [
+      "biceps"
+    ],
+    "secondary_muscles": [],
+    "is_active": true
+  },
+  {
+    "id": "ex-triceps-pushdown",
+    "slug": "triceps-pushdown",
+    "name": "Triceps Pushdown",
+    "movement_pattern": "elbow_extension",
+    "mechanics": "isolation",
+    "difficulty": "beginner",
+    "popularity": 85,
+    "is_bodyweight_ok": false,
+    "equipment": [
+      [
+        "cable-machine",
+        "resistance-bands"
+      ]
+    ],
+    "primary_muscles": [
+      "triceps"
+    ],
+    "secondary_muscles": [],
+    "is_active": true
+  },
+  {
+    "id": "ex-skull-crusher",
+    "slug": "skull-crusher",
+    "name": "Skull Crusher",
+    "movement_pattern": "elbow_extension",
+    "mechanics": "isolation",
+    "difficulty": "intermediate",
+    "popularity": 70,
+    "is_bodyweight_ok": false,
+    "equipment": [
+      [
+        "ez-curl-bar",
+        "dumbbell"
+      ],
+      [
+        "flat-bench"
+      ]
+    ],
+    "primary_muscles": [
+      "triceps"
+    ],
+    "secondary_muscles": [],
+    "is_active": true
+  },
+  {
+    "id": "ex-overhead-triceps-extension",
+    "slug": "overhead-triceps-extension",
+    "name": "Overhead Triceps Extension",
+    "movement_pattern": "elbow_extension",
+    "mechanics": "isolation",
+    "difficulty": "beginner",
+    "popularity": 65,
+    "is_bodyweight_ok": false,
+    "equipment": [
+      [
+        "dumbbell",
+        "cable-machine"
+      ]
+    ],
+    "primary_muscles": [
+      "triceps"
+    ],
+    "secondary_muscles": [],
+    "is_active": true
+  },
+  {
+    "id": "ex-plank",
+    "slug": "plank",
+    "name": "Plank",
+    "movement_pattern": "core_stability",
+    "mechanics": "isolation",
+    "difficulty": "beginner",
+    "popularity": 85,
+    "is_bodyweight_ok": true,
+    "equipment": [],
+    "primary_muscles": [
+      "abs"
+    ],
+    "secondary_muscles": [
+      "obliques",
+      "lower-back"
+    ],
+    "is_active": true
+  },
+  {
+    "id": "ex-dead-bug",
+    "slug": "dead-bug",
+    "name": "Dead Bug",
+    "movement_pattern": "core_stability",
+    "mechanics": "isolation",
+    "difficulty": "beginner",
+    "popularity": 55,
+    "is_bodyweight_ok": true,
+    "equipment": [],
+    "primary_muscles": [
+      "abs"
+    ],
+    "secondary_muscles": [
+      "hip-flexors"
+    ],
+    "is_active": true
+  },
+  {
+    "id": "ex-hanging-leg-raise",
+    "slug": "hanging-leg-raise",
+    "name": "Hanging Leg Raise",
+    "movement_pattern": "core_flexion",
+    "mechanics": "isolation",
+    "difficulty": "advanced",
+    "popularity": 65,
+    "is_bodyweight_ok": false,
+    "equipment": [
+      [
+        "pull-up-bar"
+      ]
+    ],
+    "primary_muscles": [
+      "abs"
+    ],
+    "secondary_muscles": [
+      "hip-flexors",
+      "obliques"
+    ],
+    "is_active": true
+  },
+  {
+    "id": "ex-cable-crunch",
+    "slug": "cable-crunch",
+    "name": "Cable Crunch",
+    "movement_pattern": "core_flexion",
+    "mechanics": "isolation",
+    "difficulty": "beginner",
+    "popularity": 60,
+    "is_bodyweight_ok": false,
+    "equipment": [
+      [
+        "cable-machine"
+      ]
+    ],
+    "primary_muscles": [
+      "abs"
+    ],
+    "secondary_muscles": [
+      "obliques"
+    ],
+    "is_active": true
+  },
+  {
+    "id": "ex-ab-wheel-rollout",
+    "slug": "ab-wheel-rollout",
+    "name": "Ab Wheel Rollout",
+    "movement_pattern": "core_stability",
+    "mechanics": "isolation",
+    "difficulty": "advanced",
+    "popularity": 60,
+    "is_bodyweight_ok": false,
+    "equipment": [
+      [
+        "ab-wheel"
+      ]
+    ],
+    "primary_muscles": [
+      "abs"
+    ],
+    "secondary_muscles": [
+      "obliques",
+      "lats"
+    ],
+    "is_active": true
+  },
+  {
+    "id": "ex-russian-twist",
+    "slug": "russian-twist",
+    "name": "Russian Twist",
+    "movement_pattern": "core_flexion",
+    "mechanics": "isolation",
+    "difficulty": "beginner",
+    "popularity": 60,
+    "is_bodyweight_ok": true,
+    "equipment": [
+      [
+        "medicine-ball",
+        "dumbbell"
+      ]
+    ],
+    "primary_muscles": [
+      "obliques"
+    ],
+    "secondary_muscles": [
+      "abs"
+    ],
+    "is_active": true
+  },
+  {
+    "id": "ex-farmers-carry",
+    "slug": "farmers-carry",
+    "name": "Farmer's Carry",
+    "movement_pattern": "carry",
+    "mechanics": "compound",
+    "difficulty": "beginner",
+    "popularity": 60,
+    "is_bodyweight_ok": true,
+    "equipment": [
+      [
+        "dumbbell",
+        "kettlebell"
+      ]
+    ],
+    "primary_muscles": [
+      "forearms"
+    ],
+    "secondary_muscles": [
+      "traps",
+      "abs",
+      "glute-med"
+    ],
+    "is_active": true
+  },
+  {
+    "id": "ex-treadmill-run",
+    "slug": "treadmill-run",
+    "name": "Treadmill Run",
+    "movement_pattern": "cardio",
+    "mechanics": "compound",
+    "difficulty": "beginner",
+    "popularity": 80,
+    "is_bodyweight_ok": false,
+    "equipment": [
+      [
+        "treadmill"
+      ]
+    ],
+    "primary_muscles": [
+      "quads"
+    ],
+    "secondary_muscles": [
+      "calves",
+      "hamstrings"
+    ],
+    "is_active": true
+  },
+  {
+    "id": "ex-stationary-bike-ride",
+    "slug": "stationary-bike-ride",
+    "name": "Stationary Bike",
+    "movement_pattern": "cardio",
+    "mechanics": "compound",
+    "difficulty": "beginner",
+    "popularity": 75,
+    "is_bodyweight_ok": false,
+    "equipment": [
+      [
+        "stationary-bike"
+      ]
+    ],
+    "primary_muscles": [
+      "quads"
+    ],
+    "secondary_muscles": [
+      "calves"
+    ],
+    "is_active": true
+  },
+  {
+    "id": "ex-rowing-erg",
+    "slug": "rowing-erg",
+    "name": "Rowing Machine",
+    "movement_pattern": "cardio",
+    "mechanics": "compound",
+    "difficulty": "intermediate",
+    "popularity": 70,
+    "is_bodyweight_ok": false,
+    "equipment": [
+      [
+        "rowing-machine"
+      ]
+    ],
+    "primary_muscles": [
+      "lats"
+    ],
+    "secondary_muscles": [
+      "quads",
+      "rhomboids"
+    ],
+    "is_active": true
+  },
+  {
+    "id": "ex-jump-rope",
+    "slug": "jump-rope",
+    "name": "Jump Rope",
+    "movement_pattern": "cardio",
+    "mechanics": "compound",
+    "difficulty": "beginner",
+    "popularity": 60,
+    "is_bodyweight_ok": true,
+    "equipment": [],
+    "primary_muscles": [
+      "calves"
+    ],
+    "secondary_muscles": [
+      "quads"
+    ],
+    "is_active": true
+  }
+]

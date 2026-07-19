@@ -1,0 +1,15 @@
+{
+  "name": "@fitforge/seed",
+  "version": "0.1.0",
+  "private": true,
+  "description": "FitForge curated seed data (JSON) + generator that compiles supabase/seed/seed.sql (WS-2).",
+  "type": "module",
+  "scripts": {
+    "seed:check": "tsx generate.ts check",
+    "seed:generate": "tsx generate.ts",
+    "test": "tsx --test test/validate.test.ts"
+  },
+  "devDependencies": {
+    "tsx": "^4.19.2"
+  }
+}

@@ -1,0 +1,115 @@
+{
+  "_note": "§7.4 substitution fixtures. Each case runs suggestSubstitutes(target, catalog.json, substitution-edges.json, ctx). `expected_top` is the slug that must rank first. The bench-press + home-dumbbell case is the blueprint's worked example (WS-3 §9 + WS-6 pgTAP).",
+  "cases": [
+    {
+      "name": "bench-press with home dumbbell + flat bench → dumbbell-bench-press",
+      "target": "bench-press",
+      "owned_equipment": ["dumbbell", "flat-bench"],
+      "training_location": "home",
+      "experience": "intermediate",
+      "excluded_exercises": [],
+      "excluded_patterns": [],
+      "favorites": [],
+      "expected_top": "dumbbell-bench-press"
+    },
+    {
+      "name": "barbell back squat, only dumbbells → goblet-squat",
+      "target": "barbell-back-squat",
+      "owned_equipment": ["dumbbell"],
+      "training_location": "home",
+      "experience": "beginner",
+      "excluded_exercises": [],
+      "excluded_patterns": [],
+      "favorites": [],
+      "expected_top": "goblet-squat"
+    },
+    {
+      "name": "overhead press, dumbbell + adjustable bench → seated-dumbbell-shoulder-press",
+      "target": "overhead-press",
+      "owned_equipment": ["dumbbell", "adjustable-bench"],
+      "training_location": "home",
+      "experience": "intermediate",
+      "excluded_exercises": [],
+      "excluded_patterns": [],
+      "favorites": [],
+      "expected_top": "seated-dumbbell-shoulder-press"
+    },
+    {
+      "name": "pull-up with only a lat-pulldown machine → lat-pulldown",
+      "target": "pull-up",
+      "owned_equipment": ["lat-pulldown"],
+      "training_location": "home",
+      "experience": "beginner",
+      "excluded_exercises": [],
+      "excluded_patterns": [],
+      "favorites": [],
+      "expected_top": "lat-pulldown"
+    },
+    {
+      "name": "barbell curl, only dumbbells → dumbbell-curl",
+      "target": "barbell-curl",
+      "owned_equipment": ["dumbbell"],
+      "training_location": "home",
+      "experience": "beginner",
+      "excluded_exercises": [],
+      "excluded_patterns": [],
+      "favorites": [],
+      "expected_top": "dumbbell-curl"
+    },
+    {
+      "name": "conventional deadlift, barbell + dumbbell → romanian-deadlift",
+      "target": "conventional-deadlift",
+      "owned_equipment": ["barbell", "weight-plates", "dumbbell"],
+      "training_location": "home",
+      "experience": "advanced",
+      "excluded_exercises": [],
+      "excluded_patterns": [],
+      "favorites": [],
+      "expected_top": "romanian-deadlift"
+    },
+    {
+      "name": "lat-pulldown swapped when only a pull-up bar is available → pull-up",
+      "target": "lat-pulldown",
+      "owned_equipment": ["pull-up-bar"],
+      "training_location": "home",
+      "experience": "advanced",
+      "excluded_exercises": [],
+      "excluded_patterns": [],
+      "favorites": [],
+      "expected_top": "pull-up"
+    },
+    {
+      "name": "bench-press with zero equipment (minimal) → push-up",
+      "target": "bench-press",
+      "owned_equipment": [],
+      "training_location": "minimal",
+      "experience": "beginner",
+      "excluded_exercises": [],
+      "excluded_patterns": [],
+      "favorites": [],
+      "expected_top": "push-up"
+    },
+    {
+      "name": "leg press, dumbbell + flat bench → goblet-squat",
+      "target": "leg-press",
+      "owned_equipment": ["dumbbell", "flat-bench"],
+      "training_location": "home",
+      "experience": "beginner",
+      "excluded_exercises": [],
+      "excluded_patterns": [],
+      "favorites": [],
+      "expected_top": "goblet-squat"
+    },
+    {
+      "name": "triceps pushdown, only dumbbells → overhead-triceps-extension",
+      "target": "triceps-pushdown",
+      "owned_equipment": ["dumbbell"],
+      "training_location": "home",
+      "experience": "beginner",
+      "excluded_exercises": [],
+      "excluded_patterns": [],
+      "favorites": [],
+      "expected_top": "overhead-triceps-extension"
+    }
+  ]
+}

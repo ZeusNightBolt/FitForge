@@ -1,0 +1,65 @@
+{
+  "_note": "Persona macro-target fixtures for §7.2.4. Inputs are explicit (personas §2.1 do not fix body metrics, so representative values are chosen and pinned here). WS-6 pgTAP must reproduce these exact outputs from the same inputs; both derive from BLUEPRINT §7.2.4.",
+  "personas": [
+    {
+      "key": "P1",
+      "label": "Restart Rachel",
+      "input": {
+        "sex": "female",
+        "weight_kg": 68,
+        "height_cm": 165,
+        "age": 34,
+        "days_per_week": 3,
+        "primary_goal": "fat_loss",
+        "diet_type": "vegetarian"
+      },
+      "expected": {
+        "kcal": 1650,
+        "protein_g": 120,
+        "carbs_g": 170,
+        "fat_g": 55,
+        "method": "Mifflin-St Jeor × 1.5 − 20% (fat loss)"
+      }
+    },
+    {
+      "key": "P2",
+      "label": "Gym-rat Gabe",
+      "input": {
+        "sex": "male",
+        "weight_kg": 84,
+        "height_cm": 180,
+        "age": 27,
+        "days_per_week": 5,
+        "primary_goal": "hypertrophy",
+        "diet_type": "omnivore"
+      },
+      "expected": {
+        "kcal": 3250,
+        "protein_g": 150,
+        "carbs_g": 415,
+        "fat_g": 110,
+        "method": "Mifflin-St Jeor × 1.65 + 8% (hypertrophy)"
+      }
+    },
+    {
+      "key": "P3",
+      "label": "Minimal Marco",
+      "input": {
+        "sex": "male",
+        "weight_kg": 80,
+        "height_cm": 178,
+        "age": 45,
+        "days_per_week": 3,
+        "primary_goal": "general_health",
+        "diet_type": "keto"
+      },
+      "expected": {
+        "kcal": 2550,
+        "protein_g": 130,
+        "carbs_g": 90,
+        "fat_g": 185,
+        "method": "Mifflin-St Jeor × 1.5 (general health), keto"
+      }
+    }
+  ]
+}

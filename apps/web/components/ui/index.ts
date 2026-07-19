@@ -1,0 +1,31 @@
+/**
+ * FitForge web design-system primitives (WS-4 contract, frozen for WS-5 to import).
+ * WS-5 imports UI ONLY from here: Button, Card, Chip, SelectableCardGrid, Stepper,
+ * SearchInput, ProgressBar, Sheet, MacroRing.
+ */
+export { Button } from './Button';
+export type { ButtonProps } from './Button';
+
+export { Card, CardTitle, CardDescription } from './Card';
+export type { CardProps } from './Card';
+
+export { Chip } from './Chip';
+export type { ChipProps } from './Chip';
+
+export { SelectableCardGrid } from './SelectableCardGrid';
+export type { SelectableCardGridProps, SelectableOption } from './SelectableCardGrid';
+
+export { Stepper } from './Stepper';
+export type { StepperProps } from './Stepper';
+
+export { SearchInput } from './SearchInput';
+export type { SearchInputProps } from './SearchInput';
+
+export { ProgressBar } from './ProgressBar';
+export type { ProgressBarProps } from './ProgressBar';
+
+export { Sheet } from './Sheet';
+export type { SheetProps } from './Sheet';
+
+export { MacroRing } from './MacroRing';
+export type { MacroRingProps } from './MacroRing';
