@@ -2,6 +2,7 @@
 
 import * as React from 'react';
 import { cn } from '@/lib/utils';
+import { SearchIcon } from './icons';
 
 export interface SearchInputProps<T> {
   /** async fetcher; must honour the AbortSignal so stale requests cancel (§7.1) */
@@ -112,7 +113,7 @@ export function SearchInput<T>({
     <div className={cn('relative', className)}>
       <div className="flex items-center gap-2 rounded-2xl border border-border bg-surface-2 px-3">
         <span aria-hidden className="text-muted-foreground">
-          {'\u{1F50D}'}
+          <SearchIcon size={18} />
         </span>
         <input
           type="text"

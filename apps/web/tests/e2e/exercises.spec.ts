@@ -44,14 +44,14 @@ test.describe('exercises', () => {
     await expect(page.getByText('Equipment', { exact: true })).toBeVisible();
 
     // Substitutes section with at least one real suggestion.
-    await expect(page.getByText('Substitutes', { exact: true })).toBeVisible();
-    const subsCard = page.locator('div.rounded-card', { hasText: 'Substitutes' }).first();
+    await expect(page.getByText('Swap / similar exercises')).toBeVisible();
+    const subsCard = page.locator('div.rounded-card', { hasText: 'Swap / similar' }).first();
     await expect(subsCard.locator('a[href^="/exercises/"]').first()).toBeVisible();
 
     await page.screenshot({ path: 'tests/screenshots/exercise-detail.png', fullPage: true });
 
-    // "See all" opens the full substitute sheet.
+    // "See all" opens the full swap sheet (titled "Swap <exercise>").
     await page.getByRole('button', { name: 'See all' }).click();
-    await expect(page.getByText(/substitut/i).first()).toBeVisible();
+    await expect(page.getByText(`Swap ${name}`)).toBeVisible();
   });
 });

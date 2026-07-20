@@ -9,6 +9,7 @@
 import * as React from 'react';
 import Link from 'next/link';
 import { Button, Card, CardTitle, Sheet } from '@/components/ui';
+import { ScaleIcon, CheckIcon } from '@/components/ui/icons';
 import { SubstituteSheet } from '@/components/features/shared/SubstituteSheet';
 import {
   mockPreviousSets,
@@ -245,9 +246,9 @@ export function WorkoutPlayer({ sessionId }: { sessionId: string }) {
                     type="button"
                     aria-label="Plate math"
                     onClick={() => setPlateForSet(i)}
-                    className="grid h-9 w-8 shrink-0 place-items-center rounded-lg bg-surface-2 text-xs"
+                    className="grid h-9 w-9 shrink-0 place-items-center rounded-lg border border-border bg-surface-2 text-muted-foreground"
                   >
-                    {'\u{1F9EE}'}
+                    <ScaleIcon size={16} />
                   </button>
                 </div>
                 <input
@@ -446,8 +447,8 @@ function Summary({
   return (
     <div className="space-y-5">
       <div className="text-center">
-        <div className="mx-auto grid h-16 w-16 place-items-center rounded-full bg-success/15 text-3xl">
-          {'\u{1F389}'}
+        <div className="mx-auto grid h-16 w-16 place-items-center rounded-full bg-success/15 text-success">
+          <CheckIcon size={32} />
         </div>
         <h1 className="mt-3 text-2xl font-extrabold tracking-tight">Workout complete</h1>
         <p className="mt-1 text-sm text-muted-foreground">{day.name}</p>

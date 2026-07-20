@@ -3,6 +3,7 @@
 import * as React from 'react';
 import { useRouter } from 'next/navigation';
 import { Button } from '@/components/ui';
+import { SparkleIcon } from '@/components/ui/icons';
 import { ensureSession, isOnboarded } from '@/lib/demo/store';
 
 export interface AuthPanelProps {
@@ -28,7 +29,7 @@ export function AuthPanel({ next = '/onboarding/goals' }: AuthPanelProps) {
   return (
     <div className="space-y-4">
       <Button size="lg" block loading={entering} onClick={enter} data-testid="enter-demo">
-        <span aria-hidden>{'\u{1F680}'}</span> Enter the demo
+        <SparkleIcon size={18} /> Enter the demo
       </Button>
       <p className="text-center text-xs text-muted-foreground">
         No account needed — this is a fully client-side demo. Your data is saved locally in your

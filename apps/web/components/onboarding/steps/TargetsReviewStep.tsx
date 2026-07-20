@@ -65,26 +65,58 @@ export function TargetsReviewStep() {
     { key: 'fat_g_target', label: 'Fat', unit: 'g', value: draft.fat_g_target },
   ];
 
+  const pk = (draft.protein_g_target ?? 0) * 4;
+  const ck = (draft.carbs_g_target ?? 0) * 4;
+  const fk = (draft.fat_g_target ?? 0) * 9;
+  const totalK = Math.max(1, pk + ck + fk);
+  const macroColors = ['var(--color-accent)', 'var(--color-success)', 'var(--color-energy)'];
+  const segments = [
+    { label: 'Protein', kcal: pk },
+    { label: 'Carbs', kcal: ck },
+    { label: 'Fat', kcal: fk },
+  ];
+
   return (
     <div className="space-y-6">
-      <div className="rounded-card border border-border bg-surface-2 p-4">
-        <p className="text-4xl font-extrabold tabular-nums text-foreground">
-          {draft.kcal_target ?? '—'} <span className="text-lg font-medium text-muted-foreground">kcal / day</span>
-        </p>
-        {method && <p className="mt-1 text-xs text-muted-foreground">{method}</p>}
+      <div className="overflow-hidden rounded-card bg-accent text-accent-foreground shadow-[var(--shadow-card)]">
+        <div className="px-5 pb-4 pt-5">
+          <p className="text-xs font-semibold uppercase tracking-wide opacity-80">Your daily target</p>
+          <p className="mt-1 text-4xl font-extrabold tabular-nums">
+            {draft.kcal_target ?? '—'}{' '}
+            <span className="text-lg font-semibold opacity-80">kcal / day</span>
+          </p>
+          {method && <p className="mt-1 text-xs opacity-75">{method}</p>}
+        </div>
+        <div className="flex h-2.5 w-full">
+          {segments.map((s, i) => (
+            <div
+              key={s.label}
+              style={{ width: `${(s.kcal / totalK) * 100}%`, backgroundColor: macroColors[i] }}
+            />
+          ))}
+        </div>
       </div>
 
-      <div className="space-y-3">
-        {rows.map((r) => (
-          <label key={r.key} className="flex items-center justify-between gap-4">
-            <span className="text-sm font-medium text-foreground">{r.label}</span>
+      <div className="space-y-2.5">
+        {rows.map((r, i) => (
+          <label
+            key={r.key}
+            className="flex items-center justify-between gap-4 rounded-2xl bg-surface-2 px-4 py-3 shadow-[var(--shadow-card)]"
+          >
+            <span className="flex items-center gap-2.5">
+              <span
+                className="h-2.5 w-2.5 rounded-full"
+                style={{ backgroundColor: i === 0 ? 'var(--color-muted-foreground)' : macroColors[i - 1] }}
+              />
+              <span className="text-sm font-semibold text-foreground">{r.label}</span>
+            </span>
             <span className="flex items-center gap-2">
               <input
                 type="number"
                 inputMode="numeric"
                 value={r.value ?? ''}
                 onChange={(e) => edit(r.key, e.target.value)}
-                className="h-11 w-28 rounded-xl border border-border bg-surface px-3 text-right text-base tabular-nums text-foreground outline-none focus:ring-2 focus:ring-accent"
+                className="h-11 w-24 rounded-xl border border-border bg-surface px-3 text-right text-base tabular-nums text-foreground outline-none focus:border-accent focus:ring-2 focus:ring-accent"
               />
               <span className="w-8 text-sm text-muted-foreground">{r.unit}</span>
             </span>

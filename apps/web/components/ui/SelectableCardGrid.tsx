@@ -3,6 +3,7 @@
 import * as React from 'react';
 import { cn } from '@/lib/utils';
 import { Card, CardTitle, CardDescription } from './Card';
+import { CheckIcon } from './icons';
 
 export interface SelectableOption<V extends string> {
   value: V;
@@ -60,17 +61,34 @@ export function SelectableCardGrid<V extends string>({
                 onChange(opt.value);
               }
             }}
-            className="flex items-start gap-3"
+            className="flex items-center gap-3.5 shadow-[var(--shadow-card)]"
           >
             {opt.icon && (
-              <span aria-hidden className="mt-0.5 text-2xl leading-none">
+              <span
+                aria-hidden
+                className={cn(
+                  'grid h-11 w-11 shrink-0 place-items-center rounded-xl transition-colors',
+                  isSelected ? 'bg-accent text-accent-foreground' : 'bg-accent-muted text-accent',
+                )}
+              >
                 {opt.icon}
               </span>
             )}
-            <div className="min-w-0">
+            <div className="min-w-0 flex-1">
               <CardTitle>{opt.title}</CardTitle>
               {opt.description && <CardDescription>{opt.description}</CardDescription>}
             </div>
+            <span
+              aria-hidden
+              className={cn(
+                'grid h-5 w-5 shrink-0 place-items-center rounded-full border transition-colors',
+                isSelected
+                  ? 'border-accent bg-accent text-accent-foreground'
+                  : 'border-border text-transparent',
+              )}
+            >
+              <CheckIcon size={13} />
+            </span>
           </Card>
         );
       })}

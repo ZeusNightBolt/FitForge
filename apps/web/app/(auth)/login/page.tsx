@@ -1,5 +1,6 @@
 import Link from 'next/link';
 import { AuthPanel } from '@/components/auth/AuthPanel';
+import { DumbbellIcon } from '@/components/ui/icons';
 
 /**
  * Standalone entry (§8 tree) — DEMO MODE. "I have an account" from the landing page. There is no
@@ -10,10 +11,10 @@ export default function LoginPage() {
   return (
     <main className="mx-auto flex min-h-dvh w-full max-w-[430px] flex-col px-6 pb-8 pt-16 sm:max-w-md">
       <Link href="/" className="flex items-center gap-2">
-        <span aria-hidden className="text-2xl">
-          {'\u{1F3CB}\u{FE0F}'}
+        <span className="grid h-9 w-9 place-items-center rounded-xl bg-accent text-accent-foreground shadow-[var(--shadow-card)]">
+          <DumbbellIcon size={20} />
         </span>
-        <span className="text-lg font-bold tracking-tight">FitForge</span>
+        <span className="text-lg font-extrabold tracking-tight">FitForge</span>
       </Link>
 
       <div className="mt-16 flex-1">

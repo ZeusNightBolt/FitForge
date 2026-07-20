@@ -3,6 +3,7 @@
 import * as React from 'react';
 import type { TrainingLocation } from '@fitforge/shared/types';
 import { SelectableCardGrid, type SelectableOption } from '@/components/ui';
+import { HomeIcon, BuildingIcon, PlaneIcon } from '@/components/ui/icons';
 import { useOnboarding } from '../OnboardingProvider';
 import { OnboardingFooter } from '../OnboardingFooter';
 
@@ -11,19 +12,19 @@ const OPTIONS: SelectableOption<TrainingLocation>[] = [
     value: 'home',
     title: 'Home gym',
     description: 'Dumbbells, bands, a bench — whatever you have.',
-    icon: '\u{1F3E0}',
+    icon: <HomeIcon size={22} />,
   },
   {
     value: 'commercial_gym',
     title: 'Commercial gym',
     description: 'Full rack of machines, cables, and free weights.',
-    icon: '\u{1F3E2}',
+    icon: <BuildingIcon size={22} />,
   },
   {
     value: 'minimal',
     title: 'Minimal / travel',
     description: 'Bodyweight and bands. Train anywhere.',
-    icon: '\u{2708}\u{FE0F}',
+    icon: <PlaneIcon size={22} />,
   },
 ];
 

@@ -2,6 +2,7 @@
 
 import * as React from 'react';
 import { ProgressBar } from '@/components/ui';
+import { ChevronLeftIcon } from '@/components/ui/icons';
 import { STEP_META, wizardProgress } from '@/lib/onboarding/steps';
 import type { OnboardingStep } from '@fitforge/shared/schemas';
 import { useOnboarding } from './OnboardingProvider';
@@ -35,9 +36,9 @@ export function OnboardingShell({ step }: { step: OnboardingStep }) {
             type="button"
             aria-label="Back"
             onClick={() => goBack(step)}
-            className="grid h-9 w-9 place-items-center rounded-full text-lg text-foreground hover:bg-surface-2"
+            className="grid h-9 w-9 shrink-0 place-items-center rounded-full text-foreground transition-colors hover:bg-muted"
           >
-            {'←'}
+            <ChevronLeftIcon size={22} />
           </button>
           <ProgressBar current={current} total={total} label={`Step ${current} of ${total}`} />
         </div>

@@ -18,6 +18,17 @@ import {
   Sheet,
   type SelectableOption,
 } from '@/components/ui';
+import {
+  TrophyIcon,
+  DumbbellIcon,
+  FlameIcon,
+  RunIcon,
+  HeartIcon,
+  HomeIcon,
+  BuildingIcon,
+  PlaneIcon,
+  LogOutIcon,
+} from '@/components/ui/icons';
 import { resetDemo } from '@/lib/demo/store';
 import {
   MOCK_PROFILE,
@@ -31,22 +42,38 @@ import {
 type Experience = 'beginner' | 'intermediate' | 'advanced';
 type Location = 'home' | 'commercial_gym' | 'minimal';
 
+/** A small indigo icon chip used for goal / location option cards. */
+function OptionBadge({ children }: { children: React.ReactNode }) {
+  return (
+    <span className="grid h-10 w-10 shrink-0 place-items-center rounded-xl bg-accent-muted text-accent">
+      {children}
+    </span>
+  );
+}
+
 const GOAL_OPTIONS: SelectableOption<GoalType>[] = [
-  { value: 'strength', title: 'Strength', icon: '\u{1F3CB}\u{FE0F}' },
-  { value: 'hypertrophy', title: 'Build muscle', icon: '\u{1F4AA}' },
-  { value: 'fat_loss', title: 'Lose fat', icon: '\u{1F525}' },
-  { value: 'endurance', title: 'Endurance', icon: '\u{1F3C3}' },
-  { value: 'general_health', title: 'General health', icon: '\u{2764}\u{FE0F}' },
+  { value: 'strength', title: 'Strength', icon: <OptionBadge><TrophyIcon size={20} /></OptionBadge> },
+  { value: 'hypertrophy', title: 'Build muscle', icon: <OptionBadge><DumbbellIcon size={20} /></OptionBadge> },
+  { value: 'fat_loss', title: 'Lose fat', icon: <OptionBadge><FlameIcon size={20} /></OptionBadge> },
+  { value: 'endurance', title: 'Endurance', icon: <OptionBadge><RunIcon size={20} /></OptionBadge> },
+  { value: 'general_health', title: 'General health', icon: <OptionBadge><HeartIcon size={20} /></OptionBadge> },
 ];
+const GOAL_LABEL: Record<GoalType, string> = {
+  strength: 'Strength',
+  hypertrophy: 'Build muscle',
+  fat_loss: 'Lose fat',
+  endurance: 'Endurance',
+  general_health: 'General health',
+};
 const EXPERIENCE_OPTIONS: SelectableOption<Experience>[] = [
   { value: 'beginner', title: 'Beginner', description: 'Less than 1 year consistent' },
   { value: 'intermediate', title: 'Intermediate', description: '1–3 years' },
   { value: 'advanced', title: 'Advanced', description: '3+ years' },
 ];
 const LOCATION_OPTIONS: SelectableOption<Location>[] = [
-  { value: 'home', title: 'Home', description: 'Dumbbells, bands, a bench', icon: '\u{1F3E0}' },
-  { value: 'commercial_gym', title: 'Commercial gym', description: 'Full equipment', icon: '\u{1F3E2}' },
-  { value: 'minimal', title: 'Minimal', description: 'Bodyweight & travel', icon: '\u{1F9F3}' },
+  { value: 'home', title: 'Home', description: 'Dumbbells, bands, a bench', icon: <OptionBadge><HomeIcon size={20} /></OptionBadge> },
+  { value: 'commercial_gym', title: 'Commercial gym', description: 'Full equipment', icon: <OptionBadge><BuildingIcon size={20} /></OptionBadge> },
+  { value: 'minimal', title: 'Minimal', description: 'Bodyweight & travel', icon: <OptionBadge><PlaneIcon size={20} /></OptionBadge> },
 ];
 const DIET_OPTIONS: SelectableOption<DietType>[] = [
   { value: 'omnivore', title: 'Omnivore' },
@@ -108,38 +135,13 @@ export function SettingsView() {
   }
 
   return (
-    <div className="space-y-5 pb-4">
+    <div className="space-y-6 pb-4">
       <h1 className="text-2xl font-extrabold tracking-tight">Settings</h1>
 
-      {/* Profile */}
-      <Section title="Profile">
-        <LabeledInput label="Display name" value={displayName} onChange={setDisplayName} />
-        <div className="grid grid-cols-2 gap-3">
-          <LabeledNumber label="Height (cm)" value={heightCm} onChange={setHeightCm} />
-          <label className="flex flex-col gap-1">
-            <FieldLabel>Birthdate</FieldLabel>
-            <input
-              type="date"
-              value={birthdate}
-              onChange={(e) => setBirthdate(e.target.value)}
-              className="h-11 w-full rounded-xl border border-border bg-surface px-3 text-base outline-none focus:border-accent"
-            />
-          </label>
-        </div>
-        <div>
-          <FieldLabel>Units</FieldLabel>
-          <div className="mt-1.5 flex gap-2">
-            {(['metric', 'imperial'] as const).map((u) => (
-              <Chip key={u} selected={unit === u} onClick={() => setUnit(u)}>
-                <span className="capitalize">{u}</span>
-              </Chip>
-            ))}
-          </div>
-        </div>
-      </Section>
+      {/* ---------------------------------------------------------------- Your plan */}
+      <GroupHeader>Your plan</GroupHeader>
 
-      {/* Goals */}
-      <Section title="Primary goal">
+      <Section title="Primary goal" hint="Drives how we generate and progress your routine.">
         <SelectableCardGrid
           options={GOAL_OPTIONS}
           value={primaryGoal}
@@ -154,13 +156,12 @@ export function SettingsView() {
               selected={secondaryGoal === o.value}
               onClick={() => setSecondaryGoal(secondaryGoal === o.value ? null : o.value)}
             >
-              {o.title}
+              {GOAL_LABEL[o.value]}
             </Chip>
           ))}
         </div>
       </Section>
 
-      {/* Experience */}
       <Section title="Experience">
         <SelectableCardGrid
           options={EXPERIENCE_OPTIONS}
@@ -169,7 +170,6 @@ export function SettingsView() {
         />
       </Section>
 
-      {/* Schedule */}
       <Section title="Schedule">
         <div className="flex items-center justify-between">
           <FieldLabel>Days per week</FieldLabel>
@@ -201,7 +201,6 @@ export function SettingsView() {
         </div>
       </Section>
 
-      {/* Training location */}
       <Section title="Training location">
         <SelectableCardGrid
           options={LOCATION_OPTIONS}
@@ -210,7 +209,6 @@ export function SettingsView() {
         />
       </Section>
 
-      {/* Equipment */}
       <Section title="Equipment" hint="Changing this can change which exercises we recommend.">
         <div className="flex flex-wrap gap-2">
           {EQUIPMENT_FACETS.filter((e) => e.slug !== 'bodyweight').map((e) => (
@@ -225,7 +223,6 @@ export function SettingsView() {
         </div>
       </Section>
 
-      {/* Exclusions */}
       <Section title="Protect / avoid" hint="Body areas map to movement patterns we'll avoid.">
         <div className="flex flex-wrap gap-2">
           {BODY_AREAS.map((a) => (
@@ -240,7 +237,9 @@ export function SettingsView() {
         </div>
       </Section>
 
-      {/* Nutrition */}
+      {/* ---------------------------------------------------------------- Preferences */}
+      <GroupHeader>Preferences</GroupHeader>
+
       <Section title="Diet">
         <SelectableCardGrid
           options={DIET_OPTIONS}
@@ -262,7 +261,6 @@ export function SettingsView() {
         </div>
       </Section>
 
-      {/* Targets */}
       <Section title="Calorie target" hint="Auto-computed, editable. Edits are stored as custom overrides.">
         <div className="flex items-center gap-3">
           <input
@@ -283,17 +281,51 @@ export function SettingsView() {
         </div>
       </Section>
 
-      <div className="flex flex-col gap-2 pt-2">
-        <Button size="lg" block>
-          Save changes
-        </Button>
-        <Button size="lg" variant="ghost" block onClick={resetAndLeave} data-testid="demo-signout">
-          Sign out
-        </Button>
-        <Button size="lg" variant="danger" block onClick={() => setDeleteOpen(true)}>
-          Reset demo data
-        </Button>
-      </div>
+      <Section title="Profile">
+        <LabeledInput label="Display name" value={displayName} onChange={setDisplayName} />
+        <div className="grid grid-cols-2 gap-3">
+          <LabeledNumber label="Height (cm)" value={heightCm} onChange={setHeightCm} />
+          <label className="flex flex-col gap-1">
+            <FieldLabel>Birthdate</FieldLabel>
+            <input
+              type="date"
+              value={birthdate}
+              onChange={(e) => setBirthdate(e.target.value)}
+              className="h-11 w-full rounded-xl border border-border bg-surface px-3 text-base outline-none focus:border-accent"
+            />
+          </label>
+        </div>
+        <div>
+          <FieldLabel>Units</FieldLabel>
+          <div className="mt-1.5 flex gap-2">
+            {(['metric', 'imperial'] as const).map((u) => (
+              <Chip key={u} selected={unit === u} onClick={() => setUnit(u)}>
+                <span className="capitalize">{u}</span>
+              </Chip>
+            ))}
+          </div>
+        </div>
+      </Section>
+
+      {/* ---------------------------------------------------------------- Account & demo */}
+      <GroupHeader>Account &amp; demo</GroupHeader>
+
+      <Section title="Account">
+        <div className="flex flex-col gap-2">
+          <Button size="lg" block>
+            Save changes
+          </Button>
+          <Button size="lg" variant="secondary" block onClick={resetAndLeave} data-testid="demo-signout">
+            <LogOutIcon size={18} /> Sign out
+          </Button>
+          <Button size="lg" variant="danger" block onClick={() => setDeleteOpen(true)}>
+            Reset demo data
+          </Button>
+          <p className="text-xs text-muted-foreground">
+            Reset clears the demo profile, routine, and food logs stored in this browser.
+          </p>
+        </div>
+      </Section>
 
       {/* Regenerate prompt */}
       <Sheet open={regenPrompt} onClose={() => setRegenPrompt(false)} title="Re-generate your plan?">
@@ -330,6 +362,14 @@ export function SettingsView() {
   );
 }
 
+function GroupHeader({ children }: { children: React.ReactNode }) {
+  return (
+    <h2 className="px-1 pt-1 text-xs font-bold uppercase tracking-wide text-muted-foreground">
+      {children}
+    </h2>
+  );
+}
+
 function Section({
   title,
   hint,
@@ -340,7 +380,7 @@ function Section({
   children: React.ReactNode;
 }) {
   return (
-    <Card>
+    <Card className="shadow-[var(--shadow-card)]">
       <CardTitle className="text-base">{title}</CardTitle>
       {hint && <p className="mt-0.5 text-xs text-muted-foreground">{hint}</p>}
       <div className="mt-3 space-y-3">{children}</div>

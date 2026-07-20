@@ -9,6 +9,7 @@ import * as React from 'react';
 import Link from 'next/link';
 import { notFound } from 'next/navigation';
 import { Card, CardTitle, Button } from '@/components/ui';
+import { ChevronLeftIcon, DumbbellIcon, RepeatIcon, ChevronRightIcon } from '@/components/ui/icons';
 import { SubstituteSheet } from '@/components/features/shared/SubstituteSheet';
 import {
   mockExerciseBySlug,
@@ -35,29 +36,33 @@ export function ExerciseDetail({ slug }: { slug: string }) {
 
   return (
     <div className="space-y-5">
-      <Link href="/exercises" className="text-sm font-medium text-muted-foreground">
-        ← Exercises
+      <Link
+        href="/exercises"
+        className="inline-flex items-center gap-1 text-sm font-medium text-muted-foreground transition-colors hover:text-foreground"
+      >
+        <ChevronLeftIcon size={16} /> Exercises
       </Link>
 
-      <div>
-        <h1 className="text-2xl font-extrabold tracking-tight">{ex.name}</h1>
-        <div className="mt-2 flex flex-wrap gap-1.5 text-[11px]">
-          <Tag>{ex.category_name}</Tag>
-          <Tag>{ex.movement_pattern.replace(/_/g, ' ')}</Tag>
-          <Tag>{ex.mechanics}</Tag>
-          <Tag>{DIFFICULTY_LABEL[ex.difficulty]}</Tag>
-          {ex.is_unilateral && <Tag>Unilateral</Tag>}
-          {ex.is_bodyweight_ok && <Tag>Bodyweight OK</Tag>}
+      {/* Hero */}
+      <Card className="!p-0 overflow-hidden shadow-[var(--shadow-card)]">
+        <div className="grid aspect-[16/7] place-items-center bg-accent-muted text-accent">
+          <DumbbellIcon size={56} />
         </div>
-      </div>
-
-      {/* Hero placeholder */}
-      <div className="grid aspect-video place-items-center rounded-2xl border border-border bg-surface-2 text-5xl text-muted-foreground/40">
-        {'\u{1F3CB}\u{FE0F}'}
-      </div>
+        <div className="p-4">
+          <h1 className="text-2xl font-extrabold tracking-tight">{ex.name}</h1>
+          <div className="mt-2 flex flex-wrap gap-1.5 text-[11px]">
+            <Tag>{ex.category_name}</Tag>
+            <Tag>{ex.movement_pattern.replace(/_/g, ' ')}</Tag>
+            <Tag>{ex.mechanics}</Tag>
+            <Tag>{DIFFICULTY_LABEL[ex.difficulty]}</Tag>
+            {ex.is_unilateral && <Tag>Unilateral</Tag>}
+            {ex.is_bodyweight_ok && <Tag>Bodyweight OK</Tag>}
+          </div>
+        </div>
+      </Card>
 
       {/* Muscles */}
-      <Card>
+      <Card className="shadow-[var(--shadow-card)]">
         <CardTitle className="mb-2 text-base">Muscles worked</CardTitle>
         <div className="space-y-2 text-sm">
           <div className="flex flex-wrap items-center gap-2">
@@ -82,7 +87,7 @@ export function ExerciseDetail({ slug }: { slug: string }) {
       </Card>
 
       {/* Equipment */}
-      <Card>
+      <Card className="shadow-[var(--shadow-card)]">
         <CardTitle className="mb-2 text-base">Equipment</CardTitle>
         {ex.equipment.length === 0 ? (
           <p className="text-sm text-muted-foreground">No equipment needed — bodyweight.</p>
@@ -109,15 +114,20 @@ export function ExerciseDetail({ slug }: { slug: string }) {
       </Card>
 
       {/* Instructions */}
-      <Card>
+      <Card className="shadow-[var(--shadow-card)]">
         <CardTitle className="mb-2 text-base">How to do it</CardTitle>
         <p className="text-sm leading-relaxed text-foreground">{ex.instructions}</p>
       </Card>
 
       {/* Substitutes */}
-      <Card>
+      <Card className="shadow-[var(--shadow-card)]">
         <div className="mb-2 flex items-center justify-between">
-          <CardTitle className="text-base">Substitutes</CardTitle>
+          <CardTitle className="flex items-center gap-2 text-base">
+            <span className="grid h-7 w-7 place-items-center rounded-lg bg-accent-muted text-accent">
+              <RepeatIcon size={16} />
+            </span>
+            Swap / similar exercises
+          </CardTitle>
           <Button size="sm" variant="secondary" onClick={() => setSwapOpen(true)}>
             See all
           </Button>
@@ -138,8 +148,11 @@ export function ExerciseDetail({ slug }: { slug: string }) {
                     </span>
                     <span className="block truncate text-xs text-muted-foreground">{s.reason}</span>
                   </span>
-                  <span className="shrink-0 rounded-full bg-accent-muted px-2 py-0.5 text-xs font-semibold text-accent">
-                    {Math.round(s.score)}
+                  <span className="flex shrink-0 items-center gap-1.5">
+                    <span className="rounded-full bg-accent-muted px-2 py-0.5 text-xs font-semibold text-accent">
+                      {Math.round(s.score)}
+                    </span>
+                    <ChevronRightIcon size={16} className="text-muted-foreground" />
                   </span>
                 </Link>
               </li>

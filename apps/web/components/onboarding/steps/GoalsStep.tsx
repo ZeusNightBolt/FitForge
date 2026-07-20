@@ -3,15 +3,16 @@
 import * as React from 'react';
 import type { GoalType } from '@fitforge/shared/types';
 import { SelectableCardGrid, Chip, type SelectableOption } from '@/components/ui';
+import { TrophyIcon, DumbbellIcon, FlameIcon, RunIcon, HeartIcon } from '@/components/ui/icons';
 import { useOnboarding } from '../OnboardingProvider';
 import { OnboardingFooter } from '../OnboardingFooter';
 
 const GOAL_OPTIONS: SelectableOption<GoalType>[] = [
-  { value: 'strength', title: 'Get stronger', description: 'Lift heavier over time', icon: '\u{1F3CB}\u{FE0F}' },
-  { value: 'hypertrophy', title: 'Build muscle', description: 'Add size and definition', icon: '\u{1F4AA}' },
-  { value: 'fat_loss', title: 'Lose fat', description: 'Lean out while keeping muscle', icon: '\u{1F525}' },
-  { value: 'endurance', title: 'Build endurance', description: 'Last longer, recover faster', icon: '\u{1F3C3}' },
-  { value: 'general_health', title: 'General health', description: 'Feel good and stay consistent', icon: '\u{2764}\u{FE0F}' },
+  { value: 'strength', title: 'Get stronger', description: 'Lift heavier over time', icon: <TrophyIcon size={22} /> },
+  { value: 'hypertrophy', title: 'Build muscle', description: 'Add size and definition', icon: <DumbbellIcon size={22} /> },
+  { value: 'fat_loss', title: 'Lose fat', description: 'Lean out while keeping muscle', icon: <FlameIcon size={22} /> },
+  { value: 'endurance', title: 'Build endurance', description: 'Last longer, recover faster', icon: <RunIcon size={22} /> },
+  { value: 'general_health', title: 'General health', description: 'Feel good and stay consistent', icon: <HeartIcon size={22} /> },
 ];
 
 const GOAL_LABEL: Record<GoalType, string> = {

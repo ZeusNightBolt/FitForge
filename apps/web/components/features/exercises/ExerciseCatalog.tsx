@@ -7,6 +7,7 @@
 import * as React from 'react';
 import Link from 'next/link';
 import { Card, Chip, SearchInput } from '@/components/ui';
+import { DumbbellIcon, FilterIcon, SearchIcon } from '@/components/ui/icons';
 import {
   mockAllExercises,
   mockSearchExercises,
@@ -21,6 +22,12 @@ const DIFFICULTY_LABEL: Record<string, string> = {
   beginner: 'Beginner',
   intermediate: 'Intermediate',
   advanced: 'Advanced',
+};
+
+const DIFFICULTY_STYLE: Record<string, string> = {
+  beginner: 'bg-success/10 text-success',
+  intermediate: 'bg-energy-muted text-energy',
+  advanced: 'bg-danger/10 text-danger',
 };
 
 function matchesEquipment(ex: ExerciseFull, slug: string): boolean {
@@ -42,10 +49,16 @@ export function ExerciseCatalog() {
     return true;
   });
   const sorted = [...filtered].sort((a, b) => b.popularity - a.popularity);
+  const anyFilter = category !== null || equipment !== null || muscle !== null;
 
   return (
-    <div className="space-y-4">
-      <h1 className="text-2xl font-extrabold tracking-tight">Exercises</h1>
+    <div className="space-y-5">
+      <header>
+        <h1 className="text-2xl font-extrabold tracking-tight">Exercises</h1>
+        <p className="mt-0.5 text-sm text-muted-foreground">
+          Browse the catalog, filter by category, equipment, or muscle.
+        </p>
+      </header>
 
       <SearchInput<ExerciseSearchRow>
         search={async (q) => mockSearchExercises(q, 8)}
@@ -59,29 +72,56 @@ export function ExerciseCatalog() {
       />
 
       {/* Filters */}
-      <FilterRow label="Category" facets={EXERCISE_CATEGORIES} value={category} onChange={setCategory} />
-      <FilterRow label="Equipment" facets={EQUIPMENT_FACETS} value={equipment} onChange={setEquipment} />
-      <FilterRow label="Muscle" facets={MUSCLE_FACETS} value={muscle} onChange={setMuscle} />
+      <Card className="space-y-3 shadow-[var(--shadow-card)]">
+        <div className="flex items-center gap-2 text-xs font-bold uppercase tracking-wide text-muted-foreground">
+          <FilterIcon size={15} /> Filters
+        </div>
+        <FilterRow label="Category" facets={EXERCISE_CATEGORIES} value={category} onChange={setCategory} />
+        <FilterRow label="Equipment" facets={EQUIPMENT_FACETS} value={equipment} onChange={setEquipment} />
+        <FilterRow label="Muscle" facets={MUSCLE_FACETS} value={muscle} onChange={setMuscle} />
+      </Card>
 
-      <p className="text-sm text-muted-foreground">
-        {sorted.length} exercise{sorted.length === 1 ? '' : 's'}
-      </p>
+      <div className="flex items-center justify-between">
+        <p className="text-sm text-muted-foreground">
+          <span className="font-semibold text-foreground">{sorted.length}</span> exercise
+          {sorted.length === 1 ? '' : 's'}
+        </p>
+        {anyFilter && (
+          <button
+            type="button"
+            onClick={() => {
+              setCategory(null);
+              setEquipment(null);
+              setMuscle(null);
+            }}
+            className="text-sm font-semibold text-accent"
+          >
+            Clear filters
+          </button>
+        )}
+      </div>
 
-      <ul className="space-y-2">
+      <ul className="space-y-2.5">
         {sorted.map((ex) => (
           <li key={ex.id}>
             <Link href={`/exercises/${ex.slug}`}>
-              <Card interactive className="flex items-center gap-3 !py-3">
-                <div className="grid h-11 w-11 shrink-0 place-items-center rounded-xl bg-surface text-xl">
-                  {'\u{1F3CB}\u{FE0F}'}
-                </div>
+              <Card interactive className="flex items-center gap-3 !py-3 shadow-[var(--shadow-card)]">
+                <span className="grid h-11 w-11 shrink-0 place-items-center rounded-xl bg-accent-muted text-accent">
+                  <DumbbellIcon size={22} />
+                </span>
                 <div className="min-w-0 flex-1">
                   <p className="truncate text-sm font-semibold text-foreground">{ex.name}</p>
-                  <p className="truncate text-xs text-muted-foreground">
-                    {ex.category_name} · {ex.mechanics} · targets {ex.primary_muscles.join(', ')}
-                  </p>
+                  <div className="mt-1 flex flex-wrap items-center gap-1.5">
+                    <TagPill>{ex.category_name}</TagPill>
+                    <TagPill>{ex.movement_pattern.replace(/_/g, ' ')}</TagPill>
+                    <TagPill>{ex.mechanics}</TagPill>
+                  </div>
                 </div>
-                <span className="shrink-0 rounded-full bg-surface px-2 py-0.5 text-[11px] text-muted-foreground">
+                <span
+                  className={`shrink-0 rounded-full px-2 py-0.5 text-[11px] font-semibold ${
+                    DIFFICULTY_STYLE[ex.difficulty] ?? 'bg-muted text-muted-foreground'
+                  }`}
+                >
                   {DIFFICULTY_LABEL[ex.difficulty]}
                 </span>
               </Card>
@@ -89,12 +129,30 @@ export function ExerciseCatalog() {
           </li>
         ))}
         {sorted.length === 0 && (
-          <li className="rounded-2xl border border-dashed border-border py-10 text-center text-sm text-muted-foreground">
-            No exercises match these filters.
+          <li>
+            <Card className="flex flex-col items-center gap-3 border-2 border-dashed border-border py-10 text-center shadow-none">
+              <span className="grid h-12 w-12 place-items-center rounded-2xl bg-accent-muted text-accent">
+                <SearchIcon size={24} />
+              </span>
+              <div>
+                <p className="font-semibold text-foreground">No exercises match these filters</p>
+                <p className="mt-0.5 text-sm text-muted-foreground">
+                  Try clearing a filter to widen your results.
+                </p>
+              </div>
+            </Card>
           </li>
         )}
       </ul>
     </div>
+  );
+}
+
+function TagPill({ children }: { children: React.ReactNode }) {
+  return (
+    <span className="rounded-full bg-muted px-2 py-0.5 text-[11px] capitalize text-muted-foreground">
+      {children}
+    </span>
   );
 }
 

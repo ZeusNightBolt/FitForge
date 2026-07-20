@@ -1,15 +1,16 @@
 import Link from 'next/link';
 import { Button } from '@/components/ui';
+import { DumbbellIcon } from '@/components/ui/icons';
 
 /** Marketing landing (§8 tree, §1.1 value prop). Mobile-first, one accent, dark-mode aware. */
 export default function LandingPage() {
   return (
     <main className="mx-auto flex min-h-dvh w-full max-w-[430px] flex-col px-6 pb-[max(1.5rem,env(safe-area-inset-bottom))] pt-16 sm:max-w-md">
       <header className="flex items-center gap-2">
-        <span aria-hidden className="text-2xl">
-          {'\u{1F3CB}\u{FE0F}'}
+        <span className="grid h-9 w-9 place-items-center rounded-xl bg-accent text-accent-foreground shadow-[var(--shadow-card)]">
+          <DumbbellIcon size={20} />
         </span>
-        <span className="text-lg font-bold tracking-tight">FitForge</span>
+        <span className="text-lg font-extrabold tracking-tight">FitForge</span>
       </header>
 
       <section className="mt-16 flex-1">
