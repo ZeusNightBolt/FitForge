@@ -22,6 +22,10 @@ export interface CatalogExercise {
   primary_muscles: readonly string[];
   secondary_muscles: readonly string[];
   is_active?: boolean;
+  /** §6 P0-4 teaching content (optional; present on the enriched seed, absent on the rule fixture). */
+  form_cues?: readonly string[];
+  why?: string;
+  common_mistakes?: readonly string[];
 }
 
 /** Directed curated substitution edge T → substitute (§6.5). */

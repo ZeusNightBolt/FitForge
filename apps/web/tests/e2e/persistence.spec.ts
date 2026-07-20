@@ -23,10 +23,10 @@ test.describe('persistence', () => {
     state = await readDemoState(page);
     expect((state as { routine: unknown }).routine).toBeTruthy();
 
-    // Start over via Settings → Reset demo data.
+    // Start over via Settings → Erase Local Mode data (§5.1).
     await page.goto('/settings');
-    await page.getByRole('button', { name: 'Reset demo data' }).click();
-    await page.getByRole('button', { name: 'Yes, reset everything' }).click();
+    await page.getByRole('button', { name: 'Erase Local Mode data' }).click();
+    await page.getByRole('button', { name: 'Yes, erase everything' }).click();
 
     // Routed back to the landing page and storage cleared.
     await page.waitForURL(/\/$|\/index\.html$/);

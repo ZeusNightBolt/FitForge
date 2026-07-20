@@ -1,13 +1,16 @@
 'use client';
 
 /**
- * Exercises catalog (§2.3): browse v_exercise_full with filters by category / equipment / muscle,
- * plus a type-ahead (search_exercises). Rows link to the detail page. Mocked catalog.
+ * Exercises catalog (§6 P0-2 + P1-6): browse the catalog with text filters (category /
+ * equipment / muscle) plus an interactive front/back muscle-map filter (tap a muscle →
+ * filter the list). Every card carries a MuscleMapThumb so the page reads as data, not text.
  */
 import * as React from 'react';
 import Link from 'next/link';
-import { Card, Chip, SearchInput } from '@/components/ui';
-import { DumbbellIcon, FilterIcon, SearchIcon } from '@/components/ui/icons';
+import { Card, Chip, SearchInput, Sheet, Button } from '@/components/ui';
+import { FilterIcon, SearchIcon, BodyIcon, XIcon } from '@/components/ui/icons';
+import { MuscleMap, MuscleMapThumb, MUSCLE_NAMES } from '@/components/illustrations';
+import type { MuscleSlug } from '@/components/illustrations';
 import {
   mockAllExercises,
   mockSearchExercises,
@@ -40,6 +43,7 @@ export function ExerciseCatalog() {
   const [category, setCategory] = React.useState<string | null>(null);
   const [equipment, setEquipment] = React.useState<string | null>(null);
   const [muscle, setMuscle] = React.useState<string | null>(null);
+  const [mapOpen, setMapOpen] = React.useState(false);
 
   const filtered = all.filter((ex) => {
     if (category && ex.category_slug !== category) return false;
@@ -51,10 +55,16 @@ export function ExerciseCatalog() {
   const sorted = [...filtered].sort((a, b) => b.popularity - a.popularity);
   const anyFilter = category !== null || equipment !== null || muscle !== null;
 
+  const clearAll = () => {
+    setCategory(null);
+    setEquipment(null);
+    setMuscle(null);
+  };
+
   return (
     <div className="space-y-5">
       <header>
-        <h1 className="text-2xl font-extrabold tracking-tight">Exercises</h1>
+        <h1 className="font-display text-2xl font-bold tracking-tight">Exercises</h1>
         <p className="mt-0.5 text-sm text-muted-foreground">
           Browse the catalog, filter by category, equipment, or muscle.
         </p>
@@ -72,9 +82,19 @@ export function ExerciseCatalog() {
       />
 
       {/* Filters */}
-      <Card className="space-y-3 shadow-[var(--shadow-card)]">
-        <div className="flex items-center gap-2 text-xs font-bold uppercase tracking-wide text-muted-foreground">
-          <FilterIcon size={15} /> Filters
+      <Card className="space-y-3">
+        <div className="flex items-center justify-between">
+          <div className="flex items-center gap-2 text-xs font-bold uppercase tracking-wide text-muted-foreground">
+            <FilterIcon size={15} /> Filters
+          </div>
+          <button
+            type="button"
+            onClick={() => setMapOpen(true)}
+            data-testid="muscle-filter-open"
+            className="inline-flex items-center gap-1.5 rounded-field border border-border-strong px-2.5 py-1 text-xs font-semibold text-accent transition-colors hover:bg-accent-muted"
+          >
+            <BodyIcon size={15} /> Muscle map
+          </button>
         </div>
         <FilterRow label="Category" facets={EXERCISE_CATEGORIES} value={category} onChange={setCategory} />
         <FilterRow label="Equipment" facets={EQUIPMENT_FACETS} value={equipment} onChange={setEquipment} />
@@ -87,27 +107,35 @@ export function ExerciseCatalog() {
           {sorted.length === 1 ? '' : 's'}
         </p>
         {anyFilter && (
-          <button
-            type="button"
-            onClick={() => {
-              setCategory(null);
-              setEquipment(null);
-              setMuscle(null);
-            }}
-            className="text-sm font-semibold text-accent"
-          >
+          <button type="button" onClick={clearAll} className="text-sm font-semibold text-accent">
             Clear filters
           </button>
         )}
       </div>
 
+      {/* Active muscle-map selection (may be outside the muscle facet chips). */}
+      {muscle && (
+        <button
+          type="button"
+          onClick={() => setMuscle(null)}
+          className="inline-flex items-center gap-1.5 rounded-chip bg-accent-muted px-3 py-1 text-xs font-semibold text-accent"
+        >
+          {MUSCLE_NAMES[muscle as MuscleSlug] ?? muscle}
+          <XIcon size={13} />
+        </button>
+      )}
+
       <ul className="space-y-2.5">
         {sorted.map((ex) => (
           <li key={ex.id}>
             <Link href={`/exercises/${ex.slug}`}>
-              <Card interactive className="flex items-center gap-3 !py-3 shadow-[var(--shadow-card)]">
-                <span className="grid h-11 w-11 shrink-0 place-items-center rounded-xl bg-accent-muted text-accent">
-                  <DumbbellIcon size={22} />
+              <Card interactive className="flex items-center gap-3 !py-3">
+                <span className="grid h-14 w-14 shrink-0 place-items-center rounded-sm bg-muted/60">
+                  <MuscleMapThumb
+                    primary={ex.primary_muscles as MuscleSlug[]}
+                    secondary={ex.secondary_muscles as MuscleSlug[]}
+                    height={48}
+                  />
                 </span>
                 <div className="min-w-0 flex-1">
                   <p className="truncate text-sm font-semibold text-foreground">{ex.name}</p>
@@ -144,6 +172,35 @@ export function ExerciseCatalog() {
           </li>
         )}
       </ul>
+
+      {/* Interactive muscle-map filter (P1-6) */}
+      <Sheet open={mapOpen} onClose={() => setMapOpen(false)} title="Filter by muscle">
+        <p className="mb-3 text-sm text-muted-foreground">
+          Tap a muscle on the front or back to filter the catalog.
+        </p>
+        <div className="flex justify-center">
+          <MuscleMap
+            view="both"
+            height={300}
+            interactive
+            primary={muscle ? [muscle as MuscleSlug] : []}
+            onMuscleClick={(slug) => {
+              setMuscle(slug);
+              setMapOpen(false);
+            }}
+          />
+        </div>
+        <div className="mt-4 flex gap-2">
+          {muscle && (
+            <Button variant="secondary" className="flex-1" onClick={() => setMuscle(null)}>
+              Clear muscle
+            </Button>
+          )}
+          <Button className="flex-1" onClick={() => setMapOpen(false)}>
+            Done
+          </Button>
+        </div>
+      </Sheet>
     </div>
   );
 }

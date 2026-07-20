@@ -38,6 +38,17 @@ test.describe('onboarding', () => {
     await expect(page.getByText(/we'll tune your plan for fat loss/i)).toBeVisible();
   });
 
+  test('captures an optional name on welcome and writes it to the draft (§5.4)', async ({ page }) => {
+    await page.goto('/onboarding/welcome');
+    await page.getByTestId('onboarding-name').fill('Kai');
+    await page.getByRole('button', { name: 'Get started' }).click();
+    await page.waitForURL(/\/onboarding\/auth/);
+
+    const state = await readDemoState(page);
+    const draft = (state as { draft: { display_name: string | null } }).draft;
+    expect(draft.display_name).toBe('Kai');
+  });
+
   test('completing the full flow lands on /today with a generated plan and real targets', async ({
     page,
   }) => {

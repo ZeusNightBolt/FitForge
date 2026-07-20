@@ -263,3 +263,89 @@ export const ClockIcon = (p: IconProps) => (
     <path d="M12 7.5V12l3 2" />
   </Svg>
 );
+
+/* ── added for the "Forged Gold" rebrand (consumed by WS-C/D/E/F/G) ── */
+
+/** Stopwatch — the rest timer (WS-F WorkoutPlayer, P0-5). Distinct from ClockIcon (time-of-day). */
+export const TimerIcon = (p: IconProps) => (
+  <Svg {...p}>
+    <circle cx="12" cy="14" r="8" />
+    <path d="M12 14V9.5" />
+    <path d="M9.5 2h5" />
+    <path d="M12 2v2" />
+    <path d="M18.6 7.4 20 6" />
+  </Svg>
+);
+
+/** Swap — quick-swap / substitute an exercise (WS-F, WS-C). One arrow up, one down. */
+export const SwapIcon = (p: IconProps) => (
+  <Svg {...p}>
+    <path d="M7 20V5M7 5 4 8M7 5l3 3" />
+    <path d="M17 4v15M17 19l-3-3M17 19l3-3" />
+  </Svg>
+);
+
+/** Filled flame — streak milestones ("keep the forge hot", WS-F, P1-11). */
+export const FlameSolidIcon = ({ size = 24, ...p }: IconProps) => (
+  <svg
+    xmlns="http://www.w3.org/2000/svg"
+    width={size}
+    height={size}
+    viewBox="0 0 24 24"
+    fill="currentColor"
+    aria-hidden="true"
+    {...p}
+  >
+    <path d="M12 2.5c.6 3.3-2.2 4.6-2.2 7.5a2.2 2.2 0 0 0 4.4 0c1.1 1.1 1.7 2.4 1.7 3.8A6 6 0 0 1 6 13.5c0-3.6 2.8-5.3 3.3-7.7.2-1.1.4-2.2 2.7-3.3Z" />
+  </svg>
+);
+
+/** Body silhouette glyph — muscle-map / heatmap nav & filters (WS-C, WS-F). */
+export const BodyIcon = (p: IconProps) => (
+  <Svg {...p}>
+    <circle cx="12" cy="4.6" r="2.4" />
+    <path d="M8 21l.6-7.3L7 14l1-3.6C8.4 8.7 10 8.2 12 8.2s3.6.5 4 2.2L17 14l-1.6-.3L16 21" />
+  </Svg>
+);
+
+/** 4-point spark star (filled) — the signature "strike"/PR moment (matches the logo spark). */
+export const SparkIcon = ({ size = 24, ...p }: IconProps) => (
+  <svg
+    xmlns="http://www.w3.org/2000/svg"
+    width={size}
+    height={size}
+    viewBox="0 0 24 24"
+    fill="currentColor"
+    aria-hidden="true"
+    {...p}
+  >
+    <path d="M12 2 13.9 10.1 22 12 13.9 13.9 12 22 10.1 13.9 2 12 10.1 10.1Z" />
+  </svg>
+);
+
+/** Export — download a JSON backup of Local Mode data (WS-E settings, P2-16). Arrow up out of tray. */
+export const ExportIcon = (p: IconProps) => (
+  <Svg {...p}>
+    <path d="M12 15V4" />
+    <path d="M8.5 7.5 12 4l3.5 3.5" />
+    <path d="M5 13v5a1.5 1.5 0 0 0 1.5 1.5h11a1.5 1.5 0 0 0 1.5-1.5v-5" />
+  </Svg>
+);
+
+/** Import — restore Local Mode data from a JSON file (WS-E settings, P2-16). Arrow down into tray. */
+export const ImportIcon = (p: IconProps) => (
+  <Svg {...p}>
+    <path d="M12 4v11" />
+    <path d="M8.5 11.5 12 15l3.5-3.5" />
+    <path d="M5 13v5a1.5 1.5 0 0 0 1.5 1.5h11a1.5 1.5 0 0 0 1.5-1.5v-5" />
+  </Svg>
+);
+
+/** Trash — destructive "Erase Local Mode data" (WS-E). */
+export const TrashIcon = (p: IconProps) => (
+  <Svg {...p}>
+    <path d="M4 7h16M9 7V5a1 1 0 0 1 1-1h4a1 1 0 0 1 1 1v2" />
+    <path d="M6 7l1 12.5A1.5 1.5 0 0 0 8.5 21h7a1.5 1.5 0 0 0 1.5-1.5L18 7" />
+    <path d="M10 11v6M14 11v6" />
+  </Svg>
+);

@@ -40,7 +40,7 @@ export function Stepper({
         aria-label="Decrease"
         disabled={value <= min}
         onClick={() => set(value - step)}
-        className="grid h-11 w-11 place-items-center rounded-xl bg-surface text-xl font-semibold disabled:opacity-40"
+        className="grid h-11 w-11 place-items-center rounded-xl bg-surface text-xl font-semibold transition-colors hover:bg-elevated focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent disabled:opacity-40 disabled:hover:bg-surface"
       >
         −
       </button>
@@ -58,7 +58,7 @@ export function Stepper({
         aria-label="Increase"
         disabled={value >= max}
         onClick={() => set(value + step)}
-        className="grid h-11 w-11 place-items-center rounded-xl bg-surface text-xl font-semibold disabled:opacity-40"
+        className="grid h-11 w-11 place-items-center rounded-xl bg-surface text-xl font-semibold transition-colors hover:bg-elevated focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent disabled:opacity-40 disabled:hover:bg-surface"
       >
         +
       </button>

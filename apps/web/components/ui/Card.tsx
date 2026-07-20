@@ -5,15 +5,25 @@ export interface CardProps extends React.HTMLAttributes<HTMLDivElement> {
   /** raise emphasis with the accent ring — used for selected states */
   selected?: boolean;
   interactive?: boolean;
+  /**
+   * "Forged" container (§2.4) — gold gradient hairline border. Reserved for the plan-preview card,
+   * PR cards, and the Today hero card. Provides its own surface-2 fill, so it replaces the default
+   * border/background.
+   */
+  premium?: boolean;
 }
 
-export function Card({ selected, interactive, className, ...rest }: CardProps) {
+export function Card({ selected, interactive, premium, className, ...rest }: CardProps) {
   return (
     <div
       className={cn(
-        'rounded-card border bg-surface-2 p-4',
-        selected ? 'border-accent ring-2 ring-accent' : 'border-border',
-        interactive && 'cursor-pointer transition-colors hover:border-accent/60',
+        'rounded-card p-4 shadow-[var(--shadow-card)]',
+        // fill + border: gradient hairline when premium, otherwise the standard surface treatment
+        premium ? 'border-gradient-gold' : 'bg-surface-2 border',
+        !premium && (selected ? 'border-accent' : 'border-border'),
+        selected && 'ring-2 ring-accent',
+        interactive &&
+          'cursor-pointer transition-colors hover:border-border-strong focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent',
         className,
       )}
       {...rest}

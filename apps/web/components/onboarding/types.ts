@@ -36,6 +36,9 @@ export interface DraftExcludedExercise extends NamedRef {
  * "back never loses data" and resume can rehydrate.
  */
 export interface OnboardingDraft {
+  // step 0 · welcome — optional Local Mode name capture (§5.4)
+  display_name: string | null;
+
   // step 2 · goals
   primary_goal: GoalType | null;
   secondary_goal: GoalType | null;
@@ -85,6 +88,7 @@ export interface OnboardingDraft {
 
 export function emptyDraft(): OnboardingDraft {
   return {
+    display_name: null,
     primary_goal: null,
     secondary_goal: null,
     experience_level: null,

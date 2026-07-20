@@ -3,17 +3,19 @@
 import * as React from 'react';
 import Link from 'next/link';
 import { Button } from '@/components/ui';
-import { DumbbellIcon, TargetIcon, AppleIcon, SparkleIcon } from '@/components/ui/icons';
+import { TargetIcon, SwapIcon, AppleIcon, SparkleIcon } from '@/components/ui/icons';
+import { LogoLockup } from '@/components/illustrations';
+import { patchDraft } from '@/lib/demo/store';
 import { useOnboarding } from '../OnboardingProvider';
 
 const HIGHLIGHTS = [
   {
     Icon: TargetIcon,
-    title: 'A routine built around you',
+    title: 'A plan forged around you',
     body: 'From your goals, schedule, and the exact equipment you have.',
   },
   {
-    Icon: DumbbellIcon,
+    Icon: SwapIcon,
     title: 'Swap anything, instantly',
     body: 'Hate an exercise or missing a machine? Get an equal alternative.',
   },
@@ -24,31 +26,55 @@ const HIGHLIGHTS = [
   },
 ];
 
-/** Screen 0 · Welcome (§2.2). */
+/** Screen 0 · Welcome (§5.2 / §5.4). Stacked logo, optional name capture, then "Get started". */
 export function WelcomeStep() {
-  const { goTo } = useOnboarding();
+  const { goTo, patch } = useOnboarding();
+  const [name, setName] = React.useState('');
+
+  const start = () => {
+    const trimmed = name.trim();
+    const value = trimmed ? trimmed : null;
+    patch({ display_name: value });
+    patchDraft({ display_name: value });
+    goTo('auth');
+  };
+
   return (
     <div className="flex min-h-dvh flex-col pt-14 pb-[max(1.5rem,env(safe-area-inset-bottom))]">
-      <div className="flex items-center gap-2">
-        <span className="grid h-9 w-9 place-items-center rounded-xl bg-accent text-accent-foreground shadow-[var(--shadow-card)]">
-          <DumbbellIcon size={20} />
-        </span>
-        <span className="text-lg font-extrabold tracking-tight">FitForge</span>
-      </div>
-
-      <div className="mt-10 flex-1">
-        <span className="inline-flex items-center gap-1.5 rounded-full bg-accent-muted px-3 py-1 text-xs font-semibold text-accent">
+      <div className="flex flex-col items-center pt-6">
+        <LogoLockup size={30} stacked />
+        <span className="mt-5 inline-flex items-center gap-1.5 rounded-full bg-accent-muted px-3 py-1 text-xs font-semibold text-accent">
           <SparkleIcon size={14} /> Personalized in ~2 minutes
         </span>
-        <h1 className="mt-4 text-[2rem] font-extrabold leading-[1.1] tracking-tight">
-          Your training &amp; nutrition, built around your life.
+      </div>
+
+      <div className="mt-8 flex-1">
+        <h1 className="text-center text-[2rem] font-bold leading-[1.1] tracking-tight text-foreground">
+          Your personal trainer,
+          <br />
+          <span className="text-gradient-gold">forged around you.</span>
         </h1>
-        <p className="mt-3 text-base text-muted-foreground">
+        <p className="mt-3 text-center text-base text-muted-foreground">
           Answer a few quick questions about your goals, gear, and preferences — we&apos;ll forge
           the rest.
         </p>
 
-        <ul className="mt-8 space-y-3">
+        <label className="mt-8 block">
+          <span className="text-xs font-semibold uppercase tracking-wide text-muted-foreground">
+            What should we call you?
+          </span>
+          <input
+            type="text"
+            value={name}
+            onChange={(e) => setName(e.target.value)}
+            placeholder="Your name (optional)"
+            autoComplete="given-name"
+            data-testid="onboarding-name"
+            className="mt-1.5 h-12 w-full rounded-[var(--radius-field)] border border-border bg-surface-2 px-4 text-base text-foreground outline-none transition-colors focus:border-accent"
+          />
+        </label>
+
+        <ul className="mt-6 space-y-3">
           {HIGHLIGHTS.map(({ Icon, title, body }) => (
             <li
               key={title}
@@ -67,7 +93,7 @@ export function WelcomeStep() {
       </div>
 
       <div className="mt-8 space-y-3">
-        <Button size="lg" block onClick={() => goTo('auth')}>
+        <Button size="lg" block glow onClick={start}>
           Get started
         </Button>
         <Link href="/login" className="block">

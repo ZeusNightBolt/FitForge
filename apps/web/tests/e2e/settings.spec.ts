@@ -1,9 +1,11 @@
 import { test, expect } from '@playwright/test';
-import { resetDemo } from './helpers';
+import { completeOnboarding, resetDemo } from './helpers';
 
 test.describe('settings', () => {
   test.beforeEach(async ({ page }) => {
     await resetDemo(page);
+    // (app) routes are gated (§5.3): complete onboarding so /settings is reachable.
+    await completeOnboarding(page);
   });
 
   test('renders and lets you edit an onboarding answer', async ({ page }) => {
@@ -14,6 +16,10 @@ test.describe('settings', () => {
     await expect(page.getByText('Primary goal')).toBeVisible();
     await expect(page.getByText('Experience')).toBeVisible();
     await expect(page.getByText('Diet')).toBeVisible();
+
+    // The Local Mode data section is present (§5.1).
+    await expect(page.getByRole('button', { name: /Export data \(JSON\)/ })).toBeVisible();
+    await expect(page.getByRole('button', { name: /Erase Local Mode data/ })).toBeVisible();
 
     // Edit the display name (an onboarding answer).
     const nameInput = page.getByRole('textbox').first();

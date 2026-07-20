@@ -3,6 +3,7 @@
 import * as React from 'react';
 import { ProgressBar } from '@/components/ui';
 import { ChevronLeftIcon } from '@/components/ui/icons';
+import { StepArt } from '@/components/illustrations';
 import { STEP_META, wizardProgress } from '@/lib/onboarding/steps';
 import type { OnboardingStep } from '@fitforge/shared/schemas';
 import { useOnboarding } from './OnboardingProvider';
@@ -45,6 +46,7 @@ export function OnboardingShell({ step }: { step: OnboardingStep }) {
       </header>
 
       <div className="flex flex-1 flex-col pt-4">
+        <StepArt step={step} size={52} className="mb-1 -ml-1" />
         <h1 className="text-2xl font-bold tracking-tight text-foreground">{meta.title}</h1>
         {meta.subtitle && <p className="mt-2 text-sm text-muted-foreground">{meta.subtitle}</p>}
         <div className="flex flex-1 flex-col pt-6">

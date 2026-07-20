@@ -165,8 +165,36 @@ export function saveDraft(draft: Partial<OnboardingDraft>, step: OnboardingStep)
   update((s) => ({ ...s, draft: { ...s.draft, ...draft }, onboardingStep: step }));
 }
 
+/** Merge a partial draft without moving the resume pointer (used by early name capture). */
+export function patchDraft(draft: Partial<OnboardingDraft>): void {
+  update((s) => ({ ...s, draft: { ...s.draft, ...draft } }));
+}
+
 export function loadDraft(): Partial<OnboardingDraft> {
   return load().draft;
+}
+
+/* ------------------------------------------------------- Local Mode export / import (§5.1) */
+
+/** Serialize the entire Local Mode store to a pretty JSON string (Settings → Export data). */
+export function exportState(): string {
+  return JSON.stringify(load(), null, 2);
+}
+
+/**
+ * Replace the entire Local Mode store from a JSON backup (Settings → Import data). Returns true
+ * on success. Rejects malformed payloads and anything without the expected `version` shape so a
+ * bad file never corrupts the browser store.
+ */
+export function importState(raw: string): boolean {
+  try {
+    const parsed = JSON.parse(raw) as Partial<DemoState>;
+    if (!parsed || typeof parsed !== 'object' || parsed.version !== 1) return false;
+    persist({ ...defaultState(), ...parsed } as DemoState);
+    return true;
+  } catch {
+    return false;
+  }
 }
 
 /* ---------------------------------------------------------------------------- food logging */

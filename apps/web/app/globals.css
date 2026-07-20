@@ -1,11 +1,8 @@
 @import 'tailwindcss';
 
-/*
- * FitForge design tokens — neutral surface + one accent (indigo), dark mode via
- * prefers-color-scheme (BLUEPRINT §1.3 mobile-first, WS-4 brief). Tokens are plain CSS custom
- * properties so the dark override cascades; Tailwind v4 `@theme` maps them to color utilities
- * (bg-surface, text-foreground, bg-accent, border-border, …).
- */
+/* FitForge "Forged Gold" tokens — DARK-FIRST. :root is the brand (dark);
+   prefers-color-scheme: light opts into the Ivory variant. Tailwind v4 @theme
+   maps vars to utilities (bg-surface, text-foreground, bg-accent, …). */
 @theme {
   --color-surface: var(--surface);
   --color-surface-2: var(--surface-2);
@@ -14,63 +11,115 @@
   --color-muted: var(--muted);
   --color-muted-foreground: var(--muted-foreground);
   --color-border: var(--border);
+  --color-border-strong: var(--border-strong);
   --color-accent: var(--accent);
+  --color-accent-hover: var(--accent-hover);
+  --color-accent-press: var(--accent-press);
   --color-accent-foreground: var(--accent-foreground);
   --color-accent-muted: var(--accent-muted);
+  --color-accent-soft: var(--accent-soft);
   --color-energy: var(--energy);
   --color-energy-muted: var(--energy-muted);
   --color-danger: var(--danger);
   --color-success: var(--success);
+  --color-info: var(--info);
 
-  --radius-card: 1.25rem;
+  --radius-card: 1.25rem;   /* 20px — cards, sheets */
+  --radius-field: 0.875rem; /* 14px — buttons, inputs (NEW) */
+  --radius-sm: 0.625rem;    /* 10px — thumbnails, small tiles (NEW) */
   --radius-chip: 9999px;
 
   --shadow-card: var(--elev-card);
   --shadow-pop: var(--elev-pop);
+  --shadow-glow: var(--glow-gold);
 
-  --font-sans:
-    ui-sans-serif, system-ui, -apple-system, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+  --font-sans: var(--font-inter), ui-sans-serif, system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
+  --font-display: var(--font-space-grotesk), var(--font-sans);
 }
 
 :root {
-  --surface: #f3f4f7; /* page background */
-  --surface-2: #ffffff; /* raised cards */
-  --elevated: #ffffff;
-  --foreground: #0e1017;
-  --muted: #eef0f4;
-  --muted-foreground: #5a6474;
-  --border: #e7e9ef;
-  --accent: #5546ff;
-  --accent-foreground: #ffffff;
-  --accent-muted: #ecebff;
-  --energy: #f5820b;
-  --energy-muted: #fff2e2;
-  --danger: #e5484d;
-  --success: #12a150;
-  --elev-card: 0 1px 2px rgba(14, 16, 23, 0.04), 0 6px 20px -8px rgba(14, 16, 23, 0.1);
-  --elev-pop: 0 12px 40px -10px rgba(14, 16, 23, 0.22);
+  color-scheme: dark;
+  /* ── dark (brand default) ─────────────────────────── */
+  --surface: #0a0d14;
+  --surface-2: #121826;
+  --elevated: #1a2233;
+  --foreground: #f4f1e8;
+  --muted: #1c2333;
+  --muted-foreground: #9aa3b5;
+  --border: #242d40;
+  --border-strong: #33405a;
+  --accent: #e4b84d;
+  --accent-hover: #f0c65f;
+  --accent-press: #c99b2e;
+  --accent-foreground: #171207;
+  --accent-muted: #2a2210;
+  --accent-soft: #efcf7e;
+  --energy: #ff8a4d;
+  --energy-muted: #2a1a10;
+  --danger: #ff6b70;
+  --success: #3ecf8e;
+  --info: #7cb4ff;
+
+  --elev-card: 0 1px 0 rgba(255, 255, 255, 0.03) inset, 0 1px 2px rgba(0, 0, 0, 0.5),
+    0 10px 28px -14px rgba(0, 0, 0, 0.8);
+  --elev-pop: 0 16px 48px -12px rgba(0, 0, 0, 0.75), 0 0 0 1px rgba(255, 255, 255, 0.04);
+  --glow-gold: 0 0 0 1px rgba(228, 184, 77, 0.28), 0 4px 24px -6px rgba(228, 184, 77, 0.35);
+
+  --gradient-gold: linear-gradient(135deg, #f6d883 0%, #e4b84d 45%, #b8862c 100%);
+  --gradient-gold-text: linear-gradient(100deg, #f6d883 10%, #e4b84d 55%, #d3a238 90%);
+  --gradient-ember-bg: radial-gradient(60% 45% at 18% 0%, rgba(228, 184, 77, 0.14), transparent 70%);
+  --muscle-base: #1b2231;   /* unhighlighted muscle fill (muscle map) */
+  --muscle-line: #2c3549;   /* muscle separation strokes */
+  --body-outline: #3a4356;  /* silhouette outline */
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --surface: #090b10;
-    --surface-2: #14171f;
-    --elevated: #191d27;
-    --foreground: #f3f5f9;
-    --muted: #1c202b;
-    --muted-foreground: #98a2b3;
-    --border: #262c38;
-    --accent: #8b7dff;
-    --accent-foreground: #0a0a0c;
-    --accent-muted: #211d3d;
-    --energy: #ffa53a;
-    --energy-muted: #2a2013;
-    --danger: #ff6169;
-    --success: #3ecf8e;
-    --elev-card: 0 1px 2px rgba(0, 0, 0, 0.4), 0 8px 24px -10px rgba(0, 0, 0, 0.6);
-    --elev-pop: 0 16px 48px -12px rgba(0, 0, 0, 0.7);
-  }
+/* Dark "Forged Gold" is THE default brand (above). Light Ivory is opt-in only
+   via <html data-theme="light"> — we never auto-switch on OS preference. */
+:root[data-theme='light'] {
+    --surface: #f6f4ee;
+    --surface-2: #ffffff;
+    --elevated: #ffffff;
+    --foreground: #14171f;
+    --muted: #ece9df;
+    --muted-foreground: #5b6372;
+    --border: #e3dfd2;
+    --border-strong: #c9c3b0;
+    --accent: #8a6710;        /* bronze — AA on light */
+    --accent-hover: #a37c15;
+    --accent-press: #6f530c;
+    --accent-foreground: #ffffff;
+    --accent-muted: #f3e8c8;
+    --accent-soft: #b8862c;
+    --energy: #d85f1e;
+    --energy-muted: #fdeadd;
+    --danger: #d92d33;
+    --success: #0f8a4c;
+    --info: #2668c5;
+    --elev-card: 0 1px 2px rgba(20, 23, 31, 0.05), 0 8px 24px -10px rgba(20, 23, 31, 0.12);
+    --elev-pop: 0 16px 48px -12px rgba(20, 23, 31, 0.25);
+    --glow-gold: 0 0 0 1px rgba(138, 103, 16, 0.25), 0 4px 20px -6px rgba(138, 103, 16, 0.3);
+    --gradient-gold: linear-gradient(135deg, #d3a238 0%, #a37c15 60%, #8a6710 100%);
+    --gradient-gold-text: linear-gradient(100deg, #a37c15, #8a6710);
+    --gradient-ember-bg: radial-gradient(60% 45% at 18% 0%, rgba(184, 134, 44, 0.1), transparent 70%);
+    --muscle-base: #e6e2d5;
+    --muscle-line: #cfc9b8;
+    --body-outline: #a49d87;
 }
+
+/* utility classes the primitives lean on */
+.text-gradient-gold {
+  background: var(--gradient-gold-text);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+.border-gradient-gold {
+  border: 1px solid transparent;
+  background:
+    linear-gradient(var(--surface-2), var(--surface-2)) padding-box,
+    linear-gradient(160deg, rgba(228, 184, 77, 0.55), rgba(228, 184, 77, 0.08) 70%) border-box;
+}
+.tabular { font-variant-numeric: tabular-nums; }
 
 html {
   -webkit-text-size-adjust: 100%;

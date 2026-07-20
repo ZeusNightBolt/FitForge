@@ -9,6 +9,7 @@
     "start": "next start",
     "lint": "next lint",
     "typecheck": "tsc --noEmit",
+    "assets:render": "node scripts/render-brand-assets.mjs",
     "test:e2e": "playwright test"
   },
   "dependencies": {

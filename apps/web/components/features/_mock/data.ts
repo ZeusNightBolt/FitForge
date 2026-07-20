@@ -218,7 +218,8 @@ export interface PreviousSet {
 
 /* ------------------------------------------------------------------------- user profile */
 export interface Profile {
-  display_name: string;
+  /** Optional self-chosen name (Local Mode). Null when the user skipped name capture. */
+  display_name: string | null;
   sex: 'male' | 'female' | 'other' | 'prefer_not_to_say';
   birthdate: string;
   height_cm: number;
@@ -467,11 +468,12 @@ export function mockSuggestSubstitutes(
 }
 
 /* ====================================================================================== */
-/*  User plane — a single mock "current user" (blend of persona P2 "Gym-rat Gabe", §2.1)   */
+/*  User plane — default profile shape used for Settings fallbacks & SSR snapshots.        */
+/*  No hardcoded identity: the real name comes from Local Mode name capture (§5.4).         */
 /* ====================================================================================== */
 
 export const MOCK_PROFILE: Profile = {
-  display_name: 'Gabe',
+  display_name: null,
   sex: 'male',
   birthdate: '1999-03-14',
   height_cm: 180,

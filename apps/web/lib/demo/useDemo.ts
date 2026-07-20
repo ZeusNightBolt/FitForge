@@ -41,9 +41,14 @@ export function useNutritionTargets(): NutritionTargets {
   return state.targets ?? mockNutritionTargets();
 }
 
+/**
+ * Greeting-ready display name. Once onboarding is complete, an un-named athlete falls back to
+ * "Athlete" (§5.4); before completion (pre-gate SSR / fresh state) it is empty so chrome can show
+ * its own neutral placeholder.
+ */
 export function useProfileName(): string {
   const state = useDemoState();
-  return state.profile?.display_name ?? '';
+  return state.profile?.display_name ?? (state.completedAt ? 'Athlete' : '');
 }
 
 /** Whether the user has finished onboarding (drives first-run empty states vs. real data). */

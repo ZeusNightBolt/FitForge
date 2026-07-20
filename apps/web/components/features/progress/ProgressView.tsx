@@ -9,8 +9,15 @@
 import * as React from 'react';
 import { Button, Card, CardTitle, Chip, Sheet } from '@/components/ui';
 import { LineChart } from '@/components/features/progress/charts';
-import { ScaleIcon, TrendingUpIcon, PlusIcon, TargetIcon } from '@/components/ui/icons';
+import { ScaleIcon, TrendingUpIcon, PlusIcon, TargetIcon, TrophyIcon } from '@/components/ui/icons';
 import { useWeights } from '@/lib/demo/useDemo';
+import { MuscleMap, MUSCLE_NAMES, type MuscleSlug } from '@/components/illustrations';
+import {
+  useWorkoutSessions,
+  weeklyHeat,
+  setsPerMuscleLast7Days,
+  computePRs,
+} from '@/components/features/shared/workoutLog';
 import type { ProgressPhoto, PhotoPose } from '@/components/features/_mock/data';
 
 type Tab = 'weight' | 'measurements' | 'prs' | 'photos';
@@ -52,7 +59,8 @@ export function ProgressView() {
   const [tab, setTab] = React.useState<Tab>('weight');
   return (
     <div className="space-y-5">
-      <h1 className="text-2xl font-extrabold tracking-tight">Progress</h1>
+      <h1 className="font-display text-2xl font-bold tracking-tight">Progress</h1>
+      <WeeklyVolumeHeatmap />
       <div className="flex gap-2 overflow-x-auto pb-1">
         {TABS.map((t) => (
           <Chip key={t.id} selected={tab === t.id} onClick={() => setTab(t.id)}>
@@ -65,6 +73,67 @@ export function ProgressView() {
       {tab === 'prs' && <PrTab />}
       {tab === 'photos' && <PhotosTab />}
     </div>
+  );
+}
+
+/**
+ * Weekly volume heatmap (§6 P1-7) — the "my body as a dashboard" signature. Colours each muscle by
+ * how many weighted sets it absorbed over the last 7 days (primary set = 1, secondary = 0.5),
+ * mapped to gold saturation via the frozen MuscleMap `heat` prop.
+ */
+function WeeklyVolumeHeatmap() {
+  const sessions = useWorkoutSessions();
+  const heat = React.useMemo(() => weeklyHeat(sessions), [sessions]);
+  const perMuscle = React.useMemo(() => setsPerMuscleLast7Days(sessions), [sessions]);
+  const worked = Object.keys(heat).length > 0;
+
+  // Top few worked muscles for the caption.
+  const top = React.useMemo(
+    () =>
+      (Object.entries(perMuscle) as [MuscleSlug, number][])
+        .sort((a, b) => b[1] - a[1])
+        .slice(0, 4),
+    [perMuscle],
+  );
+
+  return (
+    <Card premium className="shadow-[var(--shadow-card)]">
+      <div className="flex items-baseline justify-between">
+        <CardTitle>Weekly volume</CardTitle>
+        <span className="text-xs font-medium text-muted-foreground">last 7 days</span>
+      </div>
+      <p className="mt-1 text-sm text-muted-foreground">
+        {worked
+          ? 'Where your training landed this week — brighter gold means more sets.'
+          : 'Log a workout and your muscle map lights up with the week’s volume.'}
+      </p>
+      <div className="mt-3 flex items-center justify-center">
+        <MuscleMap
+          view="both"
+          heat={heat}
+          height={210}
+          className="mx-auto"
+        />
+      </div>
+      {worked ? (
+        <div className="mt-3 flex flex-wrap justify-center gap-2">
+          {top.map(([slug, sets]) => (
+            <span
+              key={slug}
+              className="rounded-chip bg-accent-muted px-2.5 py-0.5 text-xs font-semibold tabular-nums text-accent"
+            >
+              {MUSCLE_NAMES[slug]} · {sets % 1 === 0 ? sets : sets.toFixed(1)}
+            </span>
+          ))}
+        </div>
+      ) : (
+        <div className="mt-2 flex items-center justify-center gap-2 text-[11px] text-muted-foreground">
+          <span>Fresh</span>
+          <span className="h-2 w-24 rounded-full bg-gradient-to-r from-muted to-accent" />
+          <span>High volume</span>
+        </div>
+      )}
+    </Card>
   );
 }
 
@@ -183,12 +252,51 @@ function MeasurementsTab() {
 }
 
 function PrTab() {
+  const sessions = useWorkoutSessions();
+  const prs = React.useMemo(() => computePRs(sessions), [sessions]);
+
+  if (prs.length === 0) {
+    return (
+      <EmptyState
+        icon={<TrendingUpIcon size={26} />}
+        title="No personal records yet"
+        body="Finish a logged workout and your best sets — plus an estimated 1-rep max (Epley) — show up here automatically."
+      />
+    );
+  }
+
   return (
-    <EmptyState
-      icon={<TrendingUpIcon size={26} />}
-      title="No personal records yet"
-      body="Finish a logged workout and your best sets — plus an estimated 1-rep max (Epley) — show up here automatically."
-    />
+    <Card className="!p-0 shadow-[var(--shadow-card)]">
+      <div className="flex items-center gap-2 border-b border-border px-4 py-3 text-accent">
+        <TrophyIcon size={18} />
+        <CardTitle>Personal records</CardTitle>
+      </div>
+      <ul>
+        {prs.map((p, i) => (
+          <li
+            key={p.exercise_id}
+            className="flex items-center justify-between gap-3 border-b border-border px-4 py-3 last:border-b-0"
+          >
+            <span className="flex min-w-0 items-center gap-2">
+              <span className="w-5 shrink-0 text-center text-xs font-bold tabular-nums text-muted-foreground">
+                {i + 1}
+              </span>
+              <span className="truncate text-sm font-semibold text-foreground">
+                {p.exercise_name}
+              </span>
+            </span>
+            <span className="shrink-0 text-right">
+              <span className="block font-display text-base font-bold tabular-nums text-accent">
+                {Math.round(p.best_e1rm)} kg
+              </span>
+              <span className="block text-[11px] tabular-nums text-muted-foreground">
+                {p.best_weight_kg}kg × {p.best_reps} · e1RM
+              </span>
+            </span>
+          </li>
+        ))}
+      </ul>
+    </Card>
   );
 }
 

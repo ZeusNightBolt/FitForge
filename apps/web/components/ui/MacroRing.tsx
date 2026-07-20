@@ -10,10 +10,14 @@ export interface MacroRingProps {
   label?: string;
   /** center caption, defaults to `value / target` */
   caption?: React.ReactNode;
+  /** small line rendered inside the ring, just under the caption (e.g. a unit like "left") */
+  sublabel?: React.ReactNode;
   size?: number;
   stroke?: number;
   /** ring color CSS value; defaults to the accent token */
   color?: string;
+  /** track (unfilled) color CSS value; defaults to the muted token */
+  trackColor?: string;
   className?: string;
 }
 
@@ -26,9 +30,11 @@ export function MacroRing({
   target,
   label,
   caption,
+  sublabel,
   size = 120,
   stroke = 10,
   color = 'var(--color-accent)',
+  trackColor = 'var(--color-muted)',
   className,
 }: MacroRingProps) {
   const radius = (size - stroke) / 2;
@@ -44,7 +50,7 @@ export function MacroRing({
           cy={size / 2}
           r={radius}
           fill="none"
-          stroke="var(--color-muted)"
+          stroke={trackColor}
           strokeWidth={stroke}
         />
         <circle
@@ -63,11 +69,25 @@ export function MacroRing({
           y="50%"
           textAnchor="middle"
           dominantBaseline="central"
-          className="fill-foreground text-lg font-bold"
-          style={{ fontSize: size * 0.16 }}
+          dy={sublabel != null ? -size * 0.06 : 0}
+          className="fill-foreground font-display font-bold tabular"
+          style={{ fontSize: size * 0.24 }}
         >
           {caption ?? `${Math.round(value)}`}
         </text>
+        {sublabel != null && (
+          <text
+            x="50%"
+            y="50%"
+            textAnchor="middle"
+            dominantBaseline="central"
+            dy={size * 0.13}
+            className="fill-muted-foreground font-semibold uppercase"
+            style={{ fontSize: size * 0.1, letterSpacing: '0.06em' }}
+          >
+            {sublabel}
+          </text>
+        )}
       </svg>
       {label && <span className="mt-1 text-xs font-medium text-muted-foreground">{label}</span>}
     </div>

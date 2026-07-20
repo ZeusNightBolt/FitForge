@@ -7,28 +7,37 @@
  */
 import * as React from 'react';
 import { Button, Card, CardTitle, Chip, SearchInput, Sheet, MacroRing } from '@/components/ui';
-import { PlusIcon, SearchIcon, XIcon } from '@/components/ui/icons';
+import { PlusIcon, SearchIcon, XIcon, RepeatIcon } from '@/components/ui/icons';
 import {
   FOODS,
   RECENT_FOODS,
   MEAL_SLOTS,
   MOCK_MEAL_TEMPLATES,
   mockSearchFoods,
+  mockFoodById,
   computeMacros,
   defaultMealSlot,
+  todayISO,
   type FoodSearchRow,
   type NutritionLog,
   type MealSlot,
 } from '@/components/features/_mock/data';
-import { useNutritionTargets, useTodayLogs } from '@/lib/demo/useDemo';
+import { useDemoState, useNutritionTargets, useTodayLogs } from '@/lib/demo/useDemo';
+import { cn } from '@/lib/utils';
 
 let logSeq = 1000;
 const genLogId = () => `nl-new-${logSeq++}`;
+
+/** ISO date (UTC, matching todayISO) for N days before today. */
+function isoDaysAgo(n: number): string {
+  return new Date(Date.now() - n * 86400000).toISOString().slice(0, 10);
+}
 
 export function NutritionView() {
   // DEMO MODE: targets + today's logs come from the demo store (persisted to localStorage).
   const targets = useNutritionTargets();
   const { logs, setLogs } = useTodayLogs();
+  const state = useDemoState();
   const [slotForSearch, setSlotForSearch] = React.useState<MealSlot | null>(null);
   const [pickFood, setPickFood] = React.useState<{ food: FoodSearchRow; slot: MealSlot } | null>(
     null,
@@ -45,8 +54,39 @@ export function NutritionView() {
     { kcal: 0, protein_g: 0, carbs_g: 0, fat_g: 0 },
   );
 
+  // Remaining = Goal − Food (MFP's one-formula headline). Can go negative → "over".
+  const remainingKcal = Math.round(targets.kcal_target - totals.kcal);
+  const remainingProtein = Math.round(targets.protein_g_target - totals.protein_g);
+
+  // P2-13: yesterday's logs (for one-tap copy) + the 8 most-frequent foods (chips above search).
+  const yesterdayISO = isoDaysAgo(1);
+  const yesterdayLogs = state.logsByDate[yesterdayISO] ?? [];
+
+  const frequentFoods = React.useMemo<FoodSearchRow[]>(() => {
+    const counts = new Map<string, number>();
+    for (const dayLogs of Object.values(state.logsByDate)) {
+      for (const l of dayLogs) {
+        if (l.food_id) counts.set(l.food_id, (counts.get(l.food_id) ?? 0) + 1);
+      }
+    }
+    const ranked = [...counts.entries()]
+      .sort((a, b) => b[1] - a[1])
+      .map(([id]) => mockFoodById(id))
+      .filter((f): f is FoodSearchRow => f != null);
+    // Fresh users have no history → fall back to the curated recents so the strip still adds value.
+    return (ranked.length > 0 ? ranked : RECENT_FOODS).slice(0, 8);
+  }, [state.logsByDate]);
+
   function addLog(log: NutritionLog) {
     setLogs((prev) => [...prev, log]);
+  }
+  function copyYesterday() {
+    const src = state.logsByDate[yesterdayISO] ?? [];
+    if (src.length === 0) return;
+    setLogs((prev) => [
+      ...prev,
+      ...src.map((l) => ({ ...l, id: genLogId(), logged_on: todayISO() })),
+    ]);
   }
   function removeLog(id: string) {
     setLogs((prev) => prev.filter((l) => l.id !== id));
@@ -75,27 +115,91 @@ export function NutritionView() {
   return (
     <div className="space-y-5">
       <header className="flex items-center justify-between">
-        <h1 className="text-2xl font-extrabold tracking-tight">Nutrition</h1>
+        <h1 className="font-display text-2xl font-bold tracking-tight">Nutrition</h1>
         <span className="text-sm text-muted-foreground">Today</span>
       </header>
 
-      {/* Day summary */}
-      <Card className="shadow-[var(--shadow-card)]">
-        <div className="flex items-center gap-5">
+      {/* Day summary — "Remaining = Goal − Food" (P2-12): gold protein ring + ivory kcal ring,
+          per-macro %-of-target bars (Cronometer pattern). */}
+      <Card premium>
+        <p className="text-[11px] font-semibold uppercase tracking-[0.06em] text-muted-foreground">
+          Remaining = Goal − Food
+        </p>
+
+        <div className="mt-3 flex items-center justify-center gap-6">
+          {/* Calories ring — ivory (kcal), center shows what's left */}
           <MacroRing
             value={totals.kcal}
             target={targets.kcal_target}
-            size={112}
-            stroke={11}
-            label={`of ${targets.kcal_target} kcal`}
+            size={132}
+            stroke={12}
+            color="var(--color-foreground)"
+            caption={remainingKcal.toLocaleString()}
+            sublabel={remainingKcal < 0 ? 'over' : 'kcal left'}
+            label="Calories"
           />
-          <dl className="flex-1 space-y-2 text-sm">
-            <MacroRow label="Protein" value={totals.protein_g} target={targets.protein_g_target} color="var(--color-accent)" />
-            <MacroRow label="Carbs" value={totals.carbs_g} target={targets.carbs_g_target} color="var(--color-success)" />
-            <MacroRow label="Fat" value={totals.fat_g} target={targets.fat_g_target} color="var(--color-energy)" />
-          </dl>
+          {/* Protein ring — signature gold */}
+          <MacroRing
+            value={totals.protein_g}
+            target={targets.protein_g_target}
+            size={100}
+            stroke={10}
+            color="var(--color-accent)"
+            caption={`${Math.max(0, remainingProtein)}g`}
+            sublabel="protein left"
+            label="Protein"
+          />
         </div>
+
+        {/* Goal − Food = Remaining, spelled out for MFP-grade clarity */}
+        <div className="mt-4 grid grid-cols-3 gap-2 rounded-field bg-surface/60 px-3 py-2.5 text-center">
+          <FormulaCell label="Goal" value={targets.kcal_target} />
+          <FormulaCell label="Food" value={Math.round(totals.kcal)} />
+          <FormulaCell
+            label="Remaining"
+            value={remainingKcal}
+            emphasize
+            over={remainingKcal < 0}
+          />
+        </div>
+
+        {/* Per-macro %-of-target bars (Cronometer) */}
+        <dl className="mt-4 space-y-2.5">
+          <MacroRow label="Protein" value={totals.protein_g} target={targets.protein_g_target} color="var(--color-accent)" />
+          <MacroRow label="Carbs" value={totals.carbs_g} target={targets.carbs_g_target} color="var(--color-success)" />
+          <MacroRow label="Fat" value={totals.fat_g} target={targets.fat_g_target} color="var(--color-energy)" />
+        </dl>
       </Card>
+
+      {/* Quick add strip — copy yesterday + most-frequent foods, above the food search (P2-13) */}
+      {(yesterdayLogs.length > 0 || frequentFoods.length > 0) && (
+        <Card className="!py-3">
+          <div className="mb-2 flex items-center justify-between">
+            <CardTitle className="text-sm">Quick log</CardTitle>
+            {yesterdayLogs.length > 0 && (
+              <button
+                type="button"
+                data-testid="copy-yesterday"
+                onClick={copyYesterday}
+                className="inline-flex items-center gap-1.5 rounded-field px-2.5 py-1.5 text-sm font-semibold text-accent transition-colors hover:bg-accent-muted"
+              >
+                <RepeatIcon size={16} /> Copy yesterday
+              </button>
+            )}
+          </div>
+          <div className="flex flex-wrap gap-2">
+            {frequentFoods.map((f) => (
+              <Chip
+                key={f.food_id}
+                leading={<PlusIcon size={14} />}
+                onClick={() => setPickFood({ food: f, slot: defaultMealSlot() })}
+              >
+                {f.name}
+              </Chip>
+            ))}
+          </div>
+        </Card>
+      )}
 
       {/* First-run guidance — shown until the user logs their first food */}
       {logs.length === 0 && (
@@ -254,6 +358,34 @@ export function NutritionView() {
   );
 }
 
+function FormulaCell({
+  label,
+  value,
+  emphasize,
+  over,
+}: {
+  label: string;
+  value: number;
+  emphasize?: boolean;
+  over?: boolean;
+}) {
+  return (
+    <div>
+      <p className="text-[10px] font-semibold uppercase tracking-[0.06em] text-muted-foreground">
+        {label}
+      </p>
+      <p
+        className={cn(
+          'font-display tabular text-lg font-bold',
+          over ? 'text-energy' : emphasize ? 'text-accent' : 'text-foreground',
+        )}
+      >
+        {value.toLocaleString()}
+      </p>
+    </div>
+  );
+}
+
 function MacroRow({
   label,
   value,
@@ -265,17 +397,25 @@ function MacroRow({
   target: number;
   color: string;
 }) {
-  const pct = Math.min(100, Math.round((value / Math.max(1, target)) * 100));
+  const rawPct = Math.round((value / Math.max(1, target)) * 100);
+  const pct = Math.min(100, rawPct);
+  const over = rawPct > 100;
   return (
     <div>
-      <div className="mb-1 flex justify-between text-xs">
+      <div className="mb-1 flex items-baseline justify-between text-xs">
         <span className="font-medium text-foreground">{label}</span>
-        <span className="tabular-nums text-muted-foreground">
+        <span className="tabular text-muted-foreground">
           {Math.round(value)} / {target} g
+          <span className={cn('ml-1.5 font-semibold', over ? 'text-energy' : 'text-foreground')}>
+            {rawPct}%
+          </span>
         </span>
       </div>
       <div className="h-2 w-full overflow-hidden rounded-full bg-muted">
-        <div className="h-full rounded-full" style={{ width: `${pct}%`, backgroundColor: color }} />
+        <div
+          className="h-full rounded-full transition-[width] duration-300"
+          style={{ width: `${pct}%`, backgroundColor: over ? 'var(--color-energy)' : color }}
+        />
       </div>
     </div>
   );

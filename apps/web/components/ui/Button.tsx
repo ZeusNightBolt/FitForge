@@ -10,25 +10,31 @@ export interface ButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElemen
   /** stretch to full width — used for the bottom-anchored primary CTA (§1.3) */
   block?: boolean;
   loading?: boolean;
+  /**
+   * Gold glow (§2.4) — reserved for the ONE hero action on a screen (landing/onboarding primary
+   * CTA, active workout's current-set action, PR moments). Never two glows on screen.
+   */
+  glow?: boolean;
 }
 
 const VARIANTS: Record<Variant, string> = {
+  // Gold primary: near-black ink text on gold — the highest-contrast, eye-drawing element (§2.1).
   primary:
-    'bg-accent text-accent-foreground hover:opacity-90 active:opacity-80 disabled:opacity-50',
+    'bg-accent text-accent-foreground hover:bg-accent-hover active:bg-accent-press disabled:opacity-50',
   secondary:
-    'bg-surface-2 text-foreground border border-border hover:bg-muted active:opacity-80 disabled:opacity-50',
+    'bg-surface-2 text-foreground border border-border hover:border-border-strong hover:bg-elevated active:opacity-80 disabled:opacity-50',
   ghost: 'bg-transparent text-foreground hover:bg-surface-2 active:opacity-80 disabled:opacity-50',
   danger: 'bg-danger text-white hover:opacity-90 active:opacity-80 disabled:opacity-50',
 };
 
 const SIZES: Record<Size, string> = {
-  sm: 'h-9 px-3 text-sm rounded-lg',
-  md: 'h-11 px-4 text-base rounded-xl',
-  lg: 'h-14 px-6 text-base rounded-2xl',
+  sm: 'h-9 px-3 text-sm rounded-field',
+  md: 'h-11 px-4 text-base rounded-field',
+  lg: 'h-14 px-6 text-base rounded-field',
 };
 
 export const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(function Button(
-  { variant = 'primary', size = 'md', block, loading, className, children, disabled, ...rest },
+  { variant = 'primary', size = 'md', block, loading, glow, className, children, disabled, ...rest },
   ref,
 ) {
   return (
@@ -37,10 +43,12 @@ export const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(function 
       disabled={disabled || loading}
       className={cn(
         'inline-flex select-none items-center justify-center gap-2 font-medium',
-        'transition-[opacity,background-color] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent focus-visible:ring-offset-2 focus-visible:ring-offset-surface',
+        'transition-[opacity,background-color,box-shadow,border-color] duration-150 ease-out',
+        'focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent',
         'disabled:cursor-not-allowed touch-manipulation',
         VARIANTS[variant],
         SIZES[size],
+        glow && 'shadow-[var(--shadow-glow)] hover:shadow-[var(--shadow-glow)]',
         block && 'w-full',
         className,
       )}

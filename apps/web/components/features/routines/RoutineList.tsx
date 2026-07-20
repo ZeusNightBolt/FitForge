@@ -38,7 +38,7 @@ export function RoutineList() {
   return (
     <div className="space-y-5">
       <header className="flex items-center justify-between">
-        <h1 className="text-2xl font-extrabold tracking-tight">Workouts</h1>
+        <h1 className="font-display text-2xl font-bold tracking-tight">Workouts</h1>
         <Link href="/exercises" className="text-sm font-medium text-accent">
           Browse exercises
         </Link>
@@ -53,7 +53,7 @@ export function RoutineList() {
                   <div className="flex items-center gap-2">
                     <CardTitle className="truncate">{r.name}</CardTitle>
                     {r.is_active && (
-                      <span className="shrink-0 rounded-full bg-success/15 px-2 py-0.5 text-[11px] font-semibold text-success">
+                      <span className="shrink-0 rounded-chip bg-accent-muted px-2 py-0.5 text-[11px] font-semibold text-accent">
                         Active
                       </span>
                     )}

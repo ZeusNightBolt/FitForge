@@ -8,20 +8,29 @@
 import * as React from 'react';
 import Link from 'next/link';
 import { Card, CardTitle, Button, MacroRing } from '@/components/ui';
-import { PlusIcon, ScaleIcon, UtensilsIcon, ArrowRightIcon } from '@/components/ui/icons';
+import { PlusIcon, ScaleIcon, UtensilsIcon, ArrowRightIcon, FlameSolidIcon } from '@/components/ui/icons';
 import { todaysRoutineDay, WEEKDAY_LABELS, blueprintWeekday } from '@/components/features/_mock/data';
 import {
   useActiveRoutine,
   useNutritionTargets,
   useProfileName,
   useTodayLogs,
+  useDemoState,
 } from '@/lib/demo/useDemo';
+import { useWorkoutSessions, weeklyStreak } from '@/components/features/shared/workoutLog';
 
 export function TodayView() {
   const routine = useActiveRoutine();
   const day = todaysRoutineDay(routine);
   const targets = useNutritionTargets();
   const displayName = useProfileName();
+  const state = useDemoState();
+  const sessions = useWorkoutSessions();
+  const targetDays = state.profile?.days_per_week ?? 3;
+  const streak = React.useMemo(
+    () => weeklyStreak(sessions, targetDays),
+    [sessions, targetDays],
+  );
   const { logs } = useTodayLogs();
   const nutrition = logs.reduce(
     (a, l) => ({
@@ -59,6 +68,14 @@ export function TodayView() {
           {dateLabel}
         </div>
       </header>
+
+      {/* Weekly-target streak (§6 P1-11) */}
+      <StreakCard
+        streak={streak.streak}
+        daysThisWeek={streak.daysThisWeek}
+        target={streak.target}
+        metThisWeek={streak.metThisWeek}
+      />
 
       {/* Today's workout */}
       {day ? (
@@ -190,5 +207,75 @@ export function TodayView() {
         </div>
       </Card>
     </div>
+  );
+}
+
+/**
+ * Weekly-target streak card (§6 P1-11). Counts consecutive weeks hitting the training target
+ * (N-of-target days), not a fragile daily chain; one free "forge freeze" per streak is already
+ * applied in {@link weeklyStreak}. Ember flame + gold, with the blueprint copy.
+ */
+function StreakCard({
+  streak,
+  daysThisWeek,
+  target,
+  metThisWeek,
+}: {
+  streak: number;
+  daysThisWeek: number;
+  target: number;
+  metThisWeek: boolean;
+}) {
+  const active = streak > 0 || daysThisWeek > 0;
+  return (
+    <Card premium className="shadow-[var(--shadow-card)]">
+      <div className="flex items-center gap-4">
+        <span
+          className={
+            'grid h-12 w-12 shrink-0 place-items-center rounded-full ' +
+            (active ? 'bg-energy-muted text-energy' : 'bg-muted text-muted-foreground')
+          }
+        >
+          <FlameSolidIcon size={26} />
+        </span>
+        <div className="min-w-0 flex-1">
+          <p className="font-display text-lg font-bold tracking-tight">
+            {streak > 0 ? (
+              <>
+                Week streak: <span className="text-gradient-gold">{streak}</span>
+              </>
+            ) : (
+              'Start your streak'
+            )}
+          </p>
+          <p className="text-sm text-muted-foreground">
+            {streak > 0
+              ? 'keep the forge hot.'
+              : `Train ${target} days this week to light the forge.`}
+          </p>
+        </div>
+      </div>
+      <div className="mt-3 flex items-center gap-1.5" aria-hidden>
+        {Array.from({ length: target }).map((_, i) => (
+          <span
+            key={i}
+            className={
+              'h-2 flex-1 rounded-full ' + (i < daysThisWeek ? 'bg-accent' : 'bg-muted')
+            }
+          />
+        ))}
+      </div>
+      <p className="mt-2 text-xs text-muted-foreground tabular-nums">
+        {metThisWeek ? (
+          <span className="font-semibold text-success">
+            Target hit — {daysThisWeek}/{target} days this week
+          </span>
+        ) : (
+          <>
+            Trained {daysThisWeek} of {target} days this week
+          </>
+        )}
+      </p>
+    </Card>
   );
 }

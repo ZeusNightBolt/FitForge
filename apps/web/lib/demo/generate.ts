@@ -183,8 +183,9 @@ function profileForDraft(draft: Partial<OnboardingDraft>): Profile {
     (draft.primary_goal ?? 'general_health') as GoalType,
     (draft.experience_level ?? 'beginner') as ExperienceLevel,
   );
+  const name = draft.display_name?.trim();
   return {
-    display_name: 'Athlete',
+    display_name: name ? name : null,
     sex: (draft.sex ?? 'prefer_not_to_say') as Profile['sex'],
     birthdate: draft.birthdate ?? '1990-01-01',
     height_cm: draft.height_cm ?? 170,

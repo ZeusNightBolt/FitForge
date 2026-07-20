@@ -1,9 +1,12 @@
 import { test, expect } from '@playwright/test';
-import { resetDemo } from './helpers';
+import { resetDemo, completeOnboarding } from './helpers';
 
 test.describe('progress', () => {
   test.beforeEach(async ({ page }) => {
     await resetDemo(page);
+    // The (app) gate redirects non-onboarded visits to /onboarding/welcome, so
+    // establish a completed onboarding before deep-linking into /progress.
+    await completeOnboarding(page);
   });
 
   test('renders with weight chart and switchable tabs', async ({ page }) => {

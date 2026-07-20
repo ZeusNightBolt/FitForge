@@ -28,8 +28,11 @@ import {
   BuildingIcon,
   PlaneIcon,
   LogOutIcon,
+  ExportIcon,
+  ImportIcon,
+  TrashIcon,
 } from '@/components/ui/icons';
-import { resetDemo } from '@/lib/demo/store';
+import { resetDemo, exportState, importState, getState } from '@/lib/demo/store';
 import {
   MOCK_PROFILE,
   MOCK_NUTRITION_PROFILE,
@@ -90,10 +93,36 @@ const ALLERGENS = ['peanut', 'tree_nut', 'dairy', 'gluten', 'egg', 'soy', 'shell
 
 export function SettingsView() {
   const router = useRouter();
+  const fileInputRef = React.useRef<HTMLInputElement>(null);
+  const [importStatus, setImportStatus] = React.useState<'idle' | 'ok' | 'error'>('idle');
 
   function resetAndLeave() {
     resetDemo();
     router.push('/');
+  }
+
+  /** Export the whole Local Mode store as a downloadable JSON backup (§5.1 / P2-16). */
+  function exportData() {
+    const blob = new Blob([exportState()], { type: 'application/json' });
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = `fitforge-backup-${new Date().toISOString().slice(0, 10)}.json`;
+    document.body.appendChild(a);
+    a.click();
+    a.remove();
+    URL.revokeObjectURL(url);
+  }
+
+  /** Restore the store from a user-selected JSON backup, then reload into Today. */
+  async function importData(file: File) {
+    const text = await file.text();
+    if (importState(text)) {
+      setImportStatus('ok');
+      router.push('/today');
+    } else {
+      setImportStatus('error');
+    }
   }
   const [primaryGoal, setPrimaryGoal] = React.useState<GoalType>(MOCK_PROFILE.primary_goal);
   const [secondaryGoal, setSecondaryGoal] = React.useState<GoalType | null>(
@@ -105,8 +134,13 @@ export function SettingsView() {
   const [preferredDays, setPreferredDays] = React.useState<number[]>(MOCK_PROFILE.preferred_days);
   const [sessionMinutes, setSessionMinutes] = React.useState(MOCK_PROFILE.session_minutes);
 
-  const [displayName, setDisplayName] = React.useState(MOCK_PROFILE.display_name);
+  const [displayName, setDisplayName] = React.useState('');
   const [heightCm, setHeightCm] = React.useState(MOCK_PROFILE.height_cm);
+
+  // Hydrate the editable name from the Local Mode store after mount (§5.4).
+  React.useEffect(() => {
+    setDisplayName(getState().profile?.display_name ?? '');
+  }, []);
   const [birthdate, setBirthdate] = React.useState(MOCK_PROFILE.birthdate);
   const [unit, setUnit] = React.useState(MOCK_PROFILE.unit_system);
 
@@ -307,8 +341,56 @@ export function SettingsView() {
         </div>
       </Section>
 
-      {/* ---------------------------------------------------------------- Account & demo */}
-      <GroupHeader>Account &amp; demo</GroupHeader>
+      {/* ---------------------------------------------------------------- Local Mode */}
+      <GroupHeader>Local Mode</GroupHeader>
+
+      <Section
+        title="Local Mode"
+        hint="Everything lives in this browser. Nothing is uploaded. Back up or move your data anytime."
+      >
+        <div className="flex flex-col gap-2">
+          <Button size="lg" variant="secondary" block onClick={exportData}>
+            <ExportIcon size={18} /> Export data (JSON)
+          </Button>
+          <Button
+            size="lg"
+            variant="secondary"
+            block
+            onClick={() => fileInputRef.current?.click()}
+          >
+            <ImportIcon size={18} /> Import data
+          </Button>
+          <input
+            ref={fileInputRef}
+            type="file"
+            accept="application/json,.json"
+            className="sr-only"
+            data-testid="import-file"
+            onChange={(e) => {
+              const file = e.target.files?.[0];
+              if (file) void importData(file);
+              e.target.value = '';
+            }}
+          />
+          {importStatus === 'error' && (
+            <p role="alert" className="text-xs text-danger">
+              That file wasn&apos;t a valid FitForge backup. Nothing was changed.
+            </p>
+          )}
+          <Button
+            size="lg"
+            variant="danger"
+            block
+            onClick={() => setDeleteOpen(true)}
+            data-testid="erase-local-data"
+          >
+            <TrashIcon size={18} /> Erase Local Mode data
+          </Button>
+          <p className="text-xs text-muted-foreground">
+            Erasing clears your profile, routine, and food logs stored in this browser.
+          </p>
+        </div>
+      </Section>
 
       <Section title="Account">
         <div className="flex flex-col gap-2">
@@ -318,12 +400,6 @@ export function SettingsView() {
           <Button size="lg" variant="secondary" block onClick={resetAndLeave} data-testid="demo-signout">
             <LogOutIcon size={18} /> Sign out
           </Button>
-          <Button size="lg" variant="danger" block onClick={() => setDeleteOpen(true)}>
-            Reset demo data
-          </Button>
-          <p className="text-xs text-muted-foreground">
-            Reset clears the demo profile, routine, and food logs stored in this browser.
-          </p>
         </div>
       </Section>
 
@@ -343,15 +419,16 @@ export function SettingsView() {
         </div>
       </Sheet>
 
-      {/* Reset demo confirm */}
-      <Sheet open={deleteOpen} onClose={() => setDeleteOpen(false)} title="Reset demo data?">
+      {/* Erase Local Mode confirm */}
+      <Sheet open={deleteOpen} onClose={() => setDeleteOpen(false)} title="Erase Local Mode data?">
         <p className="text-sm text-muted-foreground">
-          This clears the demo profile, generated routine, and food logs stored in this browser
-          (localStorage key <code>fitforge.demo.v1</code>). This cannot be undone.
+          This clears your profile, generated routine, and food logs stored in this browser
+          (storage key <code>fitforge.demo.v1</code>). This cannot be undone. Export a backup first
+          if you want to keep it.
         </p>
         <div className="mt-4 flex flex-col gap-2">
           <Button variant="danger" block onClick={resetAndLeave}>
-            Yes, reset everything
+            Yes, erase everything
           </Button>
           <Button variant="ghost" block onClick={() => setDeleteOpen(false)}>
             Cancel

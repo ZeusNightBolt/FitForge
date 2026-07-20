@@ -74,13 +74,53 @@ export function PlanPreviewStep() {
     router.push('/today');
   };
 
+  const targets = getState().targets;
+  const trainingDays = routine?.days.filter((d) => d.exercises.length > 0).length ?? 0;
+  const totalExercises =
+    routine?.days.reduce((n, d) => n + d.exercises.length, 0) ?? 0;
+
   return (
     <div className="space-y-4">
       {!routine && <p className="text-sm text-muted-foreground">Building your plan…</p>}
 
       {routine && (
         <>
-          <p className="text-sm text-muted-foreground">{routine.name}</p>
+          {/* Forged-plan summary — the "money moment" premium card (§P2-14). */}
+          <Card premium className="p-5">
+            <p className="text-[11px] font-semibold uppercase tracking-[0.06em] text-accent">
+              Your forged plan
+            </p>
+            <p className="mt-1 text-xl font-bold tracking-tight text-foreground">{routine.name}</p>
+            <div className="mt-4 grid grid-cols-3 gap-3 text-center">
+              <div>
+                <p className="font-display text-3xl font-semibold leading-none tabular-nums text-accent">
+                  {trainingDays}
+                </p>
+                <p className="mt-1 text-[11px] uppercase tracking-wide text-muted-foreground">
+                  days / week
+                </p>
+              </div>
+              <div>
+                <p className="font-display text-3xl font-semibold leading-none tabular-nums text-foreground">
+                  {totalExercises}
+                </p>
+                <p className="mt-1 text-[11px] uppercase tracking-wide text-muted-foreground">
+                  exercises
+                </p>
+              </div>
+              <div>
+                <p className="font-display text-3xl font-semibold leading-none tabular-nums text-foreground">
+                  {targets?.kcal_target ?? '—'}
+                </p>
+                <p className="mt-1 text-[11px] uppercase tracking-wide text-muted-foreground">
+                  kcal / day
+                </p>
+              </div>
+            </div>
+          </Card>
+          <p className="text-sm text-muted-foreground">
+            Tap a day to review it — swap anything you like.
+          </p>
           <div className="space-y-3">
             {routine.days.map((day) => {
               const expanded = openDay === day.id;
