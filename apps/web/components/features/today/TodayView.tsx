@@ -62,7 +62,7 @@ export function TodayView() {
             {greeting}
             {displayName ? `, ${displayName}` : ''}
           </p>
-          <h1 className="text-2xl font-extrabold tracking-tight">{wdLabel}&rsquo;s plan</h1>
+          <h1 className="font-display text-2xl font-bold tracking-tight">{wdLabel}&rsquo;s plan</h1>
         </div>
         <div className="rounded-full bg-surface-2 px-3 py-1.5 text-sm font-semibold text-muted-foreground shadow-[var(--shadow-card)]">
           {dateLabel}
@@ -84,7 +84,7 @@ export function TodayView() {
             <p className="text-xs font-semibold uppercase tracking-wide opacity-80">
               Today&rsquo;s workout
             </p>
-            <h2 className="mt-1 text-lg font-bold text-accent-foreground">{day.name}</h2>
+            <h2 className="mt-1 font-display text-lg font-bold text-accent-foreground">{day.name}</h2>
             <p className="mt-0.5 text-sm opacity-80">
               {day.exercises.length} exercises · from {routine.name}
             </p>
@@ -104,7 +104,7 @@ export function TodayView() {
               )}
             </ul>
             <Link href={`/workout/${day.id}`} className="block">
-              <Button size="lg" block>
+              <Button size="lg" block glow>
                 Start workout
               </Button>
             </Link>
@@ -128,9 +128,11 @@ export function TodayView() {
       <Card className="shadow-[var(--shadow-card)]">
         <div className="flex items-center justify-between">
           <CardTitle>Nutrition</CardTitle>
-          <Link href="/nutrition" className="text-sm font-semibold text-accent">
-            {hasLogged ? 'Log food' : ''}
-          </Link>
+          {hasLogged && (
+            <Link href="/nutrition" className="text-sm font-semibold text-accent">
+              Log food
+            </Link>
+          )}
         </div>
 
         {hasLogged ? (
@@ -175,7 +177,7 @@ export function TodayView() {
               </p>
             </div>
             <Link href="/nutrition" className="w-full">
-              <Button block>
+              <Button block variant="secondary">
                 <PlusIcon size={18} /> Log your first meal
               </Button>
             </Link>
@@ -233,7 +235,7 @@ function StreakCard({
         <span
           className={
             'grid h-12 w-12 shrink-0 place-items-center rounded-full ' +
-            (active ? 'bg-energy-muted text-energy' : 'bg-muted text-muted-foreground')
+            (active ? 'bg-energy-muted text-energy' : 'bg-accent-muted text-accent-soft')
           }
         >
           <FlameSolidIcon size={26} />

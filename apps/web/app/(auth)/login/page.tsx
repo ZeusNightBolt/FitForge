@@ -14,8 +14,8 @@ export default function LoginPage() {
         <LogoLockup size={22} />
       </Link>
 
-      <div className="mt-16 flex-1">
-        <h1 className="text-2xl font-bold text-foreground">Welcome back</h1>
+      <div className="flex flex-1 flex-col justify-center pb-16">
+        <h1 className="font-display text-[1.75rem] font-bold tracking-tight text-foreground">Welcome back</h1>
         <p className="mt-2 text-sm text-muted-foreground">
           Cloud accounts are part of the hosted build. On this version, jump straight into Local
           Mode — your data stays in this browser.

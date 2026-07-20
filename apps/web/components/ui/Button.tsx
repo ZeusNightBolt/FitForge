@@ -48,7 +48,9 @@ export const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(function 
         'disabled:cursor-not-allowed touch-manipulation',
         VARIANTS[variant],
         SIZES[size],
-        glow && 'shadow-[var(--shadow-glow)] hover:shadow-[var(--shadow-glow)]',
+        glow &&
+          !(disabled || loading) &&
+          'shadow-[var(--shadow-glow)] hover:shadow-[var(--shadow-glow)]',
         block && 'w-full',
         className,
       )}

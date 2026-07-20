@@ -7,6 +7,7 @@
  */
 import * as React from 'react';
 import { Sheet, Button } from '@/components/ui';
+import { matchQuality } from '@/lib/utils';
 import { mockSuggestSubstitutes, type SubstituteRow } from '@/components/features/_mock/data';
 
 export interface SubstituteSheetProps {
@@ -56,8 +57,8 @@ export function SubstituteSheet({
                   </span>
                   <span className="block truncate text-xs text-muted-foreground">{s.reason}</span>
                 </span>
-                <span className="shrink-0 rounded-full bg-accent-muted px-2 py-0.5 text-xs font-semibold text-accent">
-                  {Math.round(s.score)}
+                <span className="shrink-0 rounded-full bg-accent-muted px-2 py-0.5 text-[11px] font-semibold text-accent">
+                  {matchQuality(s.score)}
                 </span>
               </button>
             </li>

@@ -3,9 +3,18 @@
 import * as React from 'react';
 import { useRouter } from 'next/navigation';
 import { Card, Sheet } from '@/components/ui';
+import { SwapIcon, ChevronDownIcon } from '@/components/ui/icons';
+import { MuscleMapThumb } from '@/components/illustrations';
+import type { MuscleSlug } from '@/components/illustrations';
 import { finalizeOnboarding } from '@/lib/demo/generate';
 import { getState, update } from '@/lib/demo/store';
-import { mockSuggestSubstitutes, type Routine, type RoutineExercise } from '@/components/features/_mock/data';
+import {
+  mockSuggestSubstitutes,
+  mockExerciseById,
+  type Routine,
+  type RoutineDay,
+  type RoutineExercise,
+} from '@/components/features/_mock/data';
 import { useOnboarding } from '../OnboardingProvider';
 import { OnboardingFooter } from '../OnboardingFooter';
 
@@ -15,6 +24,16 @@ interface SubHit {
   name: string;
   score: number;
   reason: string | null;
+}
+
+/** Union of a day's primary muscles (first few exercises) for the per-day map thumb (§P2-14). */
+function dayPrimaryMuscles(day: RoutineDay): MuscleSlug[] {
+  const out = new Set<string>();
+  for (const row of day.exercises) {
+    const ex = mockExerciseById(row.exercise_id);
+    for (const m of ex?.primary_muscles ?? []) out.add(m);
+  }
+  return [...out] as MuscleSlug[];
 }
 
 /**
@@ -128,18 +147,30 @@ export function PlanPreviewStep() {
                 <Card key={day.id} className="p-0">
                   <button
                     type="button"
-                    className="flex w-full items-center justify-between p-4 text-left"
+                    className="flex w-full items-center justify-between gap-3 p-4 text-left"
                     onClick={() => setOpenDay(expanded ? null : day.id)}
                   >
-                    <span>
-                      <span className="block font-semibold text-foreground">{day.name}</span>
-                      {day.focus && (
-                        <span className="block text-xs text-muted-foreground">{day.focus}</span>
-                      )}
+                    <span className="flex min-w-0 items-center gap-3">
+                      <span className="grid h-11 w-11 shrink-0 place-items-center rounded-sm bg-muted/60">
+                        <MuscleMapThumb primary={dayPrimaryMuscles(day)} height={40} />
+                      </span>
+                      <span className="min-w-0">
+                        <span className="block truncate font-semibold text-foreground">{day.name}</span>
+                        <span className="block text-xs text-muted-foreground">
+                          {day.exercises.length > 0
+                            ? `${day.exercises.length} exercises`
+                            : 'Rest / recovery'}
+                        </span>
+                      </span>
                     </span>
-                    <span aria-hidden className="text-muted-foreground">
-                      {expanded ? '−' : '+'}
-                    </span>
+                    <ChevronDownIcon
+                      size={18}
+                      aria-hidden
+                      className={
+                        'shrink-0 text-muted-foreground transition-transform duration-200 ' +
+                        (expanded ? 'rotate-180' : '')
+                      }
+                    />
                   </button>
                   {expanded && (
                     <ul className="border-t border-border">
@@ -158,9 +189,9 @@ export function PlanPreviewStep() {
                             type="button"
                             aria-label={`Swap ${row.exercise_name}`}
                             onClick={() => openSwap(day.id, row)}
-                            className="rounded-lg px-2 py-1 text-xs font-medium text-accent hover:bg-accent-muted"
+                            className="inline-flex items-center gap-1 rounded-lg px-2 py-1 text-xs font-medium text-accent hover:bg-accent-muted"
                           >
-                            {'⇄'} Swap
+                            <SwapIcon size={13} /> Swap
                           </button>
                         </li>
                       ))}

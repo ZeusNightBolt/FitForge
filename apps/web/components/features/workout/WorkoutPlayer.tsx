@@ -11,7 +11,17 @@
 import * as React from 'react';
 import Link from 'next/link';
 import { Button, Card, CardTitle, Sheet } from '@/components/ui';
-import { ScaleIcon, CheckIcon, SwapIcon, TimerIcon, TrophyIcon, SparkIcon } from '@/components/ui/icons';
+import {
+  ScaleIcon,
+  CheckIcon,
+  SwapIcon,
+  TimerIcon,
+  TrophyIcon,
+  SparkIcon,
+  XIcon,
+  ArrowRightIcon,
+  ChevronLeftIcon,
+} from '@/components/ui/icons';
 import { SubstituteSheet } from '@/components/features/shared/SubstituteSheet';
 import {
   mockPreviousSets,
@@ -248,8 +258,11 @@ export function WorkoutPlayer({ sessionId }: { sessionId: string }) {
     <div className="space-y-4 pb-4">
       {/* Header / progress */}
       <div className="flex items-center justify-between">
-        <Link href="/today" className="text-sm font-medium text-muted-foreground">
-          ✕ Close
+        <Link
+          href="/today"
+          className="inline-flex items-center gap-1.5 text-sm font-medium text-muted-foreground transition-colors hover:text-foreground"
+        >
+          <XIcon size={15} /> Close
         </Link>
         <span className="text-sm font-semibold tabular-nums text-muted-foreground">
           {doneSets}/{totalSets} sets
@@ -394,22 +407,27 @@ export function WorkoutPlayer({ sessionId }: { sessionId: string }) {
           Greyed numbers are last session&rsquo;s sets — tap ✓ to log the same, or edit first.
         </p>
 
-        {/* Pager controls */}
-        <div className="flex items-center gap-3">
+        {/* Pager controls — dimmed (never disabled) while the rest timer holds focus */}
+        <div
+          className={
+            'flex items-center gap-3 transition-opacity duration-300 ' +
+            (resting ? 'opacity-40' : 'opacity-100')
+          }
+        >
           <Button
             variant="secondary"
             disabled={index === 0}
             onClick={() => setIndex((i) => Math.max(0, i - 1))}
           >
-            ← Prev
+            <ChevronLeftIcon size={16} /> Prev
           </Button>
           {isLast ? (
-            <Button block glow onClick={finishWorkout}>
+            <Button block glow={!resting} onClick={finishWorkout}>
               Finish workout
             </Button>
           ) : (
             <Button block onClick={() => setIndex((i) => Math.min(exercises.length - 1, i + 1))}>
-              Next exercise →
+              Next exercise <ArrowRightIcon size={16} />
             </Button>
           )}
         </div>
@@ -587,7 +605,7 @@ function RestTimer({
   const r = 46;
   const c = 2 * Math.PI * r;
   return (
-    <div className="pointer-events-none fixed inset-x-0 bottom-16 z-40 mx-auto max-w-[720px] px-4 md:bottom-4">
+    <div className="pointer-events-none fixed inset-x-0 bottom-[calc(5.25rem+env(safe-area-inset-bottom))] z-40 mx-auto max-w-[720px] px-4 md:bottom-4">
       <div className="rounded-card border-gradient-gold bg-surface-2 p-4 shadow-[var(--shadow-glow)]">
         <div className="flex items-center gap-4">
           <div className="relative grid h-24 w-24 shrink-0 place-items-center">

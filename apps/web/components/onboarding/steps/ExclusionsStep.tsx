@@ -139,7 +139,7 @@ export function ExclusionsStep() {
     <div className="space-y-8">
       {/* 8a — body areas */}
       <section>
-        <p className="mb-3 text-sm font-medium text-foreground">Anything we should protect?</p>
+        <p className="mb-3 text-sm font-medium text-foreground">Protect these areas</p>
         <div className="flex flex-wrap gap-2">
           {BODY_AREAS.map((area) => (
             <Chip

@@ -27,12 +27,13 @@ const ART: Partial<Record<OnboardingStep, Art>> = {
       <path d="M50 6 L52.4 12 L58 14 L52.4 16 L50 22 L47.6 16 L42 14 L47.6 12 Z" fill={GOLD} />
     </>
   ),
-  // 3 ascending anvils
+  // ascending strength bars + spark (echoes the beginner/intermediate/advanced card icons)
   experience: (
     <>
-      <path d="M8 50 h10 v-3 h-3 v-4 h9 v7 h-16 Z" fill={SLATE} />
-      <path d="M24 44 h11 v-3 h-3 v-5 h10 v8 h-18 Z" fill={SLATE} />
-      <path d="M42 36 h12 v-3 h-3 v-6 h11 v9 h-20 Z" fill={GOLD} />
+      <rect x="10" y="40" width="10" height="14" rx="3" fill={SLATE} opacity="0.55" />
+      <rect x="27" y="30" width="10" height="24" rx="3" fill={SLATE} />
+      <rect x="44" y="18" width="10" height="36" rx="3" fill={GOLD} />
+      <path d="M49 4 L50.8 8.2 L55 10 L50.8 11.8 L49 16 L47.2 11.8 L43 10 L47.2 8.2 Z" fill={GOLD} />
     </>
   ),
   // calendar grid with gold days
@@ -66,14 +67,17 @@ const ART: Partial<Record<OnboardingStep, Art>> = {
       <circle cx="52" cy="42" r="3" fill="none" stroke={GOLD} strokeWidth="2.5" />
     </>
   ),
-  // heart + dumbbell
+  // heart with a dumbbell held inside it — "exercises you love"
   exercise_prefs: (
     <>
       <path
-        d="M24 46 C10 36 10 22 20 22 C25 22 24 27 24 27 C24 27 23 22 28 22 C38 22 38 36 24 46 Z"
-        fill={GOLD}
+        d="M32 52 C14 40 10 26 18 19 C24 14 30 17 32 22 C34 17 40 14 46 19 C54 26 50 40 32 52 Z"
+        fill="none"
+        stroke={SLATE}
+        strokeWidth="2.5"
+        strokeLinejoin="round"
       />
-      <path d="M36 40 v10 M42 37 v16 M50 40 v10 M42 45 h.01 M36 45 h6 M48 45 h4" stroke={SLATE} strokeWidth="2.5" strokeLinecap="round" />
+      <path d="M22 27 v10 M27 24 v16 M37 24 v16 M42 27 v10 M27 32 h10" stroke={GOLD} strokeWidth="2.5" strokeLinecap="round" />
     </>
   ),
   // shield over knee joint
@@ -94,34 +98,36 @@ const ART: Partial<Record<OnboardingStep, Art>> = {
       <circle cx="42" cy="36" r="2.5" fill={GOLD} />
     </>
   ),
-  // plate + leaf
+  // plate + fork with a gold leaf garnish
   nutrition_prefs: (
     <>
-      <circle cx="30" cy="34" r="20" fill="none" stroke={SLATE} strokeWidth="2.5" />
-      <circle cx="30" cy="34" r="12" fill="none" stroke={SLATE} strokeWidth="2" opacity="0.6" />
-      <path d="M44 20 C52 20 54 30 46 34 C40 37 40 28 44 20 Z" fill={GOLD} />
-      <path d="M44 22 C44 26 45 30 47 33" stroke="var(--accent-press)" strokeWidth="1.5" fill="none" />
+      <circle cx="28" cy="36" r="18" fill="none" stroke={SLATE} strokeWidth="2.5" />
+      <circle cx="28" cy="36" r="10" fill="none" stroke={SLATE} strokeWidth="2" opacity="0.55" />
+      <path d="M54 26 v26 M51 26 v7 M57 26 v7 M51 33 a3 3 0 0 0 6 0" stroke={SLATE} strokeWidth="2.5" strokeLinecap="round" fill="none" />
+      <path d="M40 12 C48 10 54 14 54 20 C48 22 41 20 40 12 Z" fill={GOLD} />
+      <path d="M41 13 C44 16 48 18 52 19" stroke="var(--accent-press)" strokeWidth="1.5" fill="none" strokeLinecap="round" />
     </>
   ),
-  // macro ring trio
+  // macro ring trio — aligned row, each ring a bit fuller than the last
   targets_review: (
     <>
-      <circle cx="18" cy="34" r="10" fill="none" stroke={SLATE} strokeWidth="3" />
-      <path d="M18 24 a10 10 0 0 1 8 15" fill="none" stroke={GOLD} strokeWidth="3" strokeLinecap="round" />
-      <circle cx="40" cy="26" r="9" fill="none" stroke={SLATE} strokeWidth="3" />
-      <path d="M40 17 a9 9 0 0 1 6 4" fill="none" stroke={GOLD} strokeWidth="3" strokeLinecap="round" />
-      <circle cx="44" cy="44" r="9" fill="none" stroke={SLATE} strokeWidth="3" />
-      <path d="M44 35 a9 9 0 0 1 8 13" fill="none" stroke={GOLD} strokeWidth="3" strokeLinecap="round" />
+      <circle cx="14" cy="36" r="9" fill="none" stroke={SLATE} strokeWidth="3" opacity="0.55" />
+      <path d="M14 27 a9 9 0 0 1 7.8 4.5" fill="none" stroke={GOLD} strokeWidth="3" strokeLinecap="round" />
+      <circle cx="35" cy="36" r="9" fill="none" stroke={SLATE} strokeWidth="3" opacity="0.55" />
+      <path d="M35 27 a9 9 0 0 1 6.4 15.4" fill="none" stroke={GOLD} strokeWidth="3" strokeLinecap="round" />
+      <circle cx="53" cy="36" r="9" fill="none" stroke={SLATE} strokeWidth="3" opacity="0.55" />
+      <path d="M53 27 a9 9 0 1 1 -8.5 6" fill="none" stroke={GOLD} strokeWidth="3" strokeLinecap="round" />
     </>
   ),
-  // flame + calendar
+  // calendar + gold flame — the forged week
   plan_preview: (
     <>
-      <rect x="8" y="14" width="34" height="40" rx="4" fill="none" stroke={SLATE} strokeWidth="2.5" />
-      <path d="M8 24 h34" stroke={SLATE} strokeWidth="2.5" />
-      <path d="M15 32 h6 M27 32 h6 M15 42 h6 M27 42 h6" stroke={SLATE} strokeWidth="2" strokeLinecap="round" opacity="0.6" />
+      <rect x="6" y="14" width="36" height="40" rx="5" fill="none" stroke={SLATE} strokeWidth="2.5" />
+      <path d="M6 24 h36" stroke={SLATE} strokeWidth="2.5" />
+      <path d="M15 10 v8 M33 10 v8" stroke={SLATE} strokeWidth="2.5" strokeLinecap="round" />
+      <path d="M13 32 h6 M29 32 h6 M13 42 h6 M29 42 h6" stroke={SLATE} strokeWidth="2" strokeLinecap="round" opacity="0.55" />
       <path
-        d="M48 52 C40 48 42 40 46 36 C46 40 49 40 49 37 C50 30 58 32 56 42 C55 49 52 52 48 52 Z"
+        d="M51 56 C43 53 41 45 45 39 C46.5 36.5 49 34.5 50 31 C52 34 51.5 37 53 38.5 C54.5 40 56 38 56 35 C59 39 61 44 59.5 49 C58.3 53.4 55 56 51 56 Z"
         fill={GOLD}
       />
     </>
@@ -129,10 +135,13 @@ const ART: Partial<Record<OnboardingStep, Art>> = {
   // anvil with big spark burst
   done: (
     <>
-      <path d="M14 48 h24 v-4 h-5 v-8 h14 v12 h4 v6 H14 Z" fill={SLATE} />
-      <path d="M20 36 C12 36 9 39 6 44 L20 45 Z" fill={SLATE} />
+      {/* anvil: top face + horn, waist, base */}
+      <rect x="14" y="30" width="32" height="8" rx="2" fill={SLATE} />
+      <path d="M15 30 C9 30 6 33 4 37 L15 38 Z" fill={SLATE} />
+      <path d="M23 38 L41 38 L38 47 L26 47 Z" fill={SLATE} />
+      <rect x="20" y="47" width="24" height="6" rx="2" fill={SLATE} />
       <path d="M44 6 L47 15 L56 18 L47 21 L44 30 L41 21 L32 18 L41 15 Z" fill={GOLD} />
-      <path d="M44 12 v-8 M56 18 h8 M50 26 l5 5" stroke={GOLD} strokeWidth="2.5" strokeLinecap="round" />
+      <path d="M44 12 v-8 M56 18 h8 M52 26 l5 5" stroke={GOLD} strokeWidth="2.5" strokeLinecap="round" />
     </>
   ),
 };

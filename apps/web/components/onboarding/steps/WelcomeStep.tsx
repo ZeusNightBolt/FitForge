@@ -49,7 +49,7 @@ export function WelcomeStep() {
       </div>
 
       <div className="mt-8 flex-1">
-        <h1 className="text-center text-[2rem] font-bold leading-[1.1] tracking-tight text-foreground">
+        <h1 className="font-display text-center text-[2rem] font-bold leading-[1.1] tracking-tight text-foreground">
           Your personal trainer,
           <br />
           <span className="text-gradient-gold">forged around you.</span>

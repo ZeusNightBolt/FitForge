@@ -28,7 +28,7 @@ const CSS = `
   filter: blur(2px);
 }
 .ff-hero__figure { position: absolute; inset: 0; display: grid; place-items: center; }
-.ff-hero__figure svg { height: 92%; width: auto; opacity: 0.85; }
+.ff-hero__figure svg { height: 92%; width: auto; opacity: 0.95; }
 .ff-hero__card {
   position: absolute;
   border: 1px solid transparent;
@@ -68,7 +68,7 @@ function Figure() {
     <svg viewBox="0 0 200 440" fill="none" aria-hidden="true">
       {/* head + neck */}
       <circle cx="100" cy="38" r="19" fill={base} stroke={outline} strokeWidth="1.5" />
-      <rect x="91" y="53" width="18" height="16" rx="6" fill={base} stroke={outline} strokeWidth="1.5" />
+      <rect x="91" y="53" width="18" height="22" rx="6" fill={base} stroke={outline} strokeWidth="1.5" />
       {/* traps collar */}
       <path d="M74 74 Q100 64 126 74 L120 84 Q100 78 80 84 Z" fill={base} stroke={line} strokeWidth="1" />
       {/* delts (gold) */}
@@ -149,9 +149,9 @@ export function LandingHero({ width = 360, style, className, ...props }: Landing
           </span>
           <span style={{ fontSize: 12, color: 'var(--muted-foreground)' }}>kg</span>
           <span style={{ fontSize: 13 }}>× 5</span>
-          <span className="ff-hero__check" style={{ fontSize: 13 }}>
-            ✓
-          </span>
+          <svg width="13" height="13" viewBox="0 0 24 24" fill="none" aria-hidden="true" className="ff-hero__check">
+            <path d="M4 12.5 L9.5 18 L20 6.5" stroke="currentColor" strokeWidth="2.6" strokeLinecap="round" strokeLinejoin="round" />
+          </svg>
         </div>
       </div>
 

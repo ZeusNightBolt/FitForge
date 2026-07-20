@@ -3,6 +3,17 @@ export function cn(...parts: Array<string | false | null | undefined>): string {
   return parts.filter(Boolean).join(' ');
 }
 
+/**
+ * Human label for a substitution similarity score. Raw scores (seed similarity + context boosts)
+ * are meaningless to users — a "157" chip reads like a bug. Thresholds chosen from the observed
+ * range (seed 40–92, boosted up to ~160).
+ */
+export function matchQuality(score: number): string {
+  if (score >= 120) return 'Top match';
+  if (score >= 80) return 'Great match';
+  return 'Good match';
+}
+
 /** Clamp a number into [min, max]. */
 export function clamp(n: number, min: number, max: number): number {
   return Math.min(max, Math.max(min, n));

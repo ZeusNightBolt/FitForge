@@ -46,8 +46,10 @@ export function OnboardingShell({ step }: { step: OnboardingStep }) {
       </header>
 
       <div className="flex flex-1 flex-col pt-4">
-        <StepArt step={step} size={52} className="mb-1 -ml-1" />
-        <h1 className="text-2xl font-bold tracking-tight text-foreground">{meta.title}</h1>
+        <StepArt step={step} size={52} className="mb-2 -ml-1" />
+        <h1 className="font-display text-[1.75rem] font-bold leading-[1.15] tracking-tight text-foreground">
+          {meta.title}
+        </h1>
         {meta.subtitle && <p className="mt-2 text-sm text-muted-foreground">{meta.subtitle}</p>}
         <div className="flex flex-1 flex-col pt-6">
           <StepBody />

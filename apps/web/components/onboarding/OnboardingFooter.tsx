@@ -42,6 +42,7 @@ export function OnboardingFooter({
       <Button
         size="lg"
         block
+        glow
         loading={saving}
         disabled={!canContinue}
         onClick={handle}

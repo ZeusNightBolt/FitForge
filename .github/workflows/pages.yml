@@ -45,8 +45,9 @@ jobs:
       - name: Build web static export
         run: npm run build -w @fitforge/web
         env:
-          # Project Pages serve from https://<user>.github.io/FitForge/
+          # Project Pages serve from https://girnarholdings.github.io/FitForge/
           NEXT_PUBLIC_BASE_PATH: /FitForge
+          NEXT_PUBLIC_SITE_URL: https://girnarholdings.github.io
           NEXT_PUBLIC_DEMO: "1"
 
       - name: Add .nojekyll (serve _next/ assets)

@@ -12,7 +12,7 @@
 [![Backend: Supabase](https://img.shields.io/badge/backend-Supabase-3ECF8E?logo=supabase&logoColor=white)](./supabase)
 [![Monorepo: Turborepo](https://img.shields.io/badge/monorepo-Turborepo-EF4444?logo=turborepo)](./turbo.json)
 
-[**🚀 Live demo → zeusnightbolt.github.io/FitForge**](https://zeusnightbolt.github.io/FitForge/)
+[**🚀 Live demo → girnarholdings.github.io/FitForge**](https://girnarholdings.github.io/FitForge/)
 
 </div>
 
@@ -22,11 +22,11 @@
 
 A fully interactive, **backend-free demo** of the web app is deployed to GitHub Pages:
 
-### **→ [zeusnightbolt.github.io/FitForge](https://zeusnightbolt.github.io/FitForge/)**
+### **→ [girnarholdings.github.io/FitForge](https://girnarholdings.github.io/FitForge/)**
 
-The demo runs entirely in your browser — it uses the app's real deterministic rules (`@fitforge/shared`) and curated catalog to power onboarding, and persists everything to `localStorage`. **Enter the demo → complete onboarding → get a generated plan → explore Today, Workouts, Nutrition, Exercises, and Progress.** No sign-up, no backend. (The production build swaps this demo data layer for Supabase auth + Postgres.)
+Runs entirely in your browser in **Local Mode** (gold-on-dark "Forged Gold" theme) — it uses the app's real deterministic rules (`@fitforge/shared`) and curated catalog, with data-driven **muscle-anatomy maps**, illustrated equipment, and a weekly volume heatmap. **Start in Local Mode → complete onboarding → get a generated plan → explore Today, Workouts, Nutrition, Exercises, and Progress.** No sign-up, no backend; export/import your data anytime. (The production build swaps this local layer for Supabase auth + Postgres.)
 
-> Every screen below is covered by the Playwright end-to-end suite (`apps/web/tests/e2e/`, **14 tests**) — the screenshots are captured by those tests on each run.
+> Every screen below is covered by the Playwright end-to-end suite (`apps/web/tests/e2e/`, **18 tests**) — the screenshots are captured by those tests on each run.
 
 |  |  |  |
 |:--:|:--:|:--:|

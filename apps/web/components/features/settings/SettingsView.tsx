@@ -170,7 +170,7 @@ export function SettingsView() {
 
   return (
     <div className="space-y-6 pb-4">
-      <h1 className="text-2xl font-extrabold tracking-tight">Settings</h1>
+      <h1 className="font-display text-2xl font-bold tracking-tight">Settings</h1>
 
       {/* ---------------------------------------------------------------- Your plan */}
       <GroupHeader>Your plan</GroupHeader>

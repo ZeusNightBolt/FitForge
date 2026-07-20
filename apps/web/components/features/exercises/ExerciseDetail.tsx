@@ -24,6 +24,7 @@ import {
 } from '@/components/ui/icons';
 import { MuscleMap, MuscleMapThumb } from '@/components/illustrations';
 import type { MuscleSlug } from '@/components/illustrations';
+import { matchQuality } from '@/lib/utils';
 import * as Illustrations from '@/components/illustrations';
 import { SubstituteSheet } from '@/components/features/shared/SubstituteSheet';
 import {
@@ -261,8 +262,8 @@ export function ExerciseDetail({ slug }: { slug: string }) {
                       <span className="block truncate text-xs text-muted-foreground">{s.reason}</span>
                     </span>
                     <span className="flex shrink-0 items-center gap-1.5">
-                      <span className="rounded-full bg-accent-muted px-2 py-0.5 text-xs font-semibold text-accent">
-                        {Math.round(s.score)}
+                      <span className="rounded-full bg-accent-muted px-2 py-0.5 text-[11px] font-semibold text-accent">
+                        {matchQuality(s.score)}
                       </span>
                       <ChevronRightIcon size={16} className="text-muted-foreground" />
                     </span>

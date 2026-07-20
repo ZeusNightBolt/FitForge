@@ -78,22 +78,32 @@ export function TargetsReviewStep() {
 
   return (
     <div className="space-y-6">
-      <div className="overflow-hidden rounded-card bg-accent text-accent-foreground shadow-[var(--shadow-card)]">
-        <div className="px-5 pb-4 pt-5">
-          <p className="text-xs font-semibold uppercase tracking-wide opacity-80">Your daily target</p>
-          <p className="mt-1 text-4xl font-extrabold tabular-nums">
-            {draft.kcal_target ?? '—'}{' '}
-            <span className="text-lg font-semibold opacity-80">kcal / day</span>
+      <div className="border-gradient-gold overflow-hidden rounded-card shadow-[var(--shadow-card)]">
+        <div className="px-5 pb-4 pt-5" style={{ background: 'var(--gradient-ember-bg)' }}>
+          <p className="text-[11px] font-semibold uppercase tracking-[0.06em] text-accent">
+            Your daily target
           </p>
-          {method && <p className="mt-1 text-xs opacity-75">{method}</p>}
-        </div>
-        <div className="flex h-2.5 w-full">
-          {segments.map((s, i) => (
-            <div
-              key={s.label}
-              style={{ width: `${(s.kcal / totalK) * 100}%`, backgroundColor: macroColors[i] }}
-            />
-          ))}
+          <p className="mt-1 font-display text-4xl font-bold tabular-nums text-foreground">
+            <span className="text-gradient-gold">{draft.kcal_target ?? '—'}</span>{' '}
+            <span className="text-lg font-semibold text-muted-foreground">kcal / day</span>
+          </p>
+          {method && <p className="mt-1 text-xs text-muted-foreground">{method}</p>}
+          <div className="mt-4 flex h-2.5 w-full gap-0.5 overflow-hidden rounded-full">
+            {segments.map((s, i) => (
+              <div
+                key={s.label}
+                style={{ width: `${(s.kcal / totalK) * 100}%`, backgroundColor: macroColors[i] }}
+              />
+            ))}
+          </div>
+          <div className="mt-2 flex gap-4">
+            {segments.map((s, i) => (
+              <span key={s.label} className="flex items-center gap-1.5 text-[11px] text-muted-foreground">
+                <span className="h-1.5 w-1.5 rounded-full" style={{ backgroundColor: macroColors[i] }} />
+                {s.label}
+              </span>
+            ))}
+          </div>
         </div>
       </div>
 
@@ -127,7 +137,7 @@ export function TargetsReviewStep() {
       <p className="text-xs text-muted-foreground">
         {draft.targets_source === 'custom'
           ? 'Using your custom targets.'
-          : 'These are our suggestion — adjust any number and it becomes your custom target.'}
+          : 'These are our suggestions — adjust any number and it becomes your custom target.'}
       </p>
 
       <div className="flex-1" />

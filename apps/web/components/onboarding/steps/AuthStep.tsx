@@ -11,10 +11,12 @@ import { StepArt } from '@/components/illustrations';
  */
 export function AuthStep() {
   return (
-    <div className="flex min-h-dvh flex-col pt-16 pb-[max(1.5rem,env(safe-area-inset-bottom))]">
-      <div className="flex-1">
+    <div className="flex min-h-dvh flex-col pt-10 pb-[max(1.5rem,env(safe-area-inset-bottom))]">
+      <div className="flex flex-1 flex-col justify-center">
         <StepArt step="done" size={56} />
-        <h1 className="mt-4 text-2xl font-bold tracking-tight">Start in Local Mode</h1>
+        <h1 className="mt-4 font-display text-[1.75rem] font-bold leading-[1.15] tracking-tight">
+          Start in Local Mode
+        </h1>
         <p className="mt-2 text-sm text-muted-foreground">
           No sign-up required. Your plan and progress are saved in this browser only — pick up right
           where you left off on this device.

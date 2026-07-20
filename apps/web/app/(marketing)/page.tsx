@@ -44,7 +44,7 @@ export default function LandingPage() {
       </header>
 
       <section className="mt-10">
-        <h1 className="text-[2.75rem] font-bold leading-[1.05] tracking-tight text-foreground">
+        <h1 className="font-display text-[2.75rem] font-bold leading-[1.05] tracking-tight text-foreground">
           Your personal trainer.
           <br />
           <span className="text-gradient-gold">Forged around you.</span>
