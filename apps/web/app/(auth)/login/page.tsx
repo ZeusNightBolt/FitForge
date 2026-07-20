@@ -2,9 +2,9 @@ import Link from 'next/link';
 import { AuthPanel } from '@/components/auth/AuthPanel';
 
 /**
- * Standalone login (§8 tree). "I have an account" from the landing page.
- * After sign-in we send returning users to /today; middleware bounces them back into
- * onboarding if their profile is incomplete.
+ * Standalone entry (§8 tree) — DEMO MODE. "I have an account" from the landing page. There is no
+ * real auth: "Enter the demo" seeds a local session and routes to onboarding (or /today if it is
+ * already complete).
  */
 export default function LoginPage() {
   return (
@@ -18,10 +18,12 @@ export default function LoginPage() {
 
       <div className="mt-16 flex-1">
         <h1 className="text-2xl font-bold text-foreground">Welcome back</h1>
-        <p className="mt-2 text-sm text-muted-foreground">Sign in to pick up where you left off.</p>
+        <p className="mt-2 text-sm text-muted-foreground">
+          Jump straight in — pick up where you left off, or start fresh.
+        </p>
 
         <div className="mt-8">
-          <AuthPanel next="/today" />
+          <AuthPanel next="/onboarding/welcome" />
         </div>
       </div>
 

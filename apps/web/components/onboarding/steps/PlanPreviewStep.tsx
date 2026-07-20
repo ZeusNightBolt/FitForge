@@ -1,35 +1,13 @@
 'use client';
 
 import * as React from 'react';
-import { createClient } from '@/lib/supabase/client';
-import { Card, Sheet, Chip } from '@/components/ui';
-import { generateStarterRoutine } from '@/lib/onboarding/persistence';
+import { useRouter } from 'next/navigation';
+import { Card, Sheet } from '@/components/ui';
+import { finalizeOnboarding } from '@/lib/demo/generate';
+import { getState, update } from '@/lib/demo/store';
+import { mockSuggestSubstitutes, type Routine, type RoutineExercise } from '@/components/features/_mock/data';
 import { useOnboarding } from '../OnboardingProvider';
 import { OnboardingFooter } from '../OnboardingFooter';
-
-interface RoutineExerciseView {
-  id: string;
-  position: number;
-  exercise_id: string;
-  sets: number;
-  rep_min: number;
-  rep_max: number;
-  rest_seconds: number;
-  exercises: { name: string; slug: string; image_path: string | null } | null;
-}
-interface RoutineDayView {
-  id: string;
-  day_index: number;
-  name: string;
-  focus: string | null;
-  routine_exercises: RoutineExerciseView[];
-}
-interface RoutineView {
-  id: string;
-  name: string;
-  description: string | null;
-  routine_days: RoutineDayView[];
-}
 
 interface SubHit {
   exercise_id: string;
@@ -39,83 +17,72 @@ interface SubHit {
   reason: string | null;
 }
 
-const ROUTINE_SELECT =
-  '*,routine_days(*,routine_exercises(*,exercises(name,slug,image_path)))';
-
-/** Screen 12 · Plan preview (§2.2 / §7.5). Generates the routine, shows it, allows swaps. */
+/**
+ * Screen 12 · Plan preview (§2.2 / §7.5) — DEMO MODE. Generates the starter routine from the draft
+ * with the §7.5 split rule over the fixture catalog, persists it, shows it, and allows swaps
+ * (§7.4). "Start plan" routes to /today.
+ */
 export function PlanPreviewStep() {
-  const { finish } = useOnboarding();
-  const supabase = React.useMemo(() => createClient(), []);
-  const [routine, setRoutine] = React.useState<RoutineView | null>(null);
-  const [error, setError] = React.useState<string | null>(null);
+  const { draft } = useOnboarding();
+  const router = useRouter();
+  const [routine, setRoutine] = React.useState<Routine | null>(null);
   const [openDay, setOpenDay] = React.useState<string | null>(null);
-  const [swap, setSwap] = React.useState<{ rowId: string; exerciseId: string } | null>(null);
+  const [swap, setSwap] = React.useState<{ dayId: string; rowId: string; exerciseId: string } | null>(null);
   const [subs, setSubs] = React.useState<SubHit[]>([]);
   const ranRef = React.useRef(false);
 
-  const loadRoutine = React.useCallback(
-    async (routineId: string) => {
-      const { data, error: err } = await supabase
-        .from('routines')
-        .select(ROUTINE_SELECT)
-        .eq('id', routineId)
-        .single();
-      if (err) {
-        setError(err.message);
-        return;
-      }
-      const r = data as unknown as RoutineView;
-      r.routine_days.sort((a, b) => a.day_index - b.day_index);
-      for (const d of r.routine_days) d.routine_exercises.sort((a, b) => a.position - b.position);
-      setRoutine(r);
-      setOpenDay(r.routine_days[0]?.id ?? null);
-    },
-    [supabase],
-  );
-
-  // Generate once on mount (§7.5 RPC), then hydrate the tree.
+  // Generate + persist once on mount (§7.5).
   React.useEffect(() => {
     if (ranRef.current) return;
     ranRef.current = true;
-    generateStarterRoutine(supabase)
-      .then((id) => loadRoutine(id))
-      .catch((e) => setError(e instanceof Error ? e.message : 'Could not generate your plan.'));
-  }, [supabase, loadRoutine]);
+    const r = finalizeOnboarding(draft);
+    setRoutine(r);
+    setOpenDay(r.days[0]?.id ?? null);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
-  const openSwap = async (row: RoutineExerciseView) => {
-    setSwap({ rowId: row.id, exerciseId: row.exercise_id });
-    setSubs([]);
-    const { data } = await supabase.rpc('suggest_substitutes', {
-      p_exercise_id: row.exercise_id,
-      p_limit: 5,
-    });
-    setSubs((data ?? []) as SubHit[]);
+  const openSwap = (dayId: string, row: RoutineExercise) => {
+    setSwap({ dayId, rowId: row.id, exerciseId: row.exercise_id });
+    setSubs(mockSuggestSubstitutes(row.exercise_id, 5));
   };
 
-  const applySwap = async (sub: SubHit) => {
-    if (!swap || !routine) return;
-    await supabase.from('routine_exercises').update({ exercise_id: sub.exercise_id }).eq('id', swap.rowId);
-    await loadRoutine(routine.id);
+  const applySwap = (sub: SubHit) => {
+    if (!swap) return;
+    const next = update((s) => {
+      if (!s.routine) return s;
+      const days = s.routine.days.map((d) =>
+        d.id !== swap.dayId
+          ? d
+          : {
+              ...d,
+              exercises: d.exercises.map((e) =>
+                e.id !== swap.rowId
+                  ? e
+                  : { ...e, exercise_id: sub.exercise_id, exercise_slug: sub.slug, exercise_name: sub.name },
+              ),
+            },
+      );
+      return { ...s, routine: { ...s.routine, days } };
+    });
+    setRoutine(next.routine);
     setSwap(null);
+  };
+
+  const startPlan = () => {
+    // ensure everything is persisted, then head to Today.
+    if (!getState().completedAt) finalizeOnboarding(draft);
+    router.push('/today');
   };
 
   return (
     <div className="space-y-4">
-      {error && (
-        <p role="alert" className="rounded-card bg-danger/10 p-3 text-sm text-danger">
-          {error}
-        </p>
-      )}
-
-      {!routine && !error && (
-        <p className="text-sm text-muted-foreground">Building your plan…</p>
-      )}
+      {!routine && <p className="text-sm text-muted-foreground">Building your plan…</p>}
 
       {routine && (
         <>
           <p className="text-sm text-muted-foreground">{routine.name}</p>
           <div className="space-y-3">
-            {routine.routine_days.map((day) => {
+            {routine.days.map((day) => {
               const expanded = openDay === day.id;
               return (
                 <Card key={day.id} className="p-0">
@@ -136,29 +103,32 @@ export function PlanPreviewStep() {
                   </button>
                   {expanded && (
                     <ul className="border-t border-border">
-                      {day.routine_exercises.map((row) => (
+                      {day.exercises.map((row) => (
                         <li
                           key={row.id}
                           className="flex items-center justify-between px-4 py-3 text-sm"
                         >
                           <span>
-                            <span className="block text-foreground">
-                              {row.exercises?.name ?? 'Exercise'}
-                            </span>
+                            <span className="block text-foreground">{row.exercise_name}</span>
                             <span className="block text-xs text-muted-foreground">
                               {row.sets} × {row.rep_min}–{row.rep_max} · {row.rest_seconds}s rest
                             </span>
                           </span>
                           <button
                             type="button"
-                            aria-label={`Swap ${row.exercises?.name ?? 'exercise'}`}
-                            onClick={() => openSwap(row)}
+                            aria-label={`Swap ${row.exercise_name}`}
+                            onClick={() => openSwap(day.id, row)}
                             className="rounded-lg px-2 py-1 text-xs font-medium text-accent hover:bg-accent-muted"
                           >
                             {'⇄'} Swap
                           </button>
                         </li>
                       ))}
+                      {day.exercises.length === 0 && (
+                        <li className="px-4 py-3 text-xs text-muted-foreground">
+                          Rest / recovery day.
+                        </li>
+                      )}
                     </ul>
                   )}
                 </Card>
@@ -170,7 +140,7 @@ export function PlanPreviewStep() {
 
       <Sheet open={swap !== null} onClose={() => setSwap(null)} title="Swap exercise">
         {subs.length === 0 ? (
-          <p className="text-sm text-muted-foreground">Finding good alternatives…</p>
+          <p className="text-sm text-muted-foreground">No alternatives found.</p>
         ) : (
           <div className="space-y-2">
             {subs.map((s) => (
@@ -193,7 +163,7 @@ export function PlanPreviewStep() {
         step="plan_preview"
         continueLabel="Start plan"
         canContinue={routine !== null}
-        onContinue={finish}
+        onContinue={startPlan}
       />
     </div>
   );

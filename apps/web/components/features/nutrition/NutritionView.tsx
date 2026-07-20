@@ -6,28 +6,28 @@
  * entry; meal templates. Meal slot defaults by time of day (§2.3). All mocked & local.
  */
 import * as React from 'react';
-import { Button, Card, CardTitle, Chip, SearchInput, Sheet, MacroRing } from '@/components/features/_stubs';
+import { Button, Card, CardTitle, Chip, SearchInput, Sheet, MacroRing } from '@/components/ui';
 import {
   FOODS,
   RECENT_FOODS,
   MEAL_SLOTS,
-  MOCK_TODAY_LOGS,
   MOCK_MEAL_TEMPLATES,
   mockSearchFoods,
-  mockNutritionTargets,
   computeMacros,
   defaultMealSlot,
   type FoodSearchRow,
   type NutritionLog,
   type MealSlot,
 } from '@/components/features/_mock/data';
+import { useNutritionTargets, useTodayLogs } from '@/lib/demo/useDemo';
 
 let logSeq = 1000;
 const genLogId = () => `nl-new-${logSeq++}`;
 
 export function NutritionView() {
-  const targets = mockNutritionTargets();
-  const [logs, setLogs] = React.useState<NutritionLog[]>(MOCK_TODAY_LOGS);
+  // DEMO MODE: targets + today's logs come from the demo store (persisted to localStorage).
+  const targets = useNutritionTargets();
+  const { logs, setLogs } = useTodayLogs();
   const [slotForSearch, setSlotForSearch] = React.useState<MealSlot | null>(null);
   const [pickFood, setPickFood] = React.useState<{ food: FoodSearchRow; slot: MealSlot } | null>(
     null,

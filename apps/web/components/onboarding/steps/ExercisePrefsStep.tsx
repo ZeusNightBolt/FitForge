@@ -2,7 +2,7 @@
 
 import * as React from 'react';
 import { Chip, SearchInput } from '@/components/ui';
-import { createClient } from '@/lib/supabase/client';
+import { demoPopularExercises } from '@/lib/demo/catalog';
 import { useOnboarding } from '../OnboardingProvider';
 import { useCatalogSearch, type ExerciseHit } from '../useCatalogSearch';
 import type { NamedRef } from '../types';
@@ -11,33 +11,11 @@ import { OnboardingFooter } from '../OnboardingFooter';
 /** Screen 7 · Exercises you enjoy (§2.2 / §7.3). Type-ahead multi-select + suggestion chips. */
 export function ExercisePrefsStep() {
   const { draft, patch } = useOnboarding();
-  const supabase = React.useMemo(() => createClient(), []);
   const { searchExercises } = useCatalogSearch();
-  const [suggestions, setSuggestions] = React.useState<NamedRef[]>([]);
+  // §7.3 suggestion chips: top popular exercises from the fixture catalog.
+  const suggestions = React.useMemo<NamedRef[]>(() => demoPopularExercises(8), []);
 
   const favoriteIds = React.useMemo(() => new Set(draft.favorites.map((f) => f.id)), [draft.favorites]);
-
-  // §7.3 suggestion chips: top popular feasible exercises (empty-query popularity variant).
-  React.useEffect(() => {
-    let cancelled = false;
-    const controller = new AbortController();
-    supabase
-      .rpc('search_exercises', { q: '', p_limit: 8, filter_equipment: true, category_slug: null })
-      .abortSignal(controller.signal)
-      .then(({ data }) => {
-        if (cancelled || !data) return;
-        setSuggestions(
-          (data as ExerciseHit[]).map((r) => ({ id: r.exercise_id, slug: r.slug, name: r.name })),
-        );
-      })
-      .catch(() => {
-        /* empty-query may be unsupported until WS-6 lands — degrade to no chips */
-      });
-    return () => {
-      cancelled = true;
-      controller.abort();
-    };
-  }, [supabase]);
 
   const addFavorite = (ref: NamedRef) => {
     if (favoriteIds.has(ref.id)) return;

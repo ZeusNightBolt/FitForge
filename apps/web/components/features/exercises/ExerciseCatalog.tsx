@@ -6,7 +6,7 @@
  */
 import * as React from 'react';
 import Link from 'next/link';
-import { Card, Chip, SearchInput } from '@/components/features/_stubs';
+import { Card, Chip, SearchInput } from '@/components/ui';
 import {
   mockAllExercises,
   mockSearchExercises,

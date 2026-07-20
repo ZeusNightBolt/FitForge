@@ -2,7 +2,6 @@
 
 import * as React from 'react';
 import { computeNutritionTargets } from '@fitforge/shared/rules';
-import { createClient } from '@/lib/supabase/client';
 import { useOnboarding } from '../OnboardingProvider';
 import type { OnboardingDraft } from '../types';
 import { OnboardingFooter } from '../OnboardingFooter';
@@ -20,15 +19,16 @@ function ageFromBirthdate(birthdate: string | null): number | null {
   return age;
 }
 
-/** Screen 11 · Targets review (§2.2 / §7.2.4). Client preview + authoritative RPC; editable. */
+/**
+ * Screen 11 · Targets review (§2.2 / §7.2.4) — DEMO MODE. Targets are computed deterministically
+ * from the draft with the §7.2.4 macros rule (Mifflin–St Jeor); editable.
+ */
 export function TargetsReviewStep() {
   const { draft, patch } = useOnboarding();
-  const supabase = React.useMemo(() => createClient(), []);
   const [method, setMethod] = React.useState<string>('');
 
-  // Instant client-side preview (§7.2.4 mirror) the first time we arrive.
+  // Instant client-side computation (§7.2.4 mirror) the first time we arrive.
   React.useEffect(() => {
-    if (draft.kcal_target != null) return;
     const preview = computeNutritionTargets({
       sex: draft.sex,
       weight_kg: draft.weight_kg,
@@ -39,6 +39,7 @@ export function TargetsReviewStep() {
       diet_type: draft.diet_type,
     });
     setMethod(preview.method);
+    if (draft.kcal_target != null) return;
     patch({
       kcal_target: preview.kcal,
       protein_g_target: preview.protein_g,
@@ -48,35 +49,6 @@ export function TargetsReviewStep() {
     });
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
-
-  // Reconcile against the authoritative RPC (single source of rounding, §5.3).
-  React.useEffect(() => {
-    let cancelled = false;
-    supabase
-      .rpc('suggest_nutrition_targets', {})
-      .then(({ data }) => {
-        if (cancelled || !data) return;
-        const row = Array.isArray(data) ? data[0] : data;
-        if (!row) return;
-        setMethod(row.method);
-        // only overwrite if the user hasn't manually edited (still 'suggested')
-        if (draft.targets_source === 'suggested') {
-          patch({
-            kcal_target: row.kcal,
-            protein_g_target: row.protein_g,
-            carbs_g_target: row.carbs_g,
-            fat_g_target: row.fat_g,
-          });
-        }
-      })
-      .catch(() => {
-        /* RPC may be unavailable until WS-6 lands — keep the client preview */
-      });
-    return () => {
-      cancelled = true;
-    };
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [supabase]);
 
   const edit = (field: TargetField, raw: string) => {
     const n = parseInt(raw, 10);

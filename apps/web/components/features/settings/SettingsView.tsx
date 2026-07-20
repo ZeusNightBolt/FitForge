@@ -7,6 +7,7 @@
  * exclusions, body metrics, nutrition prefs & targets, plus account actions.
  */
 import * as React from 'react';
+import { useRouter } from 'next/navigation';
 import {
   Button,
   Card,
@@ -16,7 +17,8 @@ import {
   Stepper,
   Sheet,
   type SelectableOption,
-} from '@/components/features/_stubs';
+} from '@/components/ui';
+import { resetDemo } from '@/lib/demo/store';
 import {
   MOCK_PROFILE,
   MOCK_NUTRITION_PROFILE,
@@ -60,6 +62,12 @@ const BODY_AREAS = ['shoulders', 'lower_back', 'knees', 'wrists', 'hips', 'neck'
 const ALLERGENS = ['peanut', 'tree_nut', 'dairy', 'gluten', 'egg', 'soy', 'shellfish', 'fish', 'sesame'];
 
 export function SettingsView() {
+  const router = useRouter();
+
+  function resetAndLeave() {
+    resetDemo();
+    router.push('/');
+  }
   const [primaryGoal, setPrimaryGoal] = React.useState<GoalType>(MOCK_PROFILE.primary_goal);
   const [secondaryGoal, setSecondaryGoal] = React.useState<GoalType | null>(
     MOCK_PROFILE.secondary_goal,
@@ -279,11 +287,11 @@ export function SettingsView() {
         <Button size="lg" block>
           Save changes
         </Button>
-        <Button size="lg" variant="ghost" block>
+        <Button size="lg" variant="ghost" block onClick={resetAndLeave} data-testid="demo-signout">
           Sign out
         </Button>
         <Button size="lg" variant="danger" block onClick={() => setDeleteOpen(true)}>
-          Delete account
+          Reset demo data
         </Button>
       </div>
 
@@ -303,15 +311,15 @@ export function SettingsView() {
         </div>
       </Sheet>
 
-      {/* Delete account confirm */}
-      <Sheet open={deleteOpen} onClose={() => setDeleteOpen(false)} title="Delete account?">
+      {/* Reset demo confirm */}
+      <Sheet open={deleteOpen} onClose={() => setDeleteOpen(false)} title="Reset demo data?">
         <p className="text-sm text-muted-foreground">
-          This permanently deletes your profile, routines, and logs. This cannot be undone. (Wired
-          to the <code>delete-account</code> Edge Function at integration.)
+          This clears the demo profile, generated routine, and food logs stored in this browser
+          (localStorage key <code>fitforge.demo.v1</code>). This cannot be undone.
         </p>
         <div className="mt-4 flex flex-col gap-2">
-          <Button variant="danger" block onClick={() => setDeleteOpen(false)}>
-            Yes, delete everything
+          <Button variant="danger" block onClick={resetAndLeave}>
+            Yes, reset everything
           </Button>
           <Button variant="ghost" block onClick={() => setDeleteOpen(false)}>
             Cancel

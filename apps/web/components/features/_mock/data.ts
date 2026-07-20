@@ -9,7 +9,22 @@
  * INTEGRATION: at wire-up time each `mock*` accessor is replaced by a Supabase client call /
  * `@fitforge/shared` RPC wrapper of the same shape. Slugs/enum values are transcribed verbatim
  * from BLUEPRINT §6 so the swap needs no data remapping. Nothing here writes to disk or network.
+ *
+ * DEMO MODE: the exercise catalog + substitution ranking are derived from the `@fitforge/shared`
+ * §6/§7 fixtures & rule mirrors (the same data the pure-TS rules were verified against), so the
+ * static demo browses/computes against real shared data with no backend.
  */
+import catalogFixtureJson from '@fitforge/shared/fixtures/catalog.json';
+import substitutionEdgesJson from '@fitforge/shared/fixtures/substitution-edges.json';
+import {
+  suggestSubstitutes,
+  type CatalogExercise,
+  type SubstitutionEdge,
+  type SubstitutionContext,
+} from '@fitforge/shared/rules';
+
+const catalogFixture = catalogFixtureJson as unknown as CatalogExercise[];
+const substitutionEdges = substitutionEdgesJson as unknown as SubstitutionEdge[];
 
 /* ------------------------------------------------------------------ enum-ish string unions */
 export type MovementPattern =
@@ -234,85 +249,121 @@ export interface NutritionProfile {
 const INSTR =
   'Set up under control, brace, and move through a full range of motion. Keep the working muscle under tension and finish each rep with intent.';
 
-function ex(
-  id: string,
-  slug: string,
-  name: string,
-  category_slug: string,
-  category_name: string,
-  movement_pattern: MovementPattern,
-  mechanics: Mechanics,
-  difficulty: Difficulty,
-  popularity: number,
-  primary_muscles: string[],
-  secondary_muscles: string[],
-  equipment: EquipmentGroup[],
-  is_bodyweight_ok = false,
-  is_unilateral = false,
-): ExerciseFull {
+/* ------------------------------------------------------------------ fixture-derived catalog */
+/**
+ * The exercise catalog is derived from the `@fitforge/shared` §6.4 fixture (59 exercises) so the
+ * demo browses the *same* catalog the rule mirrors were verified against. We enrich each row into
+ * the `v_exercise_full` read-model the UI expects (category, grouped/named equipment, etc.).
+ */
+
+/** movement_pattern → catalog category facet (matches EXERCISE_CATEGORIES below). */
+const PATTERN_CATEGORY: Record<MovementPattern, { slug: string; name: string }> = {
+  squat: { slug: 'legs', name: 'Legs' },
+  lunge: { slug: 'legs', name: 'Legs' },
+  hinge: { slug: 'legs', name: 'Legs' },
+  knee_extension_iso: { slug: 'legs', name: 'Legs' },
+  knee_flexion_iso: { slug: 'legs', name: 'Legs' },
+  calf_raise: { slug: 'legs', name: 'Legs' },
+  hip_extension_iso: { slug: 'glutes', name: 'Glutes' },
+  horizontal_push: { slug: 'chest', name: 'Chest' },
+  vertical_push: { slug: 'shoulders', name: 'Shoulders' },
+  shoulder_isolation: { slug: 'shoulders', name: 'Shoulders' },
+  horizontal_pull: { slug: 'back', name: 'Back' },
+  vertical_pull: { slug: 'back', name: 'Back' },
+  elbow_flexion: { slug: 'arms', name: 'Arms' },
+  elbow_extension: { slug: 'arms', name: 'Arms' },
+  core_flexion: { slug: 'core', name: 'Core' },
+  core_stability: { slug: 'core', name: 'Core' },
+  carry: { slug: 'full-body', name: 'Full Body' },
+  cardio: { slug: 'cardio', name: 'Cardio' },
+};
+
+/** Pretty display names for equipment slugs used across the fixture catalog. */
+const EQUIPMENT_NAMES: Record<string, string> = {
+  barbell: 'Barbell',
+  'weight-plates': 'Weight Plates',
+  'squat-rack': 'Squat / Power Rack',
+  dumbbell: 'Dumbbells',
+  kettlebell: 'Kettlebell',
+  'leg-press': 'Leg Press Machine',
+  'hack-squat-machine': 'Hack Squat Machine',
+  'flat-bench': 'Flat Bench',
+  'leg-curl-machine': 'Leg Curl Machine',
+  'leg-extension-machine': 'Leg Extension Machine',
+  'calf-raise-machine': 'Calf Raise Machine',
+  'adjustable-bench': 'Adjustable Bench',
+  'chest-press-machine': 'Chest Press Machine',
+  'cable-machine': 'Cable Machine / Crossover',
+  'pec-deck': 'Pec Deck',
+  'dip-station': 'Dip Station',
+  'shoulder-press-machine': 'Shoulder Press Machine',
+  'resistance-bands': 'Resistance Bands',
+  'pull-up-bar': 'Pull-up Bar',
+  'lat-pulldown': 'Lat Pulldown Machine',
+  'seated-row-machine': 'Seated Cable Row',
+  'suspension-trainer': 'Suspension Trainer',
+  'ez-curl-bar': 'EZ-Curl Bar',
+  'ab-wheel': 'Ab Wheel',
+  'medicine-ball': 'Medicine Ball',
+  treadmill: 'Treadmill',
+  'stationary-bike': 'Stationary Bike',
+  'rowing-machine': 'Rowing Machine',
+};
+
+function equipmentName(slug: string): string {
+  return (
+    EQUIPMENT_NAMES[slug] ??
+    slug.replace(/-/g, ' ').replace(/\b\w/g, (c) => c.toUpperCase())
+  );
+}
+
+interface CatalogFixtureRow {
+  id: string;
+  slug: string;
+  name: string;
+  movement_pattern: MovementPattern;
+  mechanics: Mechanics;
+  difficulty: Difficulty;
+  popularity: number;
+  is_bodyweight_ok: boolean;
+  equipment: string[][];
+  primary_muscles: string[];
+  secondary_muscles: string[];
+  is_active?: boolean;
+}
+
+function fromFixture(row: CatalogFixtureRow): ExerciseFull {
+  const cat = PATTERN_CATEGORY[row.movement_pattern] ?? { slug: 'full-body', name: 'Full Body' };
   return {
-    id,
-    slug,
-    name,
+    id: row.id,
+    slug: row.slug,
+    name: row.name,
     aliases: [],
-    category_slug,
-    category_name,
-    movement_pattern,
-    mechanics,
-    difficulty,
-    is_unilateral,
-    is_bodyweight_ok,
+    category_slug: cat.slug,
+    category_name: cat.name,
+    movement_pattern: row.movement_pattern,
+    mechanics: row.mechanics,
+    difficulty: row.difficulty,
+    is_unilateral: /split|lunge|one-arm|single/i.test(row.name),
+    is_bodyweight_ok: row.is_bodyweight_ok,
     instructions: INSTR,
     image_path: null,
     tags: [],
-    popularity,
-    primary_muscles,
-    secondary_muscles,
-    equipment,
+    popularity: row.popularity,
+    primary_muscles: [...row.primary_muscles],
+    secondary_muscles: [...row.secondary_muscles],
+    equipment: row.equipment.map((slugs, i) => ({
+      alt_group: i + 1,
+      slugs: [...slugs],
+      names: slugs.map(equipmentName),
+    })),
   };
 }
-const g = (alt_group: number, ...pairs: [string, string][]): EquipmentGroup => ({
-  alt_group,
-  slugs: pairs.map((p) => p[0]),
-  names: pairs.map((p) => p[1]),
-});
 
-export const EXERCISES: ExerciseFull[] = [
-  ex('ex-back-squat', 'barbell-back-squat', 'Barbell Back Squat', 'legs', 'Legs', 'squat', 'compound', 'intermediate', 95, ['quads'], ['glute-max', 'lower-back', 'adductors'], [g(1, ['barbell', 'Barbell']), g(2, ['weight-plates', 'Weight Plates']), g(3, ['squat-rack', 'Squat / Power Rack'])]),
-  ex('ex-goblet-squat', 'goblet-squat', 'Goblet Squat', 'legs', 'Legs', 'squat', 'compound', 'beginner', 80, ['quads'], ['glute-max', 'abs'], [g(1, ['dumbbell', 'Dumbbells'], ['kettlebell', 'Kettlebell'])]),
-  ex('ex-leg-press', 'leg-press', 'Leg Press', 'legs', 'Legs', 'squat', 'compound', 'beginner', 85, ['quads'], ['glute-max', 'adductors'], [g(1, ['leg-press', 'Leg Press Machine'])]),
-  ex('ex-bodyweight-squat', 'bodyweight-squat', 'Bodyweight Squat', 'legs', 'Legs', 'squat', 'compound', 'beginner', 70, ['quads'], ['glute-max'], [], true),
-  ex('ex-bulgarian-split-squat', 'bulgarian-split-squat', 'Bulgarian Split Squat', 'legs', 'Legs', 'lunge', 'compound', 'intermediate', 75, ['quads'], ['glute-max'], [g(1, ['dumbbell', 'Dumbbells'], ['kettlebell', 'Kettlebell']), g(2, ['flat-bench', 'Flat Bench'])], true, true),
-  ex('ex-conventional-deadlift', 'conventional-deadlift', 'Conventional Deadlift', 'legs', 'Legs', 'hinge', 'compound', 'advanced', 90, ['hamstrings'], ['glute-max', 'lower-back', 'traps', 'forearms'], [g(1, ['barbell', 'Barbell']), g(2, ['weight-plates', 'Weight Plates'])]),
-  ex('ex-romanian-deadlift', 'romanian-deadlift', 'Romanian Deadlift', 'legs', 'Legs', 'hinge', 'compound', 'intermediate', 85, ['hamstrings'], ['glute-max', 'lower-back'], [g(1, ['barbell', 'Barbell'], ['dumbbell', 'Dumbbells'])]),
-  ex('ex-barbell-hip-thrust', 'barbell-hip-thrust', 'Barbell Hip Thrust', 'glutes', 'Glutes', 'hip_extension_iso', 'compound', 'intermediate', 85, ['glute-max'], ['hamstrings'], [g(1, ['barbell', 'Barbell']), g(2, ['weight-plates', 'Weight Plates']), g(3, ['flat-bench', 'Flat Bench'])]),
-  ex('ex-leg-curl', 'leg-curl', 'Lying / Seated Leg Curl', 'legs', 'Legs', 'knee_flexion_iso', 'isolation', 'beginner', 75, ['hamstrings'], [], [g(1, ['leg-curl-machine', 'Leg Curl Machine'])]),
-  ex('ex-leg-extension', 'leg-extension', 'Leg Extension', 'legs', 'Legs', 'knee_extension_iso', 'isolation', 'beginner', 75, ['quads'], [], [g(1, ['leg-extension-machine', 'Leg Extension Machine'])]),
-  ex('ex-standing-calf-raise', 'standing-calf-raise', 'Standing Calf Raise', 'legs', 'Legs', 'calf_raise', 'isolation', 'beginner', 70, ['calves'], [], [g(1, ['calf-raise-machine', 'Calf Raise Machine'], ['dumbbell', 'Dumbbells'])], true),
-  ex('ex-bench-press', 'bench-press', 'Barbell Bench Press', 'chest', 'Chest', 'horizontal_push', 'compound', 'intermediate', 95, ['pecs'], ['front-delts', 'triceps'], [g(1, ['barbell', 'Barbell']), g(2, ['weight-plates', 'Weight Plates']), g(3, ['flat-bench', 'Flat Bench'])]),
-  ex('ex-dumbbell-bench-press', 'dumbbell-bench-press', 'Dumbbell Bench Press', 'chest', 'Chest', 'horizontal_push', 'compound', 'beginner', 90, ['pecs'], ['front-delts', 'triceps'], [g(1, ['dumbbell', 'Dumbbells']), g(2, ['flat-bench', 'Flat Bench'])]),
-  ex('ex-incline-dumbbell-press', 'incline-dumbbell-press', 'Incline Dumbbell Press', 'chest', 'Chest', 'horizontal_push', 'compound', 'intermediate', 85, ['pecs'], ['front-delts', 'triceps'], [g(1, ['dumbbell', 'Dumbbells']), g(2, ['adjustable-bench', 'Adjustable Bench'])]),
-  ex('ex-push-up', 'push-up', 'Push-up', 'chest', 'Chest', 'horizontal_push', 'compound', 'beginner', 90, ['pecs'], ['front-delts', 'triceps', 'abs'], [], true),
-  ex('ex-machine-chest-press', 'machine-chest-press', 'Machine Chest Press', 'chest', 'Chest', 'horizontal_push', 'compound', 'beginner', 75, ['pecs'], ['front-delts', 'triceps'], [g(1, ['chest-press-machine', 'Chest Press Machine'])]),
-  ex('ex-overhead-press', 'overhead-press', 'Barbell Overhead Press', 'shoulders', 'Shoulders', 'vertical_push', 'compound', 'intermediate', 85, ['front-delts'], ['side-delts', 'triceps'], [g(1, ['barbell', 'Barbell']), g(2, ['weight-plates', 'Weight Plates'])]),
-  ex('ex-seated-db-shoulder-press', 'seated-dumbbell-shoulder-press', 'Seated DB Shoulder Press', 'shoulders', 'Shoulders', 'vertical_push', 'compound', 'beginner', 85, ['front-delts'], ['side-delts', 'triceps'], [g(1, ['dumbbell', 'Dumbbells']), g(2, ['adjustable-bench', 'Adjustable Bench'])]),
-  ex('ex-lateral-raise', 'lateral-raise', 'Dumbbell Lateral Raise', 'shoulders', 'Shoulders', 'shoulder_isolation', 'isolation', 'beginner', 85, ['side-delts'], [], [g(1, ['dumbbell', 'Dumbbells'], ['resistance-bands', 'Resistance Bands'])]),
-  ex('ex-face-pull', 'face-pull', 'Face Pull', 'shoulders', 'Shoulders', 'shoulder_isolation', 'isolation', 'beginner', 70, ['rear-delts'], ['traps', 'rhomboids'], [g(1, ['cable-machine', 'Cable Machine / Crossover'], ['resistance-bands', 'Resistance Bands'])]),
-  ex('ex-pull-up', 'pull-up', 'Pull-up', 'back', 'Back', 'vertical_pull', 'compound', 'advanced', 90, ['lats'], ['biceps', 'rhomboids', 'forearms'], [g(1, ['pull-up-bar', 'Pull-up Bar'])]),
-  ex('ex-lat-pulldown', 'lat-pulldown', 'Lat Pulldown', 'back', 'Back', 'vertical_pull', 'compound', 'beginner', 90, ['lats'], ['biceps', 'rhomboids'], [g(1, ['lat-pulldown', 'Lat Pulldown Machine'])]),
-  ex('ex-barbell-row', 'barbell-row', 'Barbell Bent-over Row', 'back', 'Back', 'horizontal_pull', 'compound', 'intermediate', 85, ['lats'], ['rhomboids', 'rear-delts', 'biceps', 'lower-back'], [g(1, ['barbell', 'Barbell']), g(2, ['weight-plates', 'Weight Plates'])]),
-  ex('ex-dumbbell-row', 'dumbbell-row', 'One-Arm Dumbbell Row', 'back', 'Back', 'horizontal_pull', 'compound', 'beginner', 85, ['lats'], ['rhomboids', 'biceps'], [g(1, ['dumbbell', 'Dumbbells']), g(2, ['flat-bench', 'Flat Bench'])], false, true),
-  ex('ex-seated-cable-row', 'seated-cable-row', 'Seated Cable Row', 'back', 'Back', 'horizontal_pull', 'compound', 'beginner', 80, ['rhomboids'], ['lats', 'biceps', 'rear-delts'], [g(1, ['seated-row-machine', 'Seated Cable Row'], ['cable-machine', 'Cable Machine / Crossover'])]),
-  ex('ex-barbell-curl', 'barbell-curl', 'Barbell Curl', 'arms', 'Arms', 'elbow_flexion', 'isolation', 'beginner', 80, ['biceps'], ['forearms'], [g(1, ['barbell', 'Barbell'], ['ez-curl-bar', 'EZ-Curl Bar'])]),
-  ex('ex-dumbbell-curl', 'dumbbell-curl', 'Dumbbell Curl', 'arms', 'Arms', 'elbow_flexion', 'isolation', 'beginner', 85, ['biceps'], ['forearms'], [g(1, ['dumbbell', 'Dumbbells'])]),
-  ex('ex-triceps-pushdown', 'triceps-pushdown', 'Triceps Pushdown', 'arms', 'Arms', 'elbow_extension', 'isolation', 'beginner', 85, ['triceps'], [], [g(1, ['cable-machine', 'Cable Machine / Crossover'], ['resistance-bands', 'Resistance Bands'])]),
-  ex('ex-skull-crusher', 'skull-crusher', 'Skull Crusher', 'arms', 'Arms', 'elbow_extension', 'isolation', 'intermediate', 70, ['triceps'], [], [g(1, ['ez-curl-bar', 'EZ-Curl Bar'], ['dumbbell', 'Dumbbells']), g(2, ['flat-bench', 'Flat Bench'])]),
-  ex('ex-plank', 'plank', 'Plank', 'core', 'Core', 'core_stability', 'isolation', 'beginner', 85, ['abs'], ['obliques', 'lower-back'], [], true),
-  ex('ex-hanging-leg-raise', 'hanging-leg-raise', 'Hanging Leg Raise', 'core', 'Core', 'core_flexion', 'isolation', 'advanced', 65, ['abs'], ['hip-flexors', 'obliques'], [g(1, ['pull-up-bar', 'Pull-up Bar'])]),
-  ex('ex-cable-crunch', 'cable-crunch', 'Cable Crunch', 'core', 'Core', 'core_flexion', 'isolation', 'beginner', 60, ['abs'], ['obliques'], [g(1, ['cable-machine', 'Cable Machine / Crossover'])]),
-  ex('ex-farmers-carry', 'farmers-carry', "Farmer's Carry", 'full-body', 'Full Body', 'carry', 'compound', 'beginner', 60, ['forearms'], ['traps', 'abs', 'glute-med'], [g(1, ['dumbbell', 'Dumbbells'], ['kettlebell', 'Kettlebell'])]),
-  ex('ex-treadmill-run', 'treadmill-run', 'Treadmill Run', 'cardio', 'Cardio', 'cardio', 'compound', 'beginner', 80, ['quads'], ['calves', 'hamstrings'], [g(1, ['treadmill', 'Treadmill'])]),
-];
+export const EXERCISES: ExerciseFull[] = (catalogFixture as CatalogFixtureRow[])
+  .filter((r) => r.is_active !== false)
+  .map(fromFixture);
+
 
 const BY_SLUG = new Map(EXERCISES.map((e) => [e.slug, e]));
 const BY_ID = new Map(EXERCISES.map((e) => [e.id, e]));
@@ -380,72 +431,39 @@ export function mockSearchExercises(q: string, limit = 8): ExerciseSearchRow[] {
     .slice(0, limit);
 }
 
-/* ------------------------------------------------ mock suggest_substitutes (§7.4 flavoured) */
-const CURATED_SUBS: Record<string, [string, number, string][]> = {
-  'bench-press': [
-    ['dumbbell-bench-press', 92, 'Same horizontal push, uses dumbbells'],
-    ['machine-chest-press', 85, 'Same movement pattern, uses the chest-press machine'],
-    ['push-up', 70, 'Targets chest, no equipment needed'],
-    ['incline-dumbbell-press', 70, 'Targets chest, uses dumbbells'],
-  ],
-  'barbell-back-squat': [
-    ['goblet-squat', 85, 'Same squat pattern, uses dumbbells'],
-    ['leg-press', 80, 'Targets quads, uses the leg-press machine'],
-    ['bulgarian-split-squat', 70, 'Targets quads and glutes, uses dumbbells'],
-    ['bodyweight-squat', 55, 'Same squat pattern, no equipment needed'],
-  ],
-  'overhead-press': [
-    ['seated-dumbbell-shoulder-press', 90, 'Same vertical push, uses dumbbells'],
-    ['lateral-raise', 45, 'Targets shoulders, uses dumbbells'],
-  ],
-  'pull-up': [
-    ['lat-pulldown', 90, 'Same vertical pull, uses the lat-pulldown machine'],
-    ['seated-cable-row', 60, 'Targets lats, uses a cable machine'],
-  ],
-  'conventional-deadlift': [
-    ['romanian-deadlift', 85, 'Same hinge pattern, uses a barbell'],
-    ['barbell-hip-thrust', 55, 'Targets glutes and hamstrings, uses a barbell'],
-  ],
-  'barbell-row': [
-    ['dumbbell-row', 90, 'Same horizontal pull, uses dumbbells'],
-    ['seated-cable-row', 85, 'Same horizontal pull, uses a cable machine'],
-  ],
-  'barbell-curl': [
-    ['dumbbell-curl', 92, 'Same elbow flexion, uses dumbbells'],
-  ],
-  'triceps-pushdown': [
-    ['skull-crusher', 80, 'Targets triceps, uses an EZ-curl bar'],
-  ],
+/* ------------------------------------------------ suggest_substitutes via §7.4 shared rule */
+
+/**
+ * Default substitution context for the demo: assume a commercial-gym athlete with everything
+ * available and nothing excluded, so the ranking is driven purely by the §7.4 scorer over the
+ * fixture catalog + curated edges. Callers (onboarding, workout) can pass a narrower context.
+ */
+export const DEMO_SUB_CONTEXT: SubstitutionContext = {
+  ownedEquipment: new Set<string>(),
+  trainingLocation: 'commercial_gym',
+  experience: 'advanced',
+  excludedExercises: new Set<string>(),
+  excludedPatterns: new Set(),
+  favorites: new Set<string>(),
+  preferredSubstitute: null,
 };
 
-export function mockSuggestSubstitutes(exerciseId: string, limit = 5): SubstituteRow[] {
+export function mockSuggestSubstitutes(
+  exerciseId: string,
+  limit = 5,
+  ctx: SubstitutionContext = DEMO_SUB_CONTEXT,
+): SubstituteRow[] {
   const target = BY_ID.get(exerciseId);
   if (!target) return [];
-  const curated = CURATED_SUBS[target.slug];
-  if (curated) {
-    return curated
-      .map(([slug, score, reason]) => {
-        const sub = BY_SLUG.get(slug);
-        return sub
-          ? { exercise_id: sub.id, slug: sub.slug, name: sub.name, score, reason }
-          : null;
-      })
-      .filter((r): r is SubstituteRow => r !== null)
-      .slice(0, limit);
-  }
-  // Fallback: same movement pattern, different exercise, ordered by popularity (§7.4 generated).
-  return EXERCISES.filter(
-    (e) => e.id !== target.id && e.movement_pattern === target.movement_pattern,
-  )
-    .sort((a, b) => b.popularity - a.popularity)
-    .slice(0, limit)
-    .map((e) => ({
-      exercise_id: e.id,
-      slug: e.slug,
-      name: e.name,
-      score: 40 + e.popularity * 0.2,
-      reason: `Targets ${e.primary_muscles.join(', ')}, same movement pattern`,
-    }));
+  const results = suggestSubstitutes(target.slug, catalogFixture, substitutionEdges, ctx, limit);
+  return results
+    .map((r) => {
+      const ex = BY_SLUG.get(r.slug);
+      return ex
+        ? { exercise_id: ex.id, slug: ex.slug, name: ex.name, score: r.score, reason: r.reason }
+        : null;
+    })
+    .filter((r): r is SubstituteRow => r !== null);
 }
 
 /* ====================================================================================== */

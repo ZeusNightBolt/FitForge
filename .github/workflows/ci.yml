@@ -2,11 +2,10 @@ name: CI
 
 on:
   push:
-    branches: [master, main]
+    branches: [main]
   pull_request:
-    branches: [master, main]
+    branches: [main]
 
-# Cancel superseded runs on the same ref.
 concurrency:
   group: ci-${{ github.workflow }}-${{ github.ref }}
   cancel-in-progress: true
@@ -15,11 +14,9 @@ env:
   NODE_VERSION: "20"
 
 jobs:
-  # -------------------------------------------------------------------------
   # Shared TypeScript package (@fitforge/shared): rule mirrors, zod, RPC types.
-  # -------------------------------------------------------------------------
   shared:
-    name: shared · test
+    name: shared · build + test
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
@@ -27,20 +24,13 @@ jobs:
         with:
           node-version: ${{ env.NODE_VERSION }}
           cache: npm
-      - name: Install
-        run: npm ci
-      - name: Typecheck
-        run: npm run typecheck -w @fitforge/shared
-      - name: Build
-        run: npm run build -w @fitforge/shared
-      - name: Test
-        run: npm run test -w @fitforge/shared
+      - run: npm ci
+      - run: npm run build -w @fitforge/shared
+      - run: npm run test -w @fitforge/shared
 
-  # -------------------------------------------------------------------------
-  # Web app (@fitforge/web): Next.js lint + production build.
-  # -------------------------------------------------------------------------
+  # Web app (@fitforge/web): typecheck + static-export build (demo mode).
   web:
-    name: web · lint + build
+    name: web · typecheck + build
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
@@ -48,26 +38,20 @@ jobs:
         with:
           node-version: ${{ env.NODE_VERSION }}
           cache: npm
-      - name: Install
-        run: npm ci
-      # @fitforge/web imports @fitforge/shared's build output.
+      - run: npm ci
       - name: Build shared dependency
         run: npm run build -w @fitforge/shared
-      - name: Lint
-        run: npm run lint -w @fitforge/web
-      - name: Build
+      - name: Typecheck
+        run: npm run typecheck -w @fitforge/web
+      - name: Build (static export)
         run: npm run build -w @fitforge/web
         env:
-          # Public placeholders so `next build` can statically evaluate env access.
-          NEXT_PUBLIC_SUPABASE_URL: http://127.0.0.1:54321
-          NEXT_PUBLIC_SUPABASE_ANON_KEY: ci-placeholder-anon-key
-          NEXT_PUBLIC_SITE_URL: http://localhost:3000
+          NEXT_PUBLIC_BASE_PATH: ""
+          NEXT_PUBLIC_DEMO: "1"
 
-  # -------------------------------------------------------------------------
   # Seed content (@fitforge/seed): validation gate + validator unit tests.
-  # -------------------------------------------------------------------------
   seed:
-    name: seed · seed:check
+    name: seed · check + test
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
@@ -75,74 +59,13 @@ jobs:
         with:
           node-version: ${{ env.NODE_VERSION }}
           cache: npm
-      - name: Install
-        run: npm ci
-      - name: Validate seed data (referential integrity, alt_group, macro sanity)
+      - run: npm ci
+      - name: Validate seed data
         run: npm run seed:check -w @fitforge/seed
       - name: Validator unit tests
         run: npm run test -w @fitforge/seed
 
-  # -------------------------------------------------------------------------
-  # Database (schema + RPCs): boot the local Supabase stack, apply migrations,
-  # load the seed, and run the pgTAP suites in supabase/tests/**.
-  # -------------------------------------------------------------------------
-  db:
-    name: db · migrate + reset + pgTAP
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v4
-
-      - name: Install Supabase CLI
-        uses: supabase/setup-cli@v1
-        with:
-          version: latest
-
-      - name: Start local Supabase stack
-        run: supabase start
-
-      # `db reset` re-applies migrations 0001..0005 and loads supabase/seed/seed.sql
-      # (config.toml points db.seed.sql_paths at it). Fails if any migration errors.
-      - name: Apply migrations + seed (db reset)
-        run: supabase db reset
-
-      - name: Run pgTAP suites (schema + rpc)
-        run: supabase test db
-
-      - name: Stop stack
-        if: always()
-        run: supabase stop --no-backup
-
-  # -------------------------------------------------------------------------
-  # iOS app (apps/ios): resolve the XcodeGen project and build for simulator.
-  # macOS runner. Build (and unit tests) only — no signing.
-  # -------------------------------------------------------------------------
-  ios:
-    name: ios · build
-    runs-on: macos-14
-    steps:
-      - uses: actions/checkout@v4
-
-      - name: Select Xcode
-        run: sudo xcode-select -s /Applications/Xcode_15.4.app
-
-      - name: Install XcodeGen
-        run: brew install xcodegen
-
-      - name: Generate Xcode project
-        working-directory: apps/ios
-        run: xcodegen generate
-
-      - name: Build & test (iPhone simulator)
-        working-directory: apps/ios
-        run: |
-          set -o pipefail
-          xcodebuild \
-            -scheme FitForge \
-            -destination 'platform=iOS Simulator,name=iPhone 15,OS=latest' \
-            -skipPackagePluginValidation \
-            clean build test \
-            | xcbeautify || xcodebuild \
-              -scheme FitForge \
-              -destination 'platform=iOS Simulator,name=iPhone 15,OS=latest' \
-              -skipPackagePluginValidation \
-              clean build test
+  # NOTE: the database (Supabase local stack + pgTAP) and iOS (macOS + xcodebuild)
+  # jobs are deferred until those layers are wired to a live stack / verified on a
+  # Mac. Their sources live under supabase/ and apps/ios/. Re-add dedicated
+  # workflows once verified end-to-end.

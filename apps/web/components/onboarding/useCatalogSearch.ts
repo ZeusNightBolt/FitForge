@@ -1,7 +1,7 @@
 'use client';
 
 import * as React from 'react';
-import { createClient } from '@/lib/supabase/client';
+import { mockSearchExercises, mockSearchFoods } from '@/components/features/_mock/data';
 
 export interface ExerciseHit {
   exercise_id: string;
@@ -24,41 +24,43 @@ export interface FoodHit {
 }
 
 /**
- * Type-ahead fetchers backed by the §5.3 RPCs (`search_exercises` / `search_foods`).
- * Honour the AbortSignal so `SearchInput` can cancel stale requests (§7.1).
+ * DEMO MODE type-ahead fetchers. The §7.1 ranking runs entirely in-memory over the fixture
+ * catalog (`mockSearchExercises` / `mockSearchFoods`); the AbortSignal is accepted for API
+ * compatibility with `SearchInput` but there is nothing to cancel.
  */
 export function useCatalogSearch() {
-  const supabase = React.useMemo(() => createClient(), []);
-
   const searchExercises = React.useCallback(
     async (
       q: string,
-      signal: AbortSignal,
-      opts?: { filterEquipment?: boolean; categorySlug?: string | null },
+      _signal?: AbortSignal,
+      _opts?: { filterEquipment?: boolean; categorySlug?: string | null },
     ): Promise<ExerciseHit[]> => {
-      const { data, error } = await supabase
-        .rpc('search_exercises', {
-          q,
-          p_limit: 8,
-          filter_equipment: opts?.filterEquipment ?? false,
-          category_slug: opts?.categorySlug ?? null,
-        })
-        .abortSignal(signal);
-      if (error) throw error;
-      return (data ?? []) as ExerciseHit[];
+      return mockSearchExercises(q, 8).map((r) => ({
+        exercise_id: r.exercise_id,
+        slug: r.slug,
+        name: r.name,
+        matched_alias: r.matched_alias,
+        score: r.score,
+      }));
     },
-    [supabase],
+    [],
   );
 
   const searchFoods = React.useCallback(
-    async (q: string, signal: AbortSignal, applyDietFilter = true): Promise<FoodHit[]> => {
-      const { data, error } = await supabase
-        .rpc('search_foods', { q, p_limit: 8, apply_diet_filter: applyDietFilter })
-        .abortSignal(signal);
-      if (error) throw error;
-      return (data ?? []) as FoodHit[];
+    async (q: string, _signal?: AbortSignal, _applyDietFilter = true): Promise<FoodHit[]> => {
+      return mockSearchFoods(q, 8).map((f) => ({
+        food_id: f.food_id,
+        slug: f.slug,
+        name: f.name,
+        brand: f.brand,
+        kcal: f.kcal,
+        protein_g: f.protein_g,
+        serving_name: f.serving_name,
+        serving_grams: f.serving_grams,
+        score: f.score,
+      }));
     },
-    [supabase],
+    [],
   );
 
   return { searchExercises, searchFoods };

@@ -1,0 +1,70 @@
+name: Deploy web demo to GitHub Pages
+
+# Builds the Next.js web app as a static export (demo mode, no backend) and
+# publishes it to GitHub Pages. The demo runs entirely client-side using the
+# @fitforge/shared rules + fixtures and localStorage.
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - "apps/web/**"
+      - "packages/shared/**"
+      - ".github/workflows/pages.yml"
+  workflow_dispatch:
+
+# Allow the workflow to publish to Pages.
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+# One concurrent deploy; don't cancel an in-progress publish.
+concurrency:
+  group: pages
+  cancel-in-progress: false
+
+jobs:
+  build:
+    name: Build static export
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "20"
+          cache: npm
+
+      - name: Install
+        run: npm ci
+
+      - name: Build shared package
+        run: npm run build -w @fitforge/shared
+
+      - name: Build web static export
+        run: npm run build -w @fitforge/web
+        env:
+          # Project Pages serve from https://<user>.github.io/FitForge/
+          NEXT_PUBLIC_BASE_PATH: /FitForge
+          NEXT_PUBLIC_DEMO: "1"
+
+      - name: Add .nojekyll (serve _next/ assets)
+        run: touch apps/web/out/.nojekyll
+
+      - name: Upload Pages artifact
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: apps/web/out
+
+  deploy:
+    name: Deploy to Pages
+    needs: build
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - name: Deploy
+        id: deployment
+        uses: actions/deploy-pages@v4

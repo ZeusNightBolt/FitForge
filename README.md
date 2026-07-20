@@ -12,7 +12,30 @@
 [![Backend: Supabase](https://img.shields.io/badge/backend-Supabase-3ECF8E?logo=supabase&logoColor=white)](./supabase)
 [![Monorepo: Turborepo](https://img.shields.io/badge/monorepo-Turborepo-EF4444?logo=turborepo)](./turbo.json)
 
+[**🚀 Live demo → zeusnightbolt.github.io/FitForge**](https://zeusnightbolt.github.io/FitForge/)
+
 </div>
+
+---
+
+## 🚀 Live demo
+
+A fully interactive, **backend-free demo** of the web app is deployed to GitHub Pages:
+
+### **→ [zeusnightbolt.github.io/FitForge](https://zeusnightbolt.github.io/FitForge/)**
+
+The demo runs entirely in your browser — it uses the app's real deterministic rules (`@fitforge/shared`) and curated catalog to power onboarding, and persists everything to `localStorage`. **Enter the demo → complete onboarding → get a generated plan → explore Today, Workouts, Nutrition, Exercises, and Progress.** No sign-up, no backend. (The production build swaps this demo data layer for Supabase auth + Postgres.)
+
+> Every screen below is covered by the Playwright end-to-end suite (`apps/web/tests/e2e/`, **14 tests**) — the screenshots are captured by those tests on each run.
+
+|  |  |  |
+|:--:|:--:|:--:|
+| ![Landing](./docs/screenshots/landing.png) | ![Onboarding](./docs/screenshots/onboarding-step.png) | ![Computed targets](./docs/screenshots/onboarding-targets.png) |
+| **Landing** | **Preference onboarding** | **Computed macro targets** |
+| ![Today](./docs/screenshots/today.png) | ![Workout](./docs/screenshots/workout.png) | ![Nutrition](./docs/screenshots/nutrition.png) |
+| **Today — generated plan** | **Workout player** | **Nutrition logging** |
+| ![Exercise detail](./docs/screenshots/exercise-detail.png) | ![Progress](./docs/screenshots/progress.png) | |
+| **Exercise + substitutions** | **Progress** | |
 
 ---
 

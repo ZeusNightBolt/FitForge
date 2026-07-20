@@ -7,7 +7,7 @@
  */
 import * as React from 'react';
 import Link from 'next/link';
-import { Card, CardTitle, CardDescription, Button, Chip } from '@/components/features/_stubs';
+import { Card, CardTitle, CardDescription, Button, Chip } from '@/components/ui';
 import { MOCK_ROUTINES_LIST } from '@/components/features/_mock/data';
 
 const GOAL_LABEL: Record<string, string> = {

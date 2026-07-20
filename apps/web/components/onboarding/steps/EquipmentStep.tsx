@@ -8,17 +8,11 @@ import {
   equipmentDependencySuggestions,
 } from '@fitforge/shared/rules';
 import { Chip, SearchInput } from '@/components/ui';
-import { createClient } from '@/lib/supabase/client';
+import { DEMO_EQUIPMENT, type DemoEquipmentRow } from '@/lib/demo/catalog';
 import { useOnboarding } from '../OnboardingProvider';
 import { OnboardingFooter } from '../OnboardingFooter';
 
-interface EquipmentRow {
-  slug: string;
-  name: string;
-  category: EquipmentCategory;
-  common_in_home: boolean;
-  common_in_gym: boolean;
-}
+type EquipmentRow = DemoEquipmentRow;
 
 const CATEGORY_LABEL: Record<EquipmentCategory, string> = {
   free_weights: 'Free weights',
@@ -32,31 +26,13 @@ const CATEGORY_LABEL: Record<EquipmentCategory, string> = {
 /** Screen 6 · Equipment (§2.2 / §7.2.1). Preset from location + type-ahead + dependency nudges. */
 export function EquipmentStep() {
   const { draft, patch } = useOnboarding();
-  const supabase = React.useMemo(() => createClient(), []);
-  const [catalog, setCatalog] = React.useState<EquipmentRow[]>([]);
-  const [loaded, setLoaded] = React.useState(false);
+  // DEMO MODE: the equipment catalog is a static in-memory list (no backend).
+  const catalog = DEMO_EQUIPMENT;
+  const loaded = true;
 
-  // Load the equipment catalog (world-readable).
+  // Apply the location preset once, when nothing is selected yet.
   React.useEffect(() => {
-    let cancelled = false;
-    supabase
-      .from('equipment')
-      .select('slug,name,category,common_in_home,common_in_gym')
-      .order('category')
-      .order('name')
-      .then(({ data }) => {
-        if (cancelled) return;
-        setCatalog((data ?? []) as EquipmentRow[]);
-        setLoaded(true);
-      });
-    return () => {
-      cancelled = true;
-    };
-  }, [supabase]);
-
-  // Apply the location preset once, when the catalog is available and nothing is selected yet.
-  React.useEffect(() => {
-    if (!loaded || catalog.length === 0) return;
+    if (catalog.length === 0) return;
     if (draft.equipment_slugs.length > 0) return;
     if (!draft.training_location) return;
     const { preset } = equipmentPresetForLocation(draft.training_location, catalog);

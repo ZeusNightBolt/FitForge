@@ -6,7 +6,7 @@
  * player and the routine editor.
  */
 import * as React from 'react';
-import { Sheet, Button } from '@/components/features/_stubs';
+import { Sheet, Button } from '@/components/ui';
 import { mockSuggestSubstitutes, type SubstituteRow } from '@/components/features/_mock/data';
 
 export interface SubstituteSheetProps {

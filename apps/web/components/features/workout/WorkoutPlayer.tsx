@@ -8,16 +8,15 @@
  */
 import * as React from 'react';
 import Link from 'next/link';
-import { Button, Card, CardTitle, Sheet } from '@/components/features/_stubs';
+import { Button, Card, CardTitle, Sheet } from '@/components/ui';
 import { SubstituteSheet } from '@/components/features/shared/SubstituteSheet';
 import {
-  mockRoutineDay,
-  mockActiveRoutine,
   mockPreviousSets,
   type RoutineDay,
   type RoutineExercise,
   type SubstituteRow,
 } from '@/components/features/_mock/data';
+import { useActiveRoutine } from '@/lib/demo/useDemo';
 
 interface SetEntry {
   reps: number;
@@ -72,9 +71,12 @@ function plateBreakdown(total: number): { plate: number; count: number }[] {
 }
 
 export function WorkoutPlayer({ sessionId }: { sessionId: string }) {
+  // DEMO MODE: resolve the day from the active (generated or default) routine; fall back to the
+  // first day so a stale/unknown session id never dead-ends.
+  const routine = useActiveRoutine();
   const day = React.useMemo<RoutineDay | undefined>(() => {
-    return mockRoutineDay(sessionId) ?? mockActiveRoutine().days[0];
-  }, [sessionId]);
+    return routine.days.find((d) => d.id === sessionId) ?? routine.days[0];
+  }, [routine, sessionId]);
 
   const [exercises, setExercises] = React.useState<ExerciseState[]>(() =>
     day ? buildInitialState(day) : [],

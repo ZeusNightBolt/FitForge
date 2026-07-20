@@ -6,26 +6,38 @@
  */
 import * as React from 'react';
 import Link from 'next/link';
-import { Card, CardTitle, Button, MacroRing } from '@/components/features/_stubs';
+import { Card, CardTitle, Button, MacroRing } from '@/components/ui';
 import { Sparkline } from '@/components/features/progress/charts';
 import {
-  mockActiveRoutine,
   todaysRoutineDay,
-  mockDailyNutrition,
-  mockNutritionTargets,
   mockWeightSparkline,
   MOCK_BODY_METRICS,
-  MOCK_PROFILE,
   MOCK_STREAK,
   WEEKDAY_LABELS,
   blueprintWeekday,
 } from '@/components/features/_mock/data';
+import {
+  useActiveRoutine,
+  useNutritionTargets,
+  useProfileName,
+  useTodayLogs,
+} from '@/lib/demo/useDemo';
 
 export function TodayView() {
-  const routine = mockActiveRoutine();
+  const routine = useActiveRoutine();
   const day = todaysRoutineDay(routine);
-  const nutrition = mockDailyNutrition();
-  const targets = mockNutritionTargets();
+  const targets = useNutritionTargets();
+  const displayName = useProfileName();
+  const { logs } = useTodayLogs();
+  const nutrition = logs.reduce(
+    (a, l) => ({
+      kcal: a.kcal + l.kcal,
+      protein_g: a.protein_g + l.protein_g,
+      carbs_g: a.carbs_g + l.carbs_g,
+      fat_g: a.fat_g + l.fat_g,
+    }),
+    { kcal: 0, protein_g: 0, carbs_g: 0, fat_g: 0 },
+  );
   const weights = mockWeightSparkline();
   const latest = MOCK_BODY_METRICS[MOCK_BODY_METRICS.length - 1]?.weight_kg ?? null;
   const prev = MOCK_BODY_METRICS[MOCK_BODY_METRICS.length - 2]?.weight_kg ?? null;
@@ -46,7 +58,7 @@ export function TodayView() {
       <header className="flex items-baseline justify-between">
         <div>
           <p className="text-sm text-muted-foreground">
-            {greeting}, {MOCK_PROFILE.display_name}
+            {greeting}, {displayName}
           </p>
           <h1 className="text-2xl font-extrabold tracking-tight">{wdLabel}&rsquo;s plan</h1>
         </div>

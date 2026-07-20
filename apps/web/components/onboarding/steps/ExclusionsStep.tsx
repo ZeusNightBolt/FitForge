@@ -5,7 +5,7 @@ import type { MovementPattern } from '@fitforge/shared/types';
 import { BODY_AREAS, type BodyArea } from '@fitforge/shared/types';
 import { resolveBodyAreaExclusions } from '@fitforge/shared/rules';
 import { Chip, SearchInput } from '@/components/ui';
-import { createClient } from '@/lib/supabase/client';
+import { demoSubstitutes } from '@/lib/demo/catalog';
 import { useOnboarding } from '../OnboardingProvider';
 import { useCatalogSearch, type ExerciseHit } from '../useCatalogSearch';
 import type { DraftExcludedExercise, DraftMovementExclusion } from '../types';
@@ -40,7 +40,6 @@ interface SubHit {
 /** Screen 8 · Exclusions & substitutions (§2.2 / §7.2.2 / §7.4). */
 export function ExclusionsStep() {
   const { draft, patch } = useOnboarding();
-  const supabase = React.useMemo(() => createClient(), []);
   const { searchExercises } = useCatalogSearch();
 
   // Soft patterns the user has un-checked. Initialised from what the draft is *missing* vs the
@@ -106,16 +105,10 @@ export function ExclusionsStep() {
     [draft.movement_exclusions],
   );
 
-  const fetchSubs = React.useCallback(
-    async (exerciseId: string) => {
-      const { data } = await supabase.rpc('suggest_substitutes', {
-        p_exercise_id: exerciseId,
-        p_limit: 3,
-      });
-      setSubs((prev) => ({ ...prev, [exerciseId]: (data ?? []) as SubHit[] }));
-    },
-    [supabase],
-  );
+  const fetchSubs = React.useCallback((exerciseId: string) => {
+    const data = demoSubstitutes(exerciseId, 3);
+    setSubs((prev) => ({ ...prev, [exerciseId]: data as SubHit[] }));
+  }, []);
 
   const addExcludedExercise = (hit: ExerciseHit) => {
     if (draft.excluded_exercises.some((e) => e.id === hit.exercise_id)) return;

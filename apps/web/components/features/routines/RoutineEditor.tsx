@@ -15,7 +15,7 @@ import {
   Chip,
   SearchInput,
   Stepper,
-} from '@/components/features/_stubs';
+} from '@/components/ui';
 import { SubstituteSheet } from '@/components/features/shared/SubstituteSheet';
 import {
   mockRoutineById,

@@ -8,7 +8,7 @@
 import * as React from 'react';
 import Link from 'next/link';
 import { notFound } from 'next/navigation';
-import { Card, CardTitle, Button } from '@/components/features/_stubs';
+import { Card, CardTitle, Button } from '@/components/ui';
 import { SubstituteSheet } from '@/components/features/shared/SubstituteSheet';
 import {
   mockExerciseBySlug,

@@ -7,7 +7,7 @@
  * supabase.storage.from('progress-photos').upload(`${uid}/${uuid}.jpg`, file).
  */
 import * as React from 'react';
-import { Button, Card, CardTitle, Chip, Sheet } from '@/components/features/_stubs';
+import { Button, Card, CardTitle, Chip, Sheet } from '@/components/ui';
 import { LineChart } from '@/components/features/progress/charts';
 import {
   MOCK_BODY_METRICS,
