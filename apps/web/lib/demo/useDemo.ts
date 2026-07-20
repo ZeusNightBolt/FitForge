@@ -13,12 +13,12 @@ import {
   getSnapshot,
   getServerSnapshot,
   setLogsFor,
+  logWeight as logWeightStore,
   type DemoState,
+  type WeightEntry,
 } from './store';
 import {
   MOCK_ROUTINE,
-  MOCK_TODAY_LOGS,
-  MOCK_PROFILE,
   mockNutritionTargets,
   todayISO,
   type Routine,
@@ -43,21 +43,39 @@ export function useNutritionTargets(): NutritionTargets {
 
 export function useProfileName(): string {
   const state = useDemoState();
-  return state.profile?.display_name ?? MOCK_PROFILE.display_name;
+  return state.profile?.display_name ?? '';
 }
 
-/** Today's food logs, with a persister that writes through to the store. */
+/** Whether the user has finished onboarding (drives first-run empty states vs. real data). */
+export function useHasOnboarded(): boolean {
+  return useDemoState().completedAt != null;
+}
+
+/** Body-weight log (empty for a fresh user) + a persister. */
+export function useWeights(): {
+  weights: WeightEntry[];
+  logWeight: (date: string, kg: number) => void;
+} {
+  const weights = useDemoState().weights;
+  return { weights, logWeight: logWeightStore };
+}
+
+/**
+ * Today's food logs, with a persister that writes through to the store.
+ * A fresh demo user starts with an EMPTY day — nothing is auto-logged; the UI guides them to log
+ * their first food. Logs only exist once the user (or a "load sample day" action) creates them.
+ */
 export function useTodayLogs(): {
   logs: NutritionLog[];
   setLogs: (updater: (prev: NutritionLog[]) => NutritionLog[]) => void;
 } {
   const state = useDemoState();
   const today = todayISO();
-  const logs = state.logsByDate[today] ?? MOCK_TODAY_LOGS;
+  const logs = state.logsByDate[today] ?? [];
 
   const setLogs = React.useCallback(
     (updater: (prev: NutritionLog[]) => NutritionLog[]) => {
-      const prev = getSnapshot().logsByDate[today] ?? MOCK_TODAY_LOGS;
+      const prev = getSnapshot().logsByDate[today] ?? [];
       setLogsFor(today, updater(prev));
     },
     [today],

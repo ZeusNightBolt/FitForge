@@ -65,8 +65,8 @@ test.describe('onboarding', () => {
     const totalExercises = routine.days.reduce((n, d) => n + d.exercises.length, 0);
     expect(totalExercises).toBeGreaterThan(0);
 
-    // The kcal target is rendered in the nutrition ring on Today.
-    await expect(page.getByText(new RegExp(`of ${targets.kcal_target} kcal`))).toBeVisible();
+    // The kcal target is surfaced on Today's first-run nutrition card.
+    await expect(page.getByText(new RegExp(`Your target is ${targets.kcal_target} kcal`))).toBeVisible();
   });
 
   test('captures the targets-review screenshot with computed macros', async ({ page }) => {

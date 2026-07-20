@@ -18,7 +18,7 @@ test.describe('persistence', () => {
     // Reload Today — the generated plan + targets persist.
     await page.goto('/today');
     await page.reload();
-    await expect(page.getByText(new RegExp(`of ${kcal} kcal`))).toBeVisible();
+    await expect(page.getByText(new RegExp(`Your target is ${kcal} kcal`))).toBeVisible();
 
     state = await readDemoState(page);
     expect((state as { routine: unknown }).routine).toBeTruthy();

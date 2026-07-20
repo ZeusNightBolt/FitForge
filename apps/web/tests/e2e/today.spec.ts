@@ -15,15 +15,13 @@ test.describe('today', () => {
     // Header greeting + today's plan heading.
     await expect(page.getByRole('heading', { name: /plan$/i })).toBeVisible();
 
-    // Nutrition card with a non-zero kcal target rendered in the ring caption.
-    await expect(page.getByText(/of \d+ kcal/)).toBeVisible();
-    const kcalLabel = await page.getByText(/of \d+ kcal/).innerText();
-    const kcalTarget = parseInt(kcalLabel.replace(/\D/g, ''), 10);
+    // Fresh user: the nutrition card shows the first-run empty state with the REAL kcal target
+    // (proving the macros rule ran) and a clear CTA — nothing is auto-logged.
+    await expect(page.getByText(/Nothing logged yet today/i)).toBeVisible();
+    const targetLabel = await page.getByText(/Your target is \d+ kcal/).innerText();
+    const kcalTarget = parseInt((targetLabel.match(/(\d+)\s*kcal/) ?? ['', '0'])[1], 10);
     expect(kcalTarget).toBeGreaterThan(0);
-
-    // Macro target rows are present (Protein / Carbs / Fat) with gram targets.
-    await expect(page.getByText('Protein').first()).toBeVisible();
-    await expect(page.getByText(/\d+ \/ \d+ g/).first()).toBeVisible();
+    await expect(page.getByRole('button', { name: /Log your first meal/i })).toBeVisible();
 
     // A CTA into a workout exists whether today is a training or rest day.
     const startBtn = page.getByRole('button', {

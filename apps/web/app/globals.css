@@ -9,6 +9,7 @@
 @theme {
   --color-surface: var(--surface);
   --color-surface-2: var(--surface-2);
+  --color-elevated: var(--elevated);
   --color-foreground: var(--foreground);
   --color-muted: var(--muted);
   --color-muted-foreground: var(--muted-foreground);
@@ -16,43 +17,58 @@
   --color-accent: var(--accent);
   --color-accent-foreground: var(--accent-foreground);
   --color-accent-muted: var(--accent-muted);
+  --color-energy: var(--energy);
+  --color-energy-muted: var(--energy-muted);
   --color-danger: var(--danger);
   --color-success: var(--success);
 
-  --radius-card: 1rem;
+  --radius-card: 1.25rem;
   --radius-chip: 9999px;
+
+  --shadow-card: var(--elev-card);
+  --shadow-pop: var(--elev-pop);
 
   --font-sans:
     ui-sans-serif, system-ui, -apple-system, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
 }
 
 :root {
-  --surface: #ffffff;
-  --surface-2: #f4f4f5;
-  --foreground: #18181b;
-  --muted: #f4f4f5;
-  --muted-foreground: #71717a;
-  --border: #e4e4e7;
-  --accent: #4f46e5;
+  --surface: #f3f4f7; /* page background */
+  --surface-2: #ffffff; /* raised cards */
+  --elevated: #ffffff;
+  --foreground: #0e1017;
+  --muted: #eef0f4;
+  --muted-foreground: #5a6474;
+  --border: #e7e9ef;
+  --accent: #5546ff;
   --accent-foreground: #ffffff;
-  --accent-muted: #eef2ff;
-  --danger: #dc2626;
-  --success: #16a34a;
+  --accent-muted: #ecebff;
+  --energy: #f5820b;
+  --energy-muted: #fff2e2;
+  --danger: #e5484d;
+  --success: #12a150;
+  --elev-card: 0 1px 2px rgba(14, 16, 23, 0.04), 0 6px 20px -8px rgba(14, 16, 23, 0.1);
+  --elev-pop: 0 12px 40px -10px rgba(14, 16, 23, 0.22);
 }
 
 @media (prefers-color-scheme: dark) {
   :root {
-    --surface: #0a0a0c;
-    --surface-2: #17171b;
-    --foreground: #fafafa;
-    --muted: #27272a;
-    --muted-foreground: #a1a1aa;
-    --border: #27272a;
-    --accent: #818cf8;
+    --surface: #090b10;
+    --surface-2: #14171f;
+    --elevated: #191d27;
+    --foreground: #f3f5f9;
+    --muted: #1c202b;
+    --muted-foreground: #98a2b3;
+    --border: #262c38;
+    --accent: #8b7dff;
     --accent-foreground: #0a0a0c;
-    --accent-muted: #1e1b3a;
-    --danger: #f87171;
-    --success: #4ade80;
+    --accent-muted: #211d3d;
+    --energy: #ffa53a;
+    --energy-muted: #2a2013;
+    --danger: #ff6169;
+    --success: #3ecf8e;
+    --elev-card: 0 1px 2px rgba(0, 0, 0, 0.4), 0 8px 24px -10px rgba(0, 0, 0, 0.6);
+    --elev-pop: 0 16px 48px -12px rgba(0, 0, 0, 0.7);
   }
 }
 

@@ -7,6 +7,7 @@
  */
 import * as React from 'react';
 import { Button, Card, CardTitle, Chip, SearchInput, Sheet, MacroRing } from '@/components/ui';
+import { PlusIcon, SearchIcon, XIcon } from '@/components/ui/icons';
 import {
   FOODS,
   RECENT_FOODS,
@@ -79,7 +80,7 @@ export function NutritionView() {
       </header>
 
       {/* Day summary */}
-      <Card>
+      <Card className="shadow-[var(--shadow-card)]">
         <div className="flex items-center gap-5">
           <MacroRing
             value={totals.kcal}
@@ -91,21 +92,36 @@ export function NutritionView() {
           <dl className="flex-1 space-y-2 text-sm">
             <MacroRow label="Protein" value={totals.protein_g} target={targets.protein_g_target} color="var(--color-accent)" />
             <MacroRow label="Carbs" value={totals.carbs_g} target={targets.carbs_g_target} color="var(--color-success)" />
-            <MacroRow label="Fat" value={totals.fat_g} target={targets.fat_g_target} color="var(--color-danger)" />
+            <MacroRow label="Fat" value={totals.fat_g} target={targets.fat_g_target} color="var(--color-energy)" />
           </dl>
         </div>
       </Card>
 
+      {/* First-run guidance — shown until the user logs their first food */}
+      {logs.length === 0 && (
+        <Card className="border-2 border-dashed border-border bg-surface-2/60 text-center shadow-none">
+          <span className="mx-auto grid h-14 w-14 place-items-center rounded-2xl bg-accent-muted text-accent">
+            <SearchIcon size={26} />
+          </span>
+          <CardTitle className="mt-3">Log your first meal</CardTitle>
+          <p className="mx-auto mt-1 max-w-sm text-sm text-muted-foreground">
+            Search our food database, pick a serving, and it lands in your day — your calorie ring
+            and macros update instantly. Nothing is logged until you add it.
+          </p>
+          <Button className="mx-auto mt-4" onClick={() => setSlotForSearch(defaultMealSlot())}>
+            <SearchIcon size={18} /> Search &amp; add food
+          </Button>
+        </Card>
+      )}
+
       {/* Meal slots */}
-      {MEAL_SLOTS.map(({ slot, label, icon }) => {
+      {MEAL_SLOTS.map(({ slot, label }) => {
         const slotLogs = logs.filter((l) => l.meal_slot === slot);
         const slotKcal = slotLogs.reduce((a, l) => a + l.kcal, 0);
         return (
-          <Card key={slot} className="!p-0">
+          <Card key={slot} className="!p-0 shadow-[var(--shadow-card)]">
             <div className="flex items-center justify-between border-b border-border px-4 py-3">
-              <CardTitle className="flex items-center gap-2 text-base">
-                <span aria-hidden>{icon}</span> {label}
-              </CardTitle>
+              <CardTitle className="text-base">{label}</CardTitle>
               <span className="text-sm tabular-nums text-muted-foreground">
                 {Math.round(slotKcal)} kcal
               </span>
@@ -131,22 +147,22 @@ export function NutritionView() {
                         type="button"
                         aria-label={`Remove ${l.custom_name}`}
                         onClick={() => removeLog(l.id)}
-                        className="grid h-7 w-7 place-items-center rounded-lg bg-surface-2 text-xs"
+                        className="grid h-7 w-7 place-items-center rounded-lg bg-muted text-muted-foreground transition-colors hover:text-danger"
                       >
-                        ✕
+                        <XIcon size={15} />
                       </button>
                     </div>
                   </li>
                 ))}
               </ul>
             )}
-            <div className="px-4 py-2.5">
+            <div className="px-3 py-2">
               <button
                 type="button"
                 onClick={() => setSlotForSearch(slot)}
-                className="text-sm font-medium text-accent"
+                className="flex w-full items-center gap-2 rounded-xl px-2 py-2 text-sm font-semibold text-accent transition-colors hover:bg-accent-muted"
               >
-                + Add food
+                <PlusIcon size={18} /> Add food
               </button>
             </div>
           </Card>
@@ -158,15 +174,11 @@ export function NutritionView() {
         <CardTitle className="mb-2 text-sm">Quick log a saved meal</CardTitle>
         <div className="flex flex-wrap gap-2">
           {MOCK_MEAL_TEMPLATES.map((t) => (
-            <Chip
-              key={t.id}
-              leading={'\u{1F4CB}'}
-              onClick={() => logTemplate(t.id, defaultMealSlot())}
-            >
+            <Chip key={t.id} onClick={() => logTemplate(t.id, defaultMealSlot())}>
               {t.name}
             </Chip>
           ))}
-          <Chip leading="+" onClick={() => setQuickAddOpen(true)}>
+          <Chip leading={<PlusIcon size={14} />} onClick={() => setQuickAddOpen(true)}>
             Quick add
           </Chip>
         </div>

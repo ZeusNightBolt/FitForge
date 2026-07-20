@@ -2,20 +2,14 @@
 
 /**
  * Today (home tab, §2.3): today's workout card (active routine × weekday mapping), calorie/macro
- * ring (v_daily_nutrition vs targets), weight sparkline, streak.
+ * ring (v_daily_nutrition vs targets), weight, and date. A fresh demo user sees real first-run
+ * empty states with clear guidance — nothing is pre-filled.
  */
 import * as React from 'react';
 import Link from 'next/link';
 import { Card, CardTitle, Button, MacroRing } from '@/components/ui';
-import { Sparkline } from '@/components/features/progress/charts';
-import {
-  todaysRoutineDay,
-  mockWeightSparkline,
-  MOCK_BODY_METRICS,
-  MOCK_STREAK,
-  WEEKDAY_LABELS,
-  blueprintWeekday,
-} from '@/components/features/_mock/data';
+import { PlusIcon, ScaleIcon, UtensilsIcon, ArrowRightIcon } from '@/components/ui/icons';
+import { todaysRoutineDay, WEEKDAY_LABELS, blueprintWeekday } from '@/components/features/_mock/data';
 import {
   useActiveRoutine,
   useNutritionTargets,
@@ -38,44 +32,43 @@ export function TodayView() {
     }),
     { kcal: 0, protein_g: 0, carbs_g: 0, fat_g: 0 },
   );
-  const weights = mockWeightSparkline();
-  const latest = MOCK_BODY_METRICS[MOCK_BODY_METRICS.length - 1]?.weight_kg ?? null;
-  const prev = MOCK_BODY_METRICS[MOCK_BODY_METRICS.length - 2]?.weight_kg ?? null;
-  const delta = latest != null && prev != null ? +(latest - prev).toFixed(1) : null;
+  const hasLogged = logs.length > 0;
 
   const wdLabel = WEEKDAY_LABELS[blueprintWeekday()];
-  const hello = new Date().getHours();
-  const greeting = hello < 12 ? 'Good morning' : hello < 18 ? 'Good afternoon' : 'Good evening';
+  const hour = new Date().getHours();
+  const greeting = hour < 12 ? 'Good morning' : hour < 18 ? 'Good afternoon' : 'Good evening';
+  const dateLabel = new Date().toLocaleDateString(undefined, { weekday: 'short', month: 'short', day: 'numeric' });
 
   const macros = [
     { label: 'Protein', value: nutrition.protein_g, target: targets.protein_g_target, color: 'var(--color-accent)' },
     { label: 'Carbs', value: nutrition.carbs_g, target: targets.carbs_g_target, color: 'var(--color-success)' },
-    { label: 'Fat', value: nutrition.fat_g, target: targets.fat_g_target, color: 'var(--color-danger)' },
+    { label: 'Fat', value: nutrition.fat_g, target: targets.fat_g_target, color: 'var(--color-energy)' },
   ];
 
   return (
     <div className="space-y-5">
-      <header className="flex items-baseline justify-between">
+      <header className="flex items-center justify-between">
         <div>
           <p className="text-sm text-muted-foreground">
-            {greeting}, {displayName}
+            {greeting}
+            {displayName ? `, ${displayName}` : ''}
           </p>
           <h1 className="text-2xl font-extrabold tracking-tight">{wdLabel}&rsquo;s plan</h1>
         </div>
-        <div className="flex items-center gap-1 rounded-full bg-accent-muted px-3 py-1.5 text-sm font-semibold text-accent">
-          <span aria-hidden>{'\u{1F525}'}</span> {MOCK_STREAK}-day streak
+        <div className="rounded-full bg-surface-2 px-3 py-1.5 text-sm font-semibold text-muted-foreground shadow-[var(--shadow-card)]">
+          {dateLabel}
         </div>
       </header>
 
       {/* Today's workout */}
       {day ? (
-        <Card className="overflow-hidden !p-0">
-          <div className="bg-accent-muted px-5 py-4">
-            <p className="text-xs font-semibold uppercase tracking-wide text-accent">
+        <Card className="overflow-hidden !p-0 shadow-[var(--shadow-card)]">
+          <div className="bg-accent px-5 py-4 text-accent-foreground">
+            <p className="text-xs font-semibold uppercase tracking-wide opacity-80">
               Today&rsquo;s workout
             </p>
-            <CardTitle className="mt-1 text-lg">{day.name}</CardTitle>
-            <p className="mt-0.5 text-sm text-muted-foreground">
+            <h2 className="mt-1 text-lg font-bold text-accent-foreground">{day.name}</h2>
+            <p className="mt-0.5 text-sm opacity-80">
               {day.exercises.length} exercises · from {routine.name}
             </p>
           </div>
@@ -90,9 +83,7 @@ export function TodayView() {
                 </li>
               ))}
               {day.exercises.length > 4 && (
-                <li className="text-xs text-muted-foreground">
-                  +{day.exercises.length - 4} more
-                </li>
+                <li className="text-xs text-muted-foreground">+{day.exercises.length - 4} more</li>
               )}
             </ul>
             <Link href={`/workout/${day.id}`} className="block">
@@ -103,10 +94,10 @@ export function TodayView() {
           </div>
         </Card>
       ) : (
-        <Card>
+        <Card className="shadow-[var(--shadow-card)]">
           <CardTitle>Rest day</CardTitle>
           <p className="mt-1 text-sm text-muted-foreground">
-            No workout scheduled today. You can still start a freestyle session.
+            No workout scheduled today — recovery is part of the plan. Want to move anyway?
           </p>
           <Link href={`/workout/${routine.days[0]?.id ?? 'freestyle'}`} className="mt-4 block">
             <Button variant="secondary" block>
@@ -117,76 +108,85 @@ export function TodayView() {
       )}
 
       {/* Nutrition ring */}
-      <Card>
+      <Card className="shadow-[var(--shadow-card)]">
         <div className="flex items-center justify-between">
           <CardTitle>Nutrition</CardTitle>
-          <Link href="/nutrition" className="text-sm font-medium text-accent">
-            Log food
+          <Link href="/nutrition" className="text-sm font-semibold text-accent">
+            {hasLogged ? 'Log food' : ''}
           </Link>
         </div>
-        <div className="mt-3 flex items-center gap-5">
-          <MacroRing
-            value={nutrition.kcal}
-            target={targets.kcal_target}
-            size={128}
-            stroke={12}
-            caption={
-              <>
-                {Math.round(nutrition.kcal)}
-              </>
-            }
-            label={`of ${targets.kcal_target} kcal`}
-          />
-          <div className="flex-1 space-y-3">
-            {macros.map((m) => {
-              const pct = Math.min(100, Math.round((m.value / Math.max(1, m.target)) * 100));
-              return (
-                <div key={m.label}>
-                  <div className="mb-1 flex justify-between text-xs">
-                    <span className="font-medium text-foreground">{m.label}</span>
-                    <span className="tabular-nums text-muted-foreground">
-                      {Math.round(m.value)} / {m.target} g
-                    </span>
+
+        {hasLogged ? (
+          <div className="mt-3 flex items-center gap-5">
+            <MacroRing
+              value={nutrition.kcal}
+              target={targets.kcal_target}
+              size={128}
+              stroke={12}
+              caption={<>{Math.round(nutrition.kcal)}</>}
+              label={`of ${targets.kcal_target} kcal`}
+            />
+            <div className="flex-1 space-y-3">
+              {macros.map((m) => {
+                const pct = Math.min(100, Math.round((m.value / Math.max(1, m.target)) * 100));
+                return (
+                  <div key={m.label}>
+                    <div className="mb-1 flex justify-between text-xs">
+                      <span className="font-medium text-foreground">{m.label}</span>
+                      <span className="tabular-nums text-muted-foreground">
+                        {Math.round(m.value)} / {m.target} g
+                      </span>
+                    </div>
+                    <div className="h-2 w-full overflow-hidden rounded-full bg-muted">
+                      <div className="h-full rounded-full" style={{ width: `${pct}%`, backgroundColor: m.color }} />
+                    </div>
                   </div>
-                  <div className="h-2 w-full overflow-hidden rounded-full bg-muted">
-                    <div
-                      className="h-full rounded-full"
-                      style={{ width: `${pct}%`, backgroundColor: m.color }}
-                    />
-                  </div>
-                </div>
-              );
-            })}
+                );
+              })}
+            </div>
           </div>
-        </div>
+        ) : (
+          <div className="mt-3 flex flex-col items-center gap-3 rounded-2xl bg-muted/60 px-4 py-6 text-center">
+            <span className="grid h-12 w-12 place-items-center rounded-full bg-surface-2 text-accent shadow-[var(--shadow-card)]">
+              <UtensilsIcon size={24} />
+            </span>
+            <div>
+              <p className="font-semibold text-foreground">Nothing logged yet today</p>
+              <p className="mt-0.5 text-sm text-muted-foreground">
+                Your target is <span className="font-semibold text-foreground">{targets.kcal_target} kcal</span> ·{' '}
+                {targets.protein_g_target}g protein. Log a meal to fill your ring.
+              </p>
+            </div>
+            <Link href="/nutrition" className="w-full">
+              <Button block>
+                <PlusIcon size={18} /> Log your first meal
+              </Button>
+            </Link>
+          </div>
+        )}
       </Card>
 
-      {/* Weight sparkline */}
-      <Card>
+      {/* Body weight */}
+      <Card className="shadow-[var(--shadow-card)]">
         <div className="flex items-center justify-between">
           <CardTitle>Body weight</CardTitle>
-          <Link href="/progress" className="text-sm font-medium text-accent">
+          <Link href="/progress" className="text-sm font-semibold text-accent">
             Progress
           </Link>
         </div>
-        <div className="mt-2 flex items-end justify-between">
-          <div>
-            <p className="text-3xl font-extrabold tabular-nums">
-              {latest != null ? latest.toFixed(1) : '—'}
-              <span className="ml-1 text-base font-medium text-muted-foreground">kg</span>
-            </p>
-            {delta != null && (
-              <p
-                className={
-                  'text-sm font-medium ' + (delta <= 0 ? 'text-success' : 'text-muted-foreground')
-                }
-              >
-                {delta > 0 ? '+' : ''}
-                {delta} kg since last entry
-              </p>
-            )}
+        <div className="mt-3 flex items-center gap-4 rounded-2xl bg-muted/60 px-4 py-5">
+          <span className="grid h-11 w-11 shrink-0 place-items-center rounded-full bg-surface-2 text-accent shadow-[var(--shadow-card)]">
+            <ScaleIcon size={22} />
+          </span>
+          <div className="min-w-0 flex-1">
+            <p className="font-semibold text-foreground">Track your weight</p>
+            <p className="text-sm text-muted-foreground">Log weigh-ins to see your trend over time.</p>
           </div>
-          <Sparkline data={weights} width={160} height={48} />
+          <Link href="/progress">
+            <Button variant="secondary" size="sm">
+              Add <ArrowRightIcon size={16} />
+            </Button>
+          </Link>
         </div>
       </Card>
     </div>

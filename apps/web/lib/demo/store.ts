@@ -40,6 +40,13 @@ export interface DemoState {
   targets: NutritionTargets | null;
   /** food logs keyed by YYYY-MM-DD */
   logsByDate: Record<string, NutritionLog[]>;
+  /** body-weight log, ascending by date (empty for a fresh user) */
+  weights: WeightEntry[];
+}
+
+export interface WeightEntry {
+  date: string; // YYYY-MM-DD
+  kg: number;
 }
 
 export function defaultState(): DemoState {
@@ -54,6 +61,7 @@ export function defaultState(): DemoState {
     routine: null,
     targets: null,
     logsByDate: {},
+    weights: [],
   };
 }
 
@@ -169,4 +177,15 @@ export function getLogsFor(date: string): NutritionLog[] | undefined {
 
 export function setLogsFor(date: string, logs: NutritionLog[]): void {
   update((s) => ({ ...s, logsByDate: { ...s.logsByDate, [date]: logs } }));
+}
+
+/* --------------------------------------------------------------------------- weight logging */
+
+/** Upsert a body-weight entry for a date; keeps the list sorted ascending. */
+export function logWeight(date: string, kg: number): void {
+  update((s) => {
+    const others = s.weights.filter((w) => w.date !== date);
+    const next = [...others, { date, kg }].sort((a, b) => (a.date < b.date ? -1 : 1));
+    return { ...s, weights: next };
+  });
 }

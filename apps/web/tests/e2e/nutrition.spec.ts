@@ -14,8 +14,8 @@ test.describe('nutrition', () => {
 
     await expect(page.getByRole('heading', { name: 'Nutrition' })).toBeVisible();
 
-    // Open the food search sheet for the first meal slot.
-    await page.getByRole('button', { name: '+ Add food' }).first().click();
+    // Fresh day shows the guided empty state; use its primary CTA to open the food search.
+    await page.getByRole('button', { name: /Search & add food/i }).click();
 
     const search = page.getByRole('combobox', { name: 'Search foods' });
     await expect(search).toBeVisible();

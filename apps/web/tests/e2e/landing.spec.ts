@@ -22,7 +22,7 @@ test.describe('landing', () => {
     await page.goto('/');
     await page.getByRole('button', { name: 'Get started' }).click();
     await page.waitForURL(/\/onboarding\/welcome/);
-    await expect(page.getByRole('heading', { name: /build a plan that fits/i })).toBeVisible();
+    await expect(page.getByRole('heading', { name: /built around your life/i })).toBeVisible();
   });
 
   test('"I have an account" navigates to the login entry', async ({ page }) => {
