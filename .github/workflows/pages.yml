@@ -36,11 +36,6 @@ jobs:
           node-version: "20"
           cache: npm
 
-      - name: Configure Pages (auto-enable on first run)
-        uses: actions/configure-pages@v5
-        with:
-          enablement: true
-
       - name: Install
         run: npm ci
 
